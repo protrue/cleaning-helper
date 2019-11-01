@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleaningHelper.Model", "CleaningHelper.Model\CleaningHelper.Model.csproj", "{F918F926-DAF3-4050-A9FF-76E60FC45078}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleaningHelper.Core", "CleaningHelper.Core\CleaningHelper.Core.csproj", "{57A99F4C-5720-4F9F-AFAF-3E256A0DD9D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleaningHelper.OntolisTools", "CleaningHelper.OntolisTools\CleaningHelper.OntolisTools.csproj", "{166C12FF-AD19-40A8-A176-11D522BF953A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleaningHelper.Gui", "CleaningHelper.Gui\CleaningHelper.Gui.csproj", "{CDE0869C-F2D7-4BF3-A806-DC4484D0DEAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F918F926-DAF3-4050-A9FF-76E60FC45078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F918F926-DAF3-4050-A9FF-76E60FC45078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F918F926-DAF3-4050-A9FF-76E60FC45078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F918F926-DAF3-4050-A9FF-76E60FC45078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57A99F4C-5720-4F9F-AFAF-3E256A0DD9D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57A99F4C-5720-4F9F-AFAF-3E256A0DD9D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57A99F4C-5720-4F9F-AFAF-3E256A0DD9D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57A99F4C-5720-4F9F-AFAF-3E256A0DD9D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{166C12FF-AD19-40A8-A176-11D522BF953A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{166C12FF-AD19-40A8-A176-11D522BF953A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{166C12FF-AD19-40A8-A176-11D522BF953A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{166C12FF-AD19-40A8-A176-11D522BF953A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDE0869C-F2D7-4BF3-A806-DC4484D0DEAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDE0869C-F2D7-4BF3-A806-DC4484D0DEAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDE0869C-F2D7-4BF3-A806-DC4484D0DEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDE0869C-F2D7-4BF3-A806-DC4484D0DEAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
