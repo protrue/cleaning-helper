@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CleaningHelper.OntolisTools")]
+[assembly: AssemblyTitle("CleaningHelper.OntolisAdapter.DataModel")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CleaningHelper.OntolisTools")]
+[assembly: AssemblyProduct("CleaningHelper.OntolisAdapter.DataModel")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("166C12FF-AD19-40A8-A176-11D522BF953A")]
+[assembly: Guid("F3A3594C-5FA6-4197-A66B-C302908E85C6")]
 
 // Version information for an assembly consists of the following four values:
 //
