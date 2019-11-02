@@ -42,6 +42,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CleaningHelper.Model\CleaningHelper.Model.csproj">
+      <Project>{f918f926-daf3-4050-a9ff-76e60fc45078}</Project>
+      <Name>CleaningHelper.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CleaningHelper.OntolisAdapter.DataModel\CleaningHelper.OntolisAdapter.DataModel.csproj">
       <Project>{f3a3594c-5fa6-4197-a66b-c302908e85c6}</Project>
       <Name>CleaningHelper.OntolisAdapter.DataModel</Name>

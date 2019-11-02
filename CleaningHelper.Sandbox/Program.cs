@@ -9,6 +9,8 @@ namespace CleaningHelper.Sandbox
         {
             var ontolisDataObject = OntolisFileDeserializer.DeserializeOntolisFile("trans.ont");
             Console.WriteLine(ontolisDataObject);
+            var semanticNetwork = OntolisDataConverter.Convert(ontolisDataObject);
+            Console.WriteLine(semanticNetwork);
         }
     }
 }
