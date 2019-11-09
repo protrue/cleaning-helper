@@ -1,5 +1,8 @@
 ﻿namespace CleaningHelper.Model
 {
+    /// <summary>
+    /// Понятие, концепт, узел семсети
+    /// </summary>
     public class Concept
     {
         public readonly int Identifier;

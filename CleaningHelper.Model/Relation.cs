@@ -2,6 +2,9 @@
 
 namespace CleaningHelper.Model
 {
+    /// <summary>
+    /// Отношение между понятиями, дуга семсети
+    /// </summary>
     public class Relation
     {
         public readonly int Identifier;
