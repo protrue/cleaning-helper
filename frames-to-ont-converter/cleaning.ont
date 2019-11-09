@@ -1,0 +1,1681 @@
+{
+    "last_id": "185",
+    "namespaces": {
+        "default": "http://knova.ru/user/1572791144722",
+        "ontolis-avis": "http://knova.ru/ontolis-avis",
+        "owl": "http://www.w3.org/2002/07/owl",
+        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema",
+        "xsd": "http://www.w3.org/2001/XMLSchema"
+    },
+    "nodes": [
+        {
+            "attributes": {
+            },
+            "id": "0",
+            "name": "1",
+            "namespace": "",
+            "position_x": 119,
+            "position_y": 419
+        },
+        {
+            "attributes": {
+            },
+            "id": "1",
+            "name": "Ситуация",
+            "namespace": "",
+            "position_x": -1,
+            "position_y": 449
+        },
+        {
+            "attributes": {
+            },
+            "id": "3",
+            "name": "_",
+            "namespace": "",
+            "position_x": 49,
+            "position_y": 369
+        },
+        {
+            "attributes": {
+            },
+            "id": "5",
+            "name": "2",
+            "namespace": "",
+            "position_x": 229,
+            "position_y": 429
+        },
+        {
+            "attributes": {
+            },
+            "id": "6",
+            "name": "Загрязнение жиром",
+            "namespace": "",
+            "position_x": 89,
+            "position_y": 389
+        },
+        {
+            "attributes": {
+            },
+            "id": "9",
+            "name": "_",
+            "namespace": "",
+            "position_x": 209,
+            "position_y": 319
+        },
+        {
+            "attributes": {
+            },
+            "id": "11",
+            "name": "_",
+            "namespace": "",
+            "position_x": 169,
+            "position_y": 219
+        },
+        {
+            "attributes": {
+            },
+            "id": "13",
+            "name": "Вещество",
+            "namespace": "",
+            "position_x": 129,
+            "position_y": 149
+        },
+        {
+            "attributes": {
+            },
+            "id": "15",
+            "name": "Жир",
+            "namespace": "",
+            "position_x": 79,
+            "position_y": 189
+        },
+        {
+            "attributes": {
+            },
+            "id": "17",
+            "name": "3",
+            "namespace": "",
+            "position_x": 339,
+            "position_y": 529
+        },
+        {
+            "attributes": {
+            },
+            "id": "18",
+            "name": "Свежее загрязнение жиром",
+            "namespace": "",
+            "position_x": 139,
+            "position_y": 499
+        },
+        {
+            "attributes": {
+            },
+            "id": "21",
+            "name": "_",
+            "namespace": "",
+            "position_x": 289,
+            "position_y": 629
+        },
+        {
+            "attributes": {
+            },
+            "id": "23",
+            "name": "_",
+            "namespace": "",
+            "position_x": 249,
+            "position_y": 729
+        },
+        {
+            "attributes": {
+            },
+            "id": "25",
+            "name": "Возраст пятна",
+            "namespace": "",
+            "position_x": 159,
+            "position_y": 819
+        },
+        {
+            "attributes": {
+            },
+            "id": "27",
+            "name": "Свежее",
+            "namespace": "",
+            "position_x": 139,
+            "position_y": 699
+        },
+        {
+            "attributes": {
+            },
+            "id": "29",
+            "name": "4",
+            "namespace": "",
+            "position_x": 489,
+            "position_y": 589
+        },
+        {
+            "attributes": {
+            },
+            "id": "30",
+            "name": "Свежее загрязнение жиром деликатных тканей",
+            "namespace": "",
+            "position_x": 219,
+            "position_y": 649
+        },
+        {
+            "attributes": {
+            },
+            "id": "33",
+            "name": "_",
+            "namespace": "",
+            "position_x": 369,
+            "position_y": 639
+        },
+        {
+            "attributes": {
+            },
+            "id": "35",
+            "name": "_",
+            "namespace": "",
+            "position_x": 239,
+            "position_y": 669
+        },
+        {
+            "attributes": {
+            },
+            "id": "37",
+            "name": "Тип ткани",
+            "namespace": "",
+            "position_x": 109,
+            "position_y": 639
+        },
+        {
+            "attributes": {
+            },
+            "id": "39",
+            "name": "Деликатная",
+            "namespace": "",
+            "position_x": 119,
+            "position_y": 759
+        },
+        {
+            "attributes": {
+            },
+            "id": "41",
+            "name": "5",
+            "namespace": "",
+            "position_x": 689,
+            "position_y": 599
+        },
+        {
+            "attributes": {
+            },
+            "id": "42",
+            "name": "Свежее загрязнение жиром деликатных светлых тканей",
+            "namespace": "",
+            "position_x": 449,
+            "position_y": 659
+        },
+        {
+            "attributes": {
+            },
+            "id": "45",
+            "name": "_",
+            "namespace": "",
+            "position_x": 739,
+            "position_y": 499
+        },
+        {
+            "attributes": {
+            },
+            "id": "47",
+            "name": "_",
+            "namespace": "",
+            "position_x": 809,
+            "position_y": 389
+        },
+        {
+            "attributes": {
+            },
+            "id": "49",
+            "name": "Цвет ткани",
+            "namespace": "",
+            "position_x": 819,
+            "position_y": 339
+        },
+        {
+            "attributes": {
+            },
+            "id": "51",
+            "name": "Светлая",
+            "namespace": "",
+            "position_x": 759,
+            "position_y": 309
+        },
+        {
+            "attributes": {
+            },
+            "id": "53",
+            "name": "6",
+            "namespace": "",
+            "position_x": 609,
+            "position_y": 689
+        },
+        {
+            "attributes": {
+            },
+            "id": "54",
+            "name": "Свежее загрязнение жиром деликатных светлых тканей,  не нужна стирка",
+            "namespace": "",
+            "position_x": 259,
+            "position_y": 749
+        },
+        {
+            "attributes": {
+            },
+            "id": "57",
+            "name": "_",
+            "namespace": "",
+            "position_x": 529,
+            "position_y": 809
+        },
+        {
+            "attributes": {
+            },
+            "id": "59",
+            "name": "_",
+            "namespace": "",
+            "position_x": 449,
+            "position_y": 909
+        },
+        {
+            "attributes": {
+            },
+            "id": "61",
+            "name": "Нужна стирка",
+            "namespace": "",
+            "position_x": 319,
+            "position_y": 959
+        },
+        {
+            "attributes": {
+            },
+            "id": "63",
+            "name": "Нет",
+            "namespace": "",
+            "position_x": 429,
+            "position_y": 999
+        },
+        {
+            "attributes": {
+            },
+            "id": "65",
+            "name": "7",
+            "namespace": "",
+            "position_x": 599,
+            "position_y": 589
+        },
+        {
+            "attributes": {
+            },
+            "id": "66",
+            "name": "Свежее загрязнение жиром деликатных светлых тканей,  не нужна стирка, не нужна глажка",
+            "namespace": "",
+            "position_x": 79,
+            "position_y": 529
+        },
+        {
+            "attributes": {
+            },
+            "id": "69",
+            "name": "_",
+            "namespace": "",
+            "position_x": 579,
+            "position_y": 739
+        },
+        {
+            "attributes": {
+            },
+            "id": "71",
+            "name": "_",
+            "namespace": "",
+            "position_x": 589,
+            "position_y": 869
+        },
+        {
+            "attributes": {
+            },
+            "id": "73",
+            "name": "Нужна глажка",
+            "namespace": "",
+            "position_x": 559,
+            "position_y": 939
+        },
+        {
+            "attributes": {
+            },
+            "id": "75",
+            "name": "Нет",
+            "namespace": "",
+            "position_x": 539,
+            "position_y": 949
+        },
+        {
+            "attributes": {
+            },
+            "id": "77",
+            "name": "8",
+            "namespace": "",
+            "position_x": 599,
+            "position_y": 409
+        },
+        {
+            "attributes": {
+            },
+            "id": "78",
+            "name": "Свежее загрязнение жиром деликатных светлых тканей,  которые нельзя стирать",
+            "namespace": "",
+            "position_x": 119,
+            "position_y": 359
+        },
+        {
+            "attributes": {
+            },
+            "id": "81",
+            "name": "_",
+            "namespace": "",
+            "position_x": 599,
+            "position_y": 229
+        },
+        {
+            "attributes": {
+            },
+            "id": "83",
+            "name": "_",
+            "namespace": "",
+            "position_x": 589,
+            "position_y": 149
+        },
+        {
+            "attributes": {
+            },
+            "id": "85",
+            "name": "Ткань",
+            "namespace": "",
+            "position_x": 589,
+            "position_y": 69
+        },
+        {
+            "attributes": {
+            },
+            "id": "87",
+            "name": "Любая",
+            "namespace": "",
+            "position_x": 489,
+            "position_y": 159
+        },
+        {
+            "attributes": {
+            },
+            "id": "89",
+            "name": "_",
+            "namespace": "",
+            "position_x": 679,
+            "position_y": 149
+        },
+        {
+            "attributes": {
+            },
+            "id": "91",
+            "name": "Ингредиент",
+            "namespace": "",
+            "position_x": 699,
+            "position_y": 119
+        },
+        {
+            "attributes": {
+            },
+            "id": "93",
+            "name": "Зубной порошок",
+            "namespace": "",
+            "position_x": 619,
+            "position_y": 59
+        },
+        {
+            "attributes": {
+            },
+            "id": "95",
+            "name": "_",
+            "namespace": "",
+            "position_x": 549,
+            "position_y": 99
+        },
+        {
+            "attributes": {
+            },
+            "id": "97",
+            "name": "Рецепт",
+            "namespace": "",
+            "position_x": 449,
+            "position_y": 49
+        },
+        {
+            "attributes": {
+            },
+            "id": "99",
+            "name": "38",
+            "namespace": "",
+            "position_x": 539,
+            "position_y": 9
+        },
+        {
+            "attributes": {
+            },
+            "id": "101",
+            "name": "9",
+            "namespace": "",
+            "position_x": 899,
+            "position_y": 599
+        },
+        {
+            "attributes": {
+            },
+            "id": "102",
+            "name": "Свежее загрязнение жиром деликатных светлых тканей, нужна стирка",
+            "namespace": "",
+            "position_x": 589,
+            "position_y": 619
+        },
+        {
+            "attributes": {
+            },
+            "id": "105",
+            "name": "_",
+            "namespace": "",
+            "position_x": 899,
+            "position_y": 529
+        },
+        {
+            "attributes": {
+            },
+            "id": "107",
+            "name": "_",
+            "namespace": "",
+            "position_x": 839,
+            "position_y": 489
+        },
+        {
+            "attributes": {
+            },
+            "id": "109",
+            "name": "Нужна стирка",
+            "namespace": "",
+            "position_x": 749,
+            "position_y": 559
+        },
+        {
+            "attributes": {
+            },
+            "id": "111",
+            "name": "Да",
+            "namespace": "",
+            "position_x": 769,
+            "position_y": 439
+        },
+        {
+            "attributes": {
+            },
+            "id": "113",
+            "name": "10",
+            "namespace": "",
+            "position_x": 1039,
+            "position_y": 479
+        },
+        {
+            "attributes": {
+            },
+            "id": "114",
+            "name": "Свежее загрязнение жиром деликатных светлых тканей,  нужна стирка, не нужна глажка",
+            "namespace": "",
+            "position_x": 599,
+            "position_y": 529
+        },
+        {
+            "attributes": {
+            },
+            "id": "117",
+            "name": "_",
+            "namespace": "",
+            "position_x": 1149,
+            "position_y": 489
+        },
+        {
+            "attributes": {
+            },
+            "id": "119",
+            "name": "_",
+            "namespace": "",
+            "position_x": 1249,
+            "position_y": 509
+        },
+        {
+            "attributes": {
+            },
+            "id": "121",
+            "name": "Нужна глажка",
+            "namespace": "",
+            "position_x": 1239,
+            "position_y": 559
+        },
+        {
+            "attributes": {
+            },
+            "id": "123",
+            "name": "Нет",
+            "namespace": "",
+            "position_x": 1319,
+            "position_y": 479
+        },
+        {
+            "attributes": {
+            },
+            "id": "125",
+            "name": "11",
+            "namespace": "",
+            "position_x": 1129,
+            "position_y": 329
+        },
+        {
+            "attributes": {
+            },
+            "id": "126",
+            "name": "Свежее загрязнение жиром деликатных светлых тканей, которые нельзя стирать",
+            "namespace": "",
+            "position_x": 759,
+            "position_y": 319
+        },
+        {
+            "attributes": {
+            },
+            "id": "129",
+            "name": "_",
+            "namespace": "",
+            "position_x": 1209,
+            "position_y": 199
+        },
+        {
+            "attributes": {
+            },
+            "id": "131",
+            "name": "_",
+            "namespace": "",
+            "position_x": 1319,
+            "position_y": 189
+        },
+        {
+            "attributes": {
+            },
+            "id": "133",
+            "name": "Ткань",
+            "namespace": "",
+            "position_x": 1359,
+            "position_y": 219
+        },
+        {
+            "attributes": {
+            },
+            "id": "135",
+            "name": "Хлопок, лён, шелк, шифон",
+            "namespace": "",
+            "position_x": 1249,
+            "position_y": 139
+        },
+        {
+            "attributes": {
+            },
+            "id": "137",
+            "name": "_",
+            "namespace": "",
+            "position_x": 1149,
+            "position_y": 119
+        },
+        {
+            "attributes": {
+            },
+            "id": "139",
+            "name": "Ингредиент",
+            "namespace": "",
+            "position_x": 1029,
+            "position_y": 89
+        },
+        {
+            "attributes": {
+            },
+            "id": "141",
+            "name": "Меловой порошок",
+            "namespace": "",
+            "position_x": 1059,
+            "position_y": 39
+        },
+        {
+            "attributes": {
+            },
+            "id": "143",
+            "name": "_",
+            "namespace": "",
+            "position_x": 1249,
+            "position_y": 89
+        },
+        {
+            "attributes": {
+            },
+            "id": "145",
+            "name": "Рецепт",
+            "namespace": "",
+            "position_x": 1209,
+            "position_y": -1
+        },
+        {
+            "attributes": {
+            },
+            "id": "147",
+            "name": "43",
+            "namespace": "",
+            "position_x": 1309,
+            "position_y": 39
+        },
+        {
+            "attributes": {
+            },
+            "id": "149",
+            "name": "12",
+            "namespace": "",
+            "position_x": 969,
+            "position_y": 759
+        },
+        {
+            "attributes": {
+            },
+            "id": "150",
+            "name": "Свежее загрязнение жиром деликатных светлых тканей, нужна стирка, нужна глажка",
+            "namespace": "",
+            "position_x": 579,
+            "position_y": 729
+        },
+        {
+            "attributes": {
+            },
+            "id": "153",
+            "name": "_",
+            "namespace": "",
+            "position_x": 1099,
+            "position_y": 789
+        },
+        {
+            "attributes": {
+            },
+            "id": "155",
+            "name": "_",
+            "namespace": "",
+            "position_x": 1199,
+            "position_y": 809
+        },
+        {
+            "attributes": {
+            },
+            "id": "157",
+            "name": "Нужна глажка",
+            "namespace": "",
+            "position_x": 1209,
+            "position_y": 779
+        },
+        {
+            "attributes": {
+            },
+            "id": "159",
+            "name": "Да",
+            "namespace": "",
+            "position_x": 1249,
+            "position_y": 859
+        },
+        {
+            "attributes": {
+            },
+            "id": "161",
+            "name": "13",
+            "namespace": "",
+            "position_x": 987.36706090856478,
+            "position_y": 892.04578993055566
+        },
+        {
+            "attributes": {
+            },
+            "id": "162",
+            "name": "Свежее загрязнение жиром деликатных светлых тканей, которые нельзя стирать",
+            "namespace": "",
+            "position_x": 599,
+            "position_y": 939
+        },
+        {
+            "attributes": {
+            },
+            "id": "165",
+            "name": "_",
+            "namespace": "",
+            "position_x": 969,
+            "position_y": 1049
+        },
+        {
+            "attributes": {
+            },
+            "id": "167",
+            "name": "_",
+            "namespace": "",
+            "position_x": 969,
+            "position_y": 1169
+        },
+        {
+            "attributes": {
+            },
+            "id": "169",
+            "name": "Ткань",
+            "namespace": "",
+            "position_x": 989,
+            "position_y": 1239
+        },
+        {
+            "attributes": {
+            },
+            "id": "171",
+            "name": "Любая",
+            "namespace": "",
+            "position_x": 909,
+            "position_y": 1239
+        },
+        {
+            "attributes": {
+            },
+            "id": "173",
+            "name": "_",
+            "namespace": "",
+            "position_x": 1069,
+            "position_y": 1089
+        },
+        {
+            "attributes": {
+            },
+            "id": "175",
+            "name": "Ингредиент",
+            "namespace": "",
+            "position_x": 1059,
+            "position_y": 1149
+        },
+        {
+            "attributes": {
+            },
+            "id": "177",
+            "name": "Зубной порошок, тальк, сода, детская присыпка",
+            "namespace": "",
+            "position_x": 879,
+            "position_y": 1079
+        },
+        {
+            "attributes": {
+            },
+            "id": "179",
+            "name": "_",
+            "namespace": "",
+            "position_x": 879,
+            "position_y": 1109
+        },
+        {
+            "attributes": {
+            },
+            "id": "181",
+            "name": "Рецепт",
+            "namespace": "",
+            "position_x": 819,
+            "position_y": 1179
+        },
+        {
+            "attributes": {
+            },
+            "id": "183",
+            "name": "44",
+            "namespace": "",
+            "position_x": 799,
+            "position_y": 1119
+        }
+    ],
+    "relations": [
+        {
+            "attributes": {
+            },
+            "destination_node_id": "1",
+            "id": "2",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "0"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "3",
+            "id": "4",
+            "name": "has",
+            "namespace": "",
+            "source_node_id": "0"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "6",
+            "id": "7",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "5"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "0",
+            "id": "8",
+            "name": "is_a",
+            "namespace": "",
+            "source_node_id": "5"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "9",
+            "id": "10",
+            "name": "has",
+            "namespace": "",
+            "source_node_id": "5"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "9",
+            "id": "12",
+            "name": "#0",
+            "namespace": "",
+            "source_node_id": "11"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "13",
+            "id": "14",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "11"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "15",
+            "id": "16",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "11"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "18",
+            "id": "19",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "17"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "5",
+            "id": "20",
+            "name": "is_a",
+            "namespace": "",
+            "source_node_id": "17"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "21",
+            "id": "22",
+            "name": "has",
+            "namespace": "",
+            "source_node_id": "17"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "21",
+            "id": "24",
+            "name": "#0",
+            "namespace": "",
+            "source_node_id": "23"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "25",
+            "id": "26",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "23"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "27",
+            "id": "28",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "23"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "30",
+            "id": "31",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "29"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "17",
+            "id": "32",
+            "name": "is_a",
+            "namespace": "",
+            "source_node_id": "29"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "33",
+            "id": "34",
+            "name": "has",
+            "namespace": "",
+            "source_node_id": "29"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "33",
+            "id": "36",
+            "name": "#0",
+            "namespace": "",
+            "source_node_id": "35"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "37",
+            "id": "38",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "35"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "39",
+            "id": "40",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "35"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "42",
+            "id": "43",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "41"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "29",
+            "id": "44",
+            "name": "is_a",
+            "namespace": "",
+            "source_node_id": "41"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "45",
+            "id": "46",
+            "name": "has",
+            "namespace": "",
+            "source_node_id": "41"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "45",
+            "id": "48",
+            "name": "#0",
+            "namespace": "",
+            "source_node_id": "47"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "49",
+            "id": "50",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "47"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "51",
+            "id": "52",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "47"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "54",
+            "id": "55",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "53"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "41",
+            "id": "56",
+            "name": "is_a",
+            "namespace": "",
+            "source_node_id": "53"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "57",
+            "id": "58",
+            "name": "has",
+            "namespace": "",
+            "source_node_id": "53"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "57",
+            "id": "60",
+            "name": "#0",
+            "namespace": "",
+            "source_node_id": "59"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "61",
+            "id": "62",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "59"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "63",
+            "id": "64",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "59"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "66",
+            "id": "67",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "65"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "53",
+            "id": "68",
+            "name": "is_a",
+            "namespace": "",
+            "source_node_id": "65"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "69",
+            "id": "70",
+            "name": "has",
+            "namespace": "",
+            "source_node_id": "65"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "69",
+            "id": "72",
+            "name": "#0",
+            "namespace": "",
+            "source_node_id": "71"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "73",
+            "id": "74",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "71"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "75",
+            "id": "76",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "71"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "78",
+            "id": "79",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "77"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "65",
+            "id": "80",
+            "name": "is_a",
+            "namespace": "",
+            "source_node_id": "77"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "81",
+            "id": "82",
+            "name": "has",
+            "namespace": "",
+            "source_node_id": "77"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "81",
+            "id": "84",
+            "name": "#0",
+            "namespace": "",
+            "source_node_id": "83"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "85",
+            "id": "86",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "83"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "87",
+            "id": "88",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "83"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "81",
+            "id": "90",
+            "name": "#1",
+            "namespace": "",
+            "source_node_id": "89"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "91",
+            "id": "92",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "89"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "93",
+            "id": "94",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "89"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "81",
+            "id": "96",
+            "name": "#2",
+            "namespace": "",
+            "source_node_id": "95"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "97",
+            "id": "98",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "95"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "99",
+            "id": "100",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "95"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "102",
+            "id": "103",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "101"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "41",
+            "id": "104",
+            "name": "is_a",
+            "namespace": "",
+            "source_node_id": "101"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "105",
+            "id": "106",
+            "name": "has",
+            "namespace": "",
+            "source_node_id": "101"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "105",
+            "id": "108",
+            "name": "#0",
+            "namespace": "",
+            "source_node_id": "107"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "109",
+            "id": "110",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "107"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "111",
+            "id": "112",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "107"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "114",
+            "id": "115",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "113"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "101",
+            "id": "116",
+            "name": "is_a",
+            "namespace": "",
+            "source_node_id": "113"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "117",
+            "id": "118",
+            "name": "has",
+            "namespace": "",
+            "source_node_id": "113"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "117",
+            "id": "120",
+            "name": "#0",
+            "namespace": "",
+            "source_node_id": "119"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "121",
+            "id": "122",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "119"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "123",
+            "id": "124",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "119"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "126",
+            "id": "127",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "125"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "113",
+            "id": "128",
+            "name": "is_a",
+            "namespace": "",
+            "source_node_id": "125"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "129",
+            "id": "130",
+            "name": "has",
+            "namespace": "",
+            "source_node_id": "125"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "129",
+            "id": "132",
+            "name": "#0",
+            "namespace": "",
+            "source_node_id": "131"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "133",
+            "id": "134",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "131"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "135",
+            "id": "136",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "131"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "129",
+            "id": "138",
+            "name": "#1",
+            "namespace": "",
+            "source_node_id": "137"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "139",
+            "id": "140",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "137"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "141",
+            "id": "142",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "137"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "129",
+            "id": "144",
+            "name": "#2",
+            "namespace": "",
+            "source_node_id": "143"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "145",
+            "id": "146",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "143"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "147",
+            "id": "148",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "143"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "150",
+            "id": "151",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "149"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "101",
+            "id": "152",
+            "name": "is_a",
+            "namespace": "",
+            "source_node_id": "149"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "153",
+            "id": "154",
+            "name": "has",
+            "namespace": "",
+            "source_node_id": "149"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "153",
+            "id": "156",
+            "name": "#0",
+            "namespace": "",
+            "source_node_id": "155"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "157",
+            "id": "158",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "155"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "159",
+            "id": "160",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "155"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "162",
+            "id": "163",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "161"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "149",
+            "id": "164",
+            "name": "is_a",
+            "namespace": "",
+            "source_node_id": "161"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "165",
+            "id": "166",
+            "name": "has",
+            "namespace": "",
+            "source_node_id": "161"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "165",
+            "id": "168",
+            "name": "#0",
+            "namespace": "",
+            "source_node_id": "167"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "169",
+            "id": "170",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "167"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "171",
+            "id": "172",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "167"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "165",
+            "id": "174",
+            "name": "#1",
+            "namespace": "",
+            "source_node_id": "173"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "175",
+            "id": "176",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "173"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "177",
+            "id": "178",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "173"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "165",
+            "id": "180",
+            "name": "#2",
+            "namespace": "",
+            "source_node_id": "179"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "181",
+            "id": "182",
+            "name": "name",
+            "namespace": "",
+            "source_node_id": "179"
+        },
+        {
+            "attributes": {
+            },
+            "destination_node_id": "183",
+            "id": "184",
+            "name": "value",
+            "namespace": "",
+            "source_node_id": "179"
+        }
+    ],
+    "visualize_ont_path": ""
+}
