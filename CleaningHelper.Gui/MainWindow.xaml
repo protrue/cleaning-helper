@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CleaningHelper.Gui"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="Химчистка"
+        Height="768"
+        Width="1024"
+        WindowStartupLocation="CenterScreen">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            <MenuItem Header="База знаний">
+                <MenuItem Header="Загрузить"></MenuItem>
+                <MenuItem Header="Редактировать в Ontolis"></MenuItem>
+                <MenuItem Header="Закрыть"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Настройки" HorizontalAlignment="Right" Click="MenuItem_OnClick"></MenuItem>
+        </Menu>
+        <Grid></Grid>
+        <StatusBar DockPanel.Dock="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+            <Label>Статус</Label>
+        </StatusBar>        
+    </DockPanel>
+    
 </Window>
