@@ -45,6 +45,7 @@ class Ontology:
     def __init__(self, basic_json=BASIC_ONT):
         self.ont_as_dict = json.loads(basic_json)
         self.ont_id_by_real_id = {}
+        self.slot_node_by_name = {}
 
     def add_frame(self, frame: Frame):
         id_node = self.create_node(frame.id)
@@ -73,13 +74,40 @@ class Ontology:
             self.add_node(prop_node)
             self.add_relation('#' + str(prop_order), props_blank_node['id'], prop_node['id'])
 
-            prop_name_node = self.create_node(name)
-            self.add_node(prop_name_node)
+            if name in self.slot_node_by_name:
+                prop_name_node = self.slot_node_by_name[name][0]
+            else:
+                prop_name_node = self.create_node(name)
+                self.slot_node_by_name[name] = prop_name_node, {}
+                self.add_node(prop_name_node)
             self.add_relation('name', prop_node['id'], prop_name_node['id'])
 
-            prop_value_node = self.create_node(value)
-            self.add_node(prop_value_node)
+            if value in self.slot_node_by_name[name][1]:
+                prop_value_node = self.slot_node_by_name[name][1][value]
+            else:
+                prop_value_node = self.create_node(value)
+                self.slot_node_by_name[name][1][value] = prop_value_node
+                self.add_node(prop_value_node)
             self.add_relation('value', prop_node['id'], prop_value_node['id'])
+
+    def link_slots_with_values(self):
+        for slot_node, slot_values_nodes in self.slot_node_by_name.values():
+            values_node = self.create_node('_')
+            self.add_node(values_node)
+            self.add_relation('has', slot_node['id'], values_node['id'])
+
+            for order, value_node in enumerate(slot_values_nodes.values()):
+                self.add_relation('#' + str(order), values_node['id'], value_node['id'])
+
+    def add_questions_to_slots(self, questions):
+        for slot_name, info in self.slot_node_by_name.items():
+            slot_node = info[0]
+
+            question = questions.get(slot_name, slot_name + '?')
+            question_node = self.create_node(question)
+            self.add_node(question_node)
+
+            self.add_relation('has', slot_node['id'], question_node['id'])
 
     def create_node(self, value):
         node = {'id': self.get_next_id(),
@@ -109,8 +137,8 @@ class Ontology:
         self.ont_as_dict['relations'].append(relation)
 
 
-def convert(filename):
-    with open(filename, 'r') as csv_file:
+def convert(frames_filename, questions_filename):
+    with open(frames_filename, 'r') as csv_file:
         reader = csv.DictReader(csv_file, delimiter=';')
         frames = [Frame(row) for row in reader]
 
@@ -118,9 +146,19 @@ def convert(filename):
     for frame in frames:
         ontology.add_frame(frame)
 
+    ontology.link_slots_with_values()
+
+    with open(questions_filename, 'r') as csv_file:
+        reader = csv.reader(csv_file, delimiter=';')
+        next(reader)
+        questions = {row[0]: row[1] for row in reader}
+
+    ontology.add_questions_to_slots(questions)
+
+
     with open("cleaning.ont", "w", encoding='utf8') as ont_file:
         json.dump(ontology.ont_as_dict, ont_file, indent=4)
 
 
 if __name__ == '__main__':
-    convert('Выведение пятен - фреймы.csv')
+    convert('Выведение пятен - фреймы.csv', 'Выведение пятен - вопросы.csv')
