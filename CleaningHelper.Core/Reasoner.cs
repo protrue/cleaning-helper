@@ -11,9 +11,9 @@ namespace CleaningHelper.Core
         private readonly List<List<Concept>> _inferringPath = new List<List<Concept>>();
         private List<Concept> _currentLevelCandidates;
         
-        private readonly Dictionary<String, String> _memory = new Dictionary<string, string>();
+        private readonly Dictionary<Concept, Concept> _memory = new Dictionary<Concept, Concept>();
 
-        private string _askValue;
+        private Concept _askSlot;
 
         public bool AnswerFound;
         public bool AnswerIsLeaf;
@@ -32,12 +32,13 @@ namespace CleaningHelper.Core
             return new List<Concept>(descendants);
         }
 
-        public string GetNextValueToAsk()
+        public Concept GetNextValueToAsk()
         {
-            _askValue = null;
+            _askSlot = null;
             
-            while (!AnswerFound && _askValue == null)
+            while (!AnswerFound && _askSlot == null)
             {
+                var foundCandidate = false;
                 foreach (var candidate in _currentLevelCandidates)
                 {
                     _inferringPath.Last().Add(candidate);
@@ -51,46 +52,51 @@ namespace CleaningHelper.Core
                     var candidateSuits = true;
                     foreach (var slot in _semanticNetwork.getSituationSlotsConcepts(candidate))
                     {
-                        string slotName = _semanticNetwork.getSlotName(slot);
-                        string slotValue = _semanticNetwork.getSlotValue(slot);
+                        Concept slotType = _semanticNetwork.getSlotType(slot);
+                        Concept slotValue = _semanticNetwork.getSlotValue(slot);
                 
-                        if (!_memory.ContainsKey(slotName))
+                        if (!_memory.ContainsKey(slotType))
                         {
-                            _askValue = slotName;
+                            _askSlot = slotType;
                             break;
                         }
 
-                        if (_memory[slotName] != slotValue)
+                        if (_memory[slotType] != slotValue)
                         {
                             candidateSuits = false;
                             break;
                         }
                     }
                     
-                    if (_askValue != null)
+                    if (_askSlot != null)
                         break;
 
                     if (candidateSuits)
                     {
                         _currentLevelCandidates = GetDescendantConcepts(candidate);
                         _inferringPath.Add(new List<Concept>());
+                        foundCandidate = true;
                         break;
                     }
-                }   
-                if (_askValue != null || AnswerFound)
+                }
+                if (_askSlot != null || AnswerFound)
                     break;
+                
+                if (foundCandidate)
+                    continue;
                 
                 // Если дошли до сюда, значит, ни один кандидат не подошел, 
                 // выдаем рекомендацию из текущей вершины
+                AnswerFound = true;
                 AnswerIsLeaf = false;
             }
 
-            return _askValue;
+            return _askSlot;
         }
 
-        public void SetAnswer(string ans)
+        public void SetAnswer(Concept value)
         {
-            _memory[_askValue] = ans;
+            _memory[_askSlot] = value;
         }
 
         public Concept GetResultSituation()

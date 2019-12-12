@@ -21,17 +21,25 @@ namespace CleaningHelper.Model
         public static IEnumerable<Concept> getSituationSlotsConcepts(this SemanticNetwork semanticNetwork, Concept situationFrame)
         {
             var unnamedSlotsConcept = semanticNetwork.Relations.WithName("has").GetEndConcepts(situationFrame).First();
-            return semanticNetwork.Relations.GetEndConcepts(unnamedSlotsConcept);
+            var situationSlotsConcepts = semanticNetwork.Relations.GetEndConcepts(unnamedSlotsConcept);
+            return situationSlotsConcepts;
         }
 
-        public static string getSlotName(this SemanticNetwork semanticNetwork, Concept slot)
+        public static Concept getSlotType(this SemanticNetwork semanticNetwork, Concept slot)
         {
-            return semanticNetwork.Relations.WithName("name").GetEndConcepts(slot).First().Name;
+            return semanticNetwork.Relations.WithName("name").GetEndConcepts(slot).First();
         }
 
-        public static string getSlotValue(this SemanticNetwork semanticNetwork, Concept slot)
+        public static Concept getSlotValue(this SemanticNetwork semanticNetwork, Concept slot)
         {
-            return semanticNetwork. Relations.WithName("value").GetEndConcepts(slot).First().Name;
+            return semanticNetwork. Relations.WithName("value").GetEndConcepts(slot).First();
+        }
+        
+        public static IEnumerable<Concept> getSlotDomainValues(this SemanticNetwork semanticNetwork, Concept slot)
+        {
+            var slotEndConcepts = semanticNetwork.Relations.WithName("has").GetEndConcepts(slot);
+            var unnamedValuesConcept = slotEndConcepts.First(x => semanticNetwork.Concepts.GetUnnamed().Contains(x));
+            return semanticNetwork.Relations.GetEndConcepts(unnamedValuesConcept);
         }
         
         public static bool isLeafSituation(this SemanticNetwork semanticNetwork, Concept situation)

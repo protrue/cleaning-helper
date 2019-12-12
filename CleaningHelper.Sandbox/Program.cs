@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using CleaningHelper.Core;
+using CleaningHelper.Model;
 using CleaningHelper.OntolisAdapter.Tools;
 
 namespace CleaningHelper.Sandbox
@@ -16,9 +18,18 @@ namespace CleaningHelper.Sandbox
             var reasoner = new Reasoner(semanticNetwork);
             while (!reasoner.AnswerFound)
             {
-                Console.WriteLine(reasoner.GetNextValueToAsk());
+                var slotType = reasoner.GetNextValueToAsk();
+                
                 if (!reasoner.AnswerFound)
-                    reasoner.SetAnswer(Console.ReadLine());
+                {
+                    Console.WriteLine(slotType.Name + "? Введите id нужного варианта");
+                    var domainValues = semanticNetwork.getSlotDomainValues(slotType);
+                    Console.WriteLine(String.Join(", ", domainValues));
+                    
+                    var valueId = int.Parse(Console.ReadLine());
+                    var valueConcept = semanticNetwork.GetConcept(valueId);
+                    reasoner.SetAnswer(valueConcept);
+                }
             }
 
             var resultConcept = reasoner.GetResultSituation();
