@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="OntolisDataConverter.cs" />
     <Compile Include="OntolisDataDeserializer.cs" />
+    <Compile Include="OntolisRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

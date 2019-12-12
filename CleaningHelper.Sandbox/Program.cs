@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using CleaningHelper.Core;
 using CleaningHelper.Model;
@@ -14,6 +14,10 @@ namespace CleaningHelper.Sandbox
             Console.WriteLine(ontolisDataObject);
             var semanticNetwork = OntolisDataConverter.Convert(ontolisDataObject);
             Console.WriteLine(semanticNetwork);
+
+            // var runner = new OntolisRunner("path_to_ontolis.exe");
+            // runner.RunOntolis();
+            // runner.StopOntolis();
 
             var reasoner = new Reasoner(semanticNetwork);
             while (!reasoner.AnswerFound)
@@ -31,7 +35,7 @@ namespace CleaningHelper.Sandbox
                     reasoner.SetAnswer(valueConcept);
                 }
             }
-
+            
             var resultConcept = reasoner.GetResultSituation();
             Console.WriteLine(resultConcept);
         }
