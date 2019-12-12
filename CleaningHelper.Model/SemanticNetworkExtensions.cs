@@ -56,5 +56,9 @@ namespace CleaningHelper.Model
         /// <returns>Список понятий которые являются началом для данного понятия</returns>
         public static IEnumerable<Concept> GetStartConcepts(this IEnumerable<Relation> relations, Concept concept) =>
             relations.Where(r => ReferenceEquals(r.SecondConcept, concept)).Select(r => r.FirstConcept);
+
+        public static IEnumerable<Concept> GetDirectDescendantConcepts(this IEnumerable<Relation> relations, Concept concept)
+            => relations.Where(r => ReferenceEquals(r.SecondConcept, concept) && r.Name == "is_a").Select(r => r.FirstConcept);
+        
     }
 }
