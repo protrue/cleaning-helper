@@ -23,7 +23,7 @@ namespace CleaningHelper.Core
         {
             _semanticNetwork = semanticNetwork;
             _inferringPath.Add(new List<Concept>());
-            _currentLevelCandidates = new List<Concept> {_semanticNetwork.getRootSituationFrame()};
+            _currentLevelCandidates = new List<Concept> {_semanticNetwork.GetRootSituationFrame()};
         }
 
         private List<Concept> GetDescendantConcepts(Concept concept)
@@ -42,7 +42,7 @@ namespace CleaningHelper.Core
                 foreach (var candidate in _currentLevelCandidates)
                 {
                     _inferringPath.Last().Add(candidate);
-                    if (_semanticNetwork.isLeafSituation(candidate))
+                    if (_semanticNetwork.IsLeafSituation(candidate))
                     {
                         AnswerFound = true;
                         AnswerIsLeaf = true;
@@ -50,18 +50,18 @@ namespace CleaningHelper.Core
                     }
                     
                     var candidateSuits = true;
-                    foreach (var slot in _semanticNetwork.getSituationSlotsConcepts(candidate))
+                    foreach (var slotInstance in _semanticNetwork.GetSituationSlotInstancesConcepts(candidate))
                     {
-                        Concept slotType = _semanticNetwork.getSlotType(slot);
-                        Concept slotValue = _semanticNetwork.getSlotValue(slot);
+                        Concept slot = _semanticNetwork.GetSlotByInstance(slotInstance);
+                        Concept slotValue = _semanticNetwork.GetSlotValue(slotInstance);
                 
-                        if (!_memory.ContainsKey(slotType))
+                        if (!_memory.ContainsKey(slot))
                         {
-                            _askSlot = slotType;
+                            _askSlot = slot;
                             break;
                         }
 
-                        if (_memory[slotType] != slotValue)
+                        if (_memory[slot] != slotValue)
                         {
                             candidateSuits = false;
                             break;

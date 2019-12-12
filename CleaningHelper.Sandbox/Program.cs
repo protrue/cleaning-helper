@@ -23,7 +23,7 @@ namespace CleaningHelper.Sandbox
                 if (!reasoner.AnswerFound)
                 {
                     Console.WriteLine(slotType.Name + "? Введите id нужного варианта");
-                    var domainValues = semanticNetwork.getSlotDomainValues(slotType);
+                    var domainValues = semanticNetwork.GetSlotDomainValues(slotType);
                     Console.WriteLine(String.Join(", ", domainValues));
                     
                     var valueId = int.Parse(Console.ReadLine());
