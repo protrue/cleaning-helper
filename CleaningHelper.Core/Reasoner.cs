@@ -107,5 +107,10 @@ namespace CleaningHelper.Core
             return _inferringPath[_inferringPath.Count - 1].Last();
 
         }
+
+        public List<List<Concept>> InferringPath
+        {
+            get => _inferringPath;
+        }
     }
 }
