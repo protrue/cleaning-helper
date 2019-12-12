@@ -71,7 +71,7 @@ class Ontology:
                 continue
             prop_node = self.create_node('_')
             self.add_node(prop_node)
-            self.add_relation('#' + str(prop_order), prop_node['id'], props_blank_node['id'])
+            self.add_relation('#' + str(prop_order), props_blank_node['id'], prop_node['id'])
 
             prop_name_node = self.create_node(name)
             self.add_node(prop_name_node)
