@@ -8,6 +8,7 @@ namespace CleaningHelper.OntolisAdapter.Tools
     {
         private readonly string _pathToOntolis;
         private readonly bool _block;
+        private Process _process = null;
 
         public OntolisRunner(string pathToOntolis, bool block = false)
         {
@@ -21,12 +22,17 @@ namespace CleaningHelper.OntolisAdapter.Tools
             // startInfo.WorkingDirectory = Path.GetDirectoryName(_pathToOntolis);
             // startInfo.FileName = _pathToOntolis;
                 
-            var process = Process.Start(_pathToOntolis);
+            _process = Process.Start(_pathToOntolis);
             if (_block)
             {
-                process.WaitForExit();
+                _process.WaitForExit();
                 Console.WriteLine("Ontolis finished");
             }
+        }
+
+        public void StopOntolis()
+        {
+            _process?.Kill();
         }
     }
 }
