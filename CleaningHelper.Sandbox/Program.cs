@@ -15,7 +15,7 @@ namespace CleaningHelper.Sandbox
             var semanticNetwork = OntolisDataConverter.Convert(ontolisDataObject);
             Console.WriteLine(semanticNetwork);
 
-            var runner = new OntolisRunner("C:\\Portable software\\build-ontolis-meta-Release\\build-ontolis-meta-Release\\ontolis\\ontolis.exe");
+            var runner = new OntolisRunner("path_to_ontolis.exe");
             runner.RunOntolis();
 
             // var reasoner = new Reasoner(semanticNetwork);
