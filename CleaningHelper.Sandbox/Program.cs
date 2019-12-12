@@ -15,25 +15,28 @@ namespace CleaningHelper.Sandbox
             var semanticNetwork = OntolisDataConverter.Convert(ontolisDataObject);
             Console.WriteLine(semanticNetwork);
 
-            var reasoner = new Reasoner(semanticNetwork);
-            while (!reasoner.AnswerFound)
-            {
-                var slotType = reasoner.GetNextValueToAsk();
-                
-                if (!reasoner.AnswerFound)
-                {
-                    Console.WriteLine(slotType.Name + "? Введите id нужного варианта");
-                    var domainValues = semanticNetwork.getSlotDomainValues(slotType);
-                    Console.WriteLine(String.Join(", ", domainValues));
-                    
-                    var valueId = int.Parse(Console.ReadLine());
-                    var valueConcept = semanticNetwork.GetConcept(valueId);
-                    reasoner.SetAnswer(valueConcept);
-                }
-            }
+            var runner = new OntolisRunner("C:\\Portable software\\build-ontolis-meta-Release\\build-ontolis-meta-Release\\ontolis\\ontolis.exe");
+            runner.RunOntolis();
 
-            var resultConcept = reasoner.GetResultSituation();
-            Console.WriteLine(resultConcept);
+            // var reasoner = new Reasoner(semanticNetwork);
+            // while (!reasoner.AnswerFound)
+            // {
+            //     var slotType = reasoner.GetNextValueToAsk();
+            //     
+            //     if (!reasoner.AnswerFound)
+            //     {
+            //         Console.WriteLine(slotType.Name + "? Введите id нужного варианта");
+            //         var domainValues = semanticNetwork.getSlotDomainValues(slotType);
+            //         Console.WriteLine(String.Join(", ", domainValues));
+            //         
+            //         var valueId = int.Parse(Console.ReadLine());
+            //         var valueConcept = semanticNetwork.GetConcept(valueId);
+            //         reasoner.SetAnswer(valueConcept);
+            //     }
+            // }
+            //
+            // var resultConcept = reasoner.GetResultSituation();
+            // Console.WriteLine(resultConcept);
         }
     }
 }
