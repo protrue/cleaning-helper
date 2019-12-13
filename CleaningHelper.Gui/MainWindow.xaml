@@ -5,8 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CleaningHelper.Gui"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="Химчистка"
+        Height="600"
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        Icon="Res/icon.ico" Loaded="Window_Loaded" Closing="Window_Closing">
+
+    <Grid DockPanel.Dock="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="41*"></ColumnDefinition>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="220*"></ColumnDefinition>
+            <ColumnDefinition Width="220*"></ColumnDefinition>
+            <ColumnDefinition Width="220*"></ColumnDefinition>
+            <ColumnDefinition Width="66*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.3*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0.3*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Content="Ontolis" Margin="5"></GroupBox>
+        <GroupBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="2" Content="Модель" Margin="5"></GroupBox>
+        <GroupBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="2" Content="Консультация" Margin="5"></GroupBox>
+
+        <Button x:Name="SetPathToOntolisButton" Content="Указать путь к Ontolis" Grid.Row="1" Grid.Column="2" Margin="35" Click="SetPathToOntolisButton_Click"></Button>
+        <Button x:Name="LoadModelButton" Content="Загрузить модель" Grid.Row="2" Grid.Column="2" Margin="35" Click="LoadModelButton_Click"/>
+        <Button x:Name="EditModelButton" IsEnabled="{Binding Path=IsEditModelButtonEnabled}" Content="Редактировать модель" Grid.Row="3" Grid.Column="2" Margin="35" Click="EditModelButton_Click"/>
+        <Button x:Name="StartConsultationButton" IsEnabled="{Binding Path=IsStartConsultationButtonEnabled}" Content="Запуск консультации" Grid.Row="4" Grid.Column="2" Margin="35" Click="StartConsultationButton_Click"></Button>
+        <Button x:Name="ShowResultsButton" Content="Просмотр результатов" Grid.Row="5" Grid.Column="2" Margin="35" Click="ShowResultsButton_Click"></Button>
+
+        <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Content="Путь к Ontolis:" Grid.Row="0" VerticalAlignment="Bottom"/>
+            <TextBox Text="{Binding Path=PathToOntolis}" IsReadOnly="True" Grid.Row="1" VerticalAlignment="Top" Margin="10 0"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Content="Текущая модель:" Grid.Row="0" VerticalAlignment="Bottom"/>
+            <TextBox Text="{Binding Path=PathToModel}" IsReadOnly="True" Grid.Row="1" VerticalAlignment="Top" Margin="10 0"/>
+        </Grid>
     </Grid>
+
 </Window>
