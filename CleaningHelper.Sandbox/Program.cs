@@ -35,9 +35,20 @@ namespace CleaningHelper.Sandbox
                     reasoner.SetAnswer(valueConcept);
                 }
             }
-            
+
             var resultConcept = reasoner.GetResultSituation();
             Console.WriteLine(resultConcept);
+
+            foreach (var list in reasoner.InferringPath)
+            {
+                foreach (var concept in list)
+                {
+                    Console.Write(concept + " ");
+                }
+                Console.WriteLine();
+            }
+
+            Console.ReadKey();
         }
     }
 }

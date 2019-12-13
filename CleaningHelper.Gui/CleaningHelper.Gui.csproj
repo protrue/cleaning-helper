@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -50,9 +53,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="SettingsWindow.xaml.cs">
-      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    <Compile Include="ApplicationState.cs" />
+    <Compile Include="ConsultationWindow.xaml.cs">
+      <DependentUpon>ConsultationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ResultsWindow.xaml.cs">
+      <DependentUpon>ResultsWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="ConsultationWindow.xaml" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -65,7 +73,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="SettingsWindow.xaml" />
+    <Page Include="ResultsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -83,6 +94,32 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CleaningHelper.Core\CleaningHelper.Core.csproj">
+      <Project>{57a99f4c-5720-4f9f-afaf-3e256a0dd9d0}</Project>
+      <Name>CleaningHelper.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CleaningHelper.Model\CleaningHelper.Model.csproj">
+      <Project>{f918f926-daf3-4050-a9ff-76e60fc45078}</Project>
+      <Name>CleaningHelper.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CleaningHelper.OntolisAdapter.DataModel\CleaningHelper.OntolisAdapter.DataModel.csproj">
+      <Project>{f3a3594c-5fa6-4197-a66b-c302908e85c6}</Project>
+      <Name>CleaningHelper.OntolisAdapter.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CleaningHelper.OntolisAdapter.Tools\CleaningHelper.OntolisAdapter.Tools.csproj">
+      <Project>{dd2dd835-3ec1-41fa-88aa-23b1e4ba6a98}</Project>
+      <Name>CleaningHelper.OntolisAdapter.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CleaningHelper.ViewModel\CleaningHelper.ViewModel.csproj">
+      <Project>{e111507a-7312-4351-90db-327025e99caa}</Project>
+      <Name>CleaningHelper.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Res\icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
