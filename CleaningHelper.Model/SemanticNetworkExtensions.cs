@@ -29,7 +29,7 @@ namespace CleaningHelper.Model
         /// <param name="relations">Список отношений</param>
         /// <returns>Неименованные отношения</returns>
         public static IEnumerable<Relation> GetUnnamed(this IEnumerable<Relation> relations) =>
-            relations.WithName(string.Empty);
+            relations.WithName("_");
 
         /// <summary>
         /// Возвращает неименованные понятия
@@ -37,7 +37,7 @@ namespace CleaningHelper.Model
         /// <param name="concepts">Список понятий</param>
         /// <returns>Неименованные понятия</returns>
         public static IEnumerable<Concept> GetUnnamed(this IEnumerable<Concept> concepts) =>
-            concepts.WithName(string.Empty);
+            concepts.WithName("_");
         
         /// <summary>
         /// Возвращает список понятий которые являются концами для данного понятия
@@ -56,5 +56,9 @@ namespace CleaningHelper.Model
         /// <returns>Список понятий которые являются началом для данного понятия</returns>
         public static IEnumerable<Concept> GetStartConcepts(this IEnumerable<Relation> relations, Concept concept) =>
             relations.Where(r => ReferenceEquals(r.SecondConcept, concept)).Select(r => r.FirstConcept);
+
+        public static IEnumerable<Concept> GetDirectDescendantConcepts(this IEnumerable<Relation> relations, Concept concept)
+            => relations.Where(r => ReferenceEquals(r.SecondConcept, concept) && r.Name == "is_a").Select(r => r.FirstConcept);
+        
     }
 }

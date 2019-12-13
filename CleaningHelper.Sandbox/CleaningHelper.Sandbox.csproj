@@ -42,6 +42,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CleaningHelper.Core\CleaningHelper.Core.csproj">
+      <Project>{57a99f4c-5720-4f9f-afaf-3e256a0dd9d0}</Project>
+      <Name>CleaningHelper.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CleaningHelper.Model\CleaningHelper.Model.csproj">
       <Project>{f918f926-daf3-4050-a9ff-76e60fc45078}</Project>
       <Name>CleaningHelper.Model</Name>
