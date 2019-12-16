@@ -61,7 +61,7 @@
             Content="Загрузить модель"
             Grid.Row="1"
             Grid.Column="0"
-            Margin="35"
+            Margin="35 50 35 20"
             Command="{Binding LoadModelCommand}"/>
         <Button
             x:Name="EditModelButton"
@@ -69,7 +69,7 @@
             IsEnabled="{Binding Path=IsEditModelButtonEnabled}"
             Grid.Row="2"
             Grid.Column="0"
-            Margin="35"
+            Margin="35 20 35 50"
             Command="{Binding RunOntolisCommand}"/>
         <Button
             x:Name="StartConsultationButton"
@@ -77,14 +77,14 @@
             IsEnabled="{Binding Path=IsStartConsultationButtonEnabled}"
             Grid.Column="0"
             Grid.Row="3"
-            Margin="35"
+            Margin="35 50 35 20"
             Click="StartConsultationButton_Click" />
         <Button
             x:Name="ShowResultsButton"
             Content="Просмотр результатов"
             Grid.Row="4"
             Grid.Column="0"
-            Margin="35"
+            Margin="35 20 35 50"
             Click="ShowResultsButton_Click" />
 
         <Grid
@@ -104,7 +104,7 @@
                 IsReadOnly="True"
                 Grid.Row="1"
                 VerticalAlignment="Top"
-                Margin="10 0"/>
+                Margin="0 0 15 0"/>
         </Grid>
 
         <Grid
@@ -125,7 +125,7 @@
                 IsReadOnly="True"
                 Grid.Row="1"
                 VerticalAlignment="Top"
-                Margin="10 0"/>
+                Margin="0 0 15 0"/>
         </Grid>
     </Grid>
 

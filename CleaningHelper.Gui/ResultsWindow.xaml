@@ -5,9 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CleaningHelper.Gui"
         mc:Ignorable="d"
-        Title="Результаты консультации" Height="600" Width="800" Icon="Resources/icon.ico">
+        Title="Результаты консультации"
+        Height="600"
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        Icon="Resources/icon.ico">
+
     <Grid Margin="50">
-        <TreeView Name="ResultsTreeView">
-        </TreeView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <GroupBox
+            Header="Результат:"
+            Grid.Row="0">
+            <Label Content="{Binding Path=ResultView}"></Label>
+        </GroupBox>
+
+        <GroupBox
+            Header="Объяснение:"
+            Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="9*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <TreeView
+                    Grid.Row="0"
+                    Name="ResultsTreeView"
+                    ItemsSource="{Binding InferringPathView}">
+                    <!--<TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
+                                <TreeViewItem Header="{Binding Name}" />
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>-->
+                </TreeView>
+
+                <Button
+                    Grid.Row="1"
+                    Content="Свернуть/развернуть всё"
+                    Click="Button_Click">
+                </Button>
+            </Grid>
+        </GroupBox>
+
     </Grid>
 </Window>

@@ -11,5 +11,10 @@ namespace CleaningHelper.ViewModel
     {
         public string Name { get; set; }
         public ObservableCollection<Node> Nodes { get; set; }
+
+        public Node()
+        {
+            Nodes = new ObservableCollection<Node>();
+        }
     }
 }

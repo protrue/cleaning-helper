@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,9 +15,8 @@ namespace CleaningHelper.ViewModel
 {
     public class ConsultationViewModel : INotifyPropertyChanged
     {
-        private Mutex _mutex = new Mutex();
         private string _questionText;
-        private List<Concept> _answersList;
+        private ObservableCollection<Concept> _answersList = new ObservableCollection<Concept>();
         private Concept _selectedAnswer;
         private Concept _result;
 
@@ -36,7 +36,7 @@ namespace CleaningHelper.ViewModel
             }
         }
 
-        public List<Concept> AnswersList
+        public ObservableCollection<Concept> AnswersList
         {
             get => _answersList;
             set
@@ -72,42 +72,41 @@ namespace CleaningHelper.ViewModel
             Reasoner = new Reasoner(semanticNetwork);
         }
 
-        private Task<int> GetCurrentAnswer()
-        {
-            _mutex.WaitOne();
-            return new Task<int>(() => SelectedAnswer.Identifier);
-        }
 
-        private async void Consult()
+        public Command SetQuestionCommand => new Command(parameter =>
         {
-            while (!Reasoner.AnswerFound)
+            var slotType = Reasoner.GetNextValueToAsk();
+
+            if (Reasoner.AnswerFound)
             {
-                var slotType = Reasoner.GetNextValueToAsk();
-
-                if (!Reasoner.AnswerFound)
-                {
-                    QuestionText = $"{slotType.Name}?";
-                    AnswersList = SemanticNetwork.GetSlotDomainValues(slotType).ToList();
-
-                    var valueId = await GetCurrentAnswer();
-                    var valueConcept = SemanticNetwork.GetConcept(valueId);
-                    Reasoner.SetAnswer(valueConcept);
-                }
+                Result = Reasoner.GetResultSituation();
+                return;
             }
 
-            Result = Reasoner.GetResultSituation();
-        }
-
-        public Command SelectAnswerCommand => new Command(parameter =>
-        {
-            _mutex.ReleaseMutex();
+            QuestionText = $"{slotType.Name}?";
+            AnswersList.Clear();
+            foreach (var slotDomainValue in SemanticNetwork.GetSlotDomainValues(slotType))
+            {
+                AnswersList.Add(slotDomainValue);
+            }
         });
 
-        public Command ConsultCommand => new Command(parameter =>
+        public Command SetAnswerCommand => new Command(parameter =>
         {
-            var consultTask = new Task(Consult);
-            consultTask.Start();
+            if (SelectedAnswer == null || Reasoner.AnswerFound)
+                return;
+
+            var valueId = SelectedAnswer.Identifier;
+            var valueConcept = SemanticNetwork.GetConcept(valueId);
+            Reasoner.SetAnswer(valueConcept);
+
+            if (!Reasoner.AnswerFound)
+                SetQuestionCommand.Execute();
+            else
+                Result = Reasoner.GetResultSituation();
         });
+
+        public Command SetResultCommand => new Command(parameter => { });
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

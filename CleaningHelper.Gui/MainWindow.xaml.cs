@@ -14,20 +14,19 @@ namespace CleaningHelper.Gui
     /// </summary>
     public partial class MainWindow
     {
-        private readonly MainViewModel _viewModel;
+        public MainViewModel ViewModel;
         
         public MainWindow()
         {
             InitializeComponent();
 
-            _viewModel = new MainViewModel();
-
-            DataContext = _viewModel;
+            ViewModel = new MainViewModel();
+            DataContext = ViewModel;
         }
 
         private void ShowConsultationWindow()
         {
-            var consultationWindow = new ConsultationWindow(_viewModel.Model);
+            var consultationWindow = new ConsultationWindow(ViewModel.Model);
             
             consultationWindow.ShowDialog();
         }
@@ -51,12 +50,12 @@ namespace CleaningHelper.Gui
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _viewModel.LoadStateCommand.Execute();
+            ViewModel.LoadStateCommand.Execute();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _viewModel.SaveStateCommand.Execute();
+            ViewModel.SaveStateCommand.Execute();
         }
     }
 }
