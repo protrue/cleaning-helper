@@ -12,7 +12,7 @@ namespace CleaningHelper.Gui
         public ConsultationViewModel ViewModel { get; set; }
 
         private List<Concept> _answerListWrap = new List<Concept>();
-        
+
         public ConsultationWindow(SemanticNetwork semanticNetwork)
         {
             InitializeComponent();
@@ -22,7 +22,7 @@ namespace CleaningHelper.Gui
 
             DataContext = ViewModel;
         }
-        
+
         private void ShowResultsWindow()
         {
             var resultsWindow = new ResultsWindow(ViewModel.SemanticNetwork, ViewModel.Result, ViewModel.Reasoner.InferringPath);

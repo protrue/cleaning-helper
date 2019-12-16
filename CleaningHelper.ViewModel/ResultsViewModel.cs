@@ -66,7 +66,6 @@ namespace CleaningHelper.ViewModel
                     {
                         var situationText = concept.Name + ": " + SemanticNetwork.GetSituationNameConcept(concept).Name;
                         tvi.Items.Add(new TreeViewItem() {Header = situationText});
-                        //node.Nodes.Add(new Node { Name = concept.Name });
                     }
                 }
 

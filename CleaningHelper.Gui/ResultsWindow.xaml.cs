@@ -21,8 +21,6 @@ namespace CleaningHelper.Gui
     /// </summary>
     public partial class ResultsWindow : Window
     {
-        private bool _isExpanded = false;
-
         public ResultsViewModel ViewModel { get; set; }
 
         public ResultsWindow(SemanticNetwork semanticNetwork = null, Concept result = null, List<List<Concept>> inferringPath = null)
@@ -33,36 +31,37 @@ namespace CleaningHelper.Gui
             DataContext = ViewModel;
         }
 
-        private void ExpandAll(TreeViewItem treeViewItem, bool isExpanded = true)
+        private void ExpandAll(bool isExpanded)
         {
-            var stack = new Stack<TreeViewItem>(treeViewItem.Items.Cast<TreeViewItem>());
+            var firstItem = ResultsTreeView.Items.Cast<TreeViewItem>().FirstOrDefault();
+            if (firstItem == null) return;
+
+            var stack = new Stack<TreeViewItem>(firstItem.Items.Cast<TreeViewItem>());
             while (stack.Count > 0)
             {
-                TreeViewItem item = stack.Pop();
+                var item = stack.Pop();
 
                 foreach (var child in item.Items)
                 {
-                    var childContainer = child as TreeViewItem;
-                    if (childContainer == null)
-                    {
-                        childContainer = item.ItemContainerGenerator.ContainerFromItem(child) as TreeViewItem;
-                    }
+                    var childContainer = child as TreeViewItem ?? item.ItemContainerGenerator.ContainerFromItem(child) as TreeViewItem;
 
                     stack.Push(childContainer);
                 }
 
+                item.Focus();
+                item.IsSelected = true;
                 item.IsExpanded = isExpanded;
-                item.ExpandSubtree();
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ExpandAllButton_Click(object sender, RoutedEventArgs e)
         {
-            _isExpanded = !_isExpanded;
-            var firstItem = ResultsTreeView.Items[0] as TreeViewItem;
-            if (firstItem == null)
-                return;
-            ExpandAll(firstItem, _isExpanded);
+            ExpandAll(true);
+        }
+
+        private void CollapseAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            ExpandAll(false);
         }
     }
 }

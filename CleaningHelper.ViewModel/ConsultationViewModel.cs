@@ -89,6 +89,8 @@ namespace CleaningHelper.ViewModel
             {
                 AnswersList.Add(slotDomainValue);
             }
+
+            SelectedAnswer = AnswersList.FirstOrDefault();
         });
 
         public Command SetAnswerCommand => new Command(parameter =>
