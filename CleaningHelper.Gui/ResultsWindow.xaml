@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:CleaningHelper.Gui"
         mc:Ignorable="d"
         Title="Результаты консультации" Height="600" Width="800" Icon="Resources/icon.ico">
-    <Grid>
-        
+    <Grid Margin="50">
+        <TreeView Name="ResultsTreeView">
+        </TreeView>
     </Grid>
 </Window>

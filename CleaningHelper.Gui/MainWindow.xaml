@@ -12,6 +12,7 @@
         Icon="Resources/icon.ico"
         Loaded="Window_Loaded"
         Closing="Window_Closing">
+
     <Grid Margin="50">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

@@ -5,23 +5,49 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:CleaningHelper.Gui"
         mc:Ignorable="d"
-        Title="Консультация" Height="600" Width="800" Loaded="Window_Loaded" Icon="Resources/icon.ico">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.2*"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="0.2*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+        Title="Консультация"
+        Height="600"
+        Width="800"
+        Loaded="Window_Loaded"
+        Icon="Resources/icon.ico">
+    
+    <Grid Margin="50">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.3*"></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height="0.3*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Name="QuestionLabel" Grid.Column="1" Grid.Row="1"></Label>
-        <GroupBox Grid.Column="1" Grid.Row="2" Grid.RowSpan="2"></GroupBox>
-        <Button Name="AnswerButton" Content="Ответить" Grid.Column="1" Grid.Row="4" Margin="40"></Button>
+
+        <Label
+            Name="QuestionLabel"
+            Grid.Row="0"
+            Content="{Binding QuestionText}">
+        </Label>
+        <ListBox
+            Name="AnswersListBox"
+            Grid.Row="1"
+            ItemsSource="{Binding AnswersList}"
+            SelectedItem="{Binding SelectedAnswer}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button
+            Name="AnswerButton"
+            Content="Ответить"
+            Grid.Row="2"
+            Margin="150 20"
+            Command="{Binding SelectAnswerCommand}">
+        </Button>
+        <Button
+            Name="ExplainButton"
+            Content="Объяснить"
+            Grid.Row="3"
+            Margin="150 20" Click="ExplainButton_Click">
+        </Button>
     </Grid>
+    
 </Window>

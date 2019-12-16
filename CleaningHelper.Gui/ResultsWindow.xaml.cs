@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CleaningHelper.Model;
 
 namespace CleaningHelper.Gui
 {
@@ -20,11 +21,14 @@ namespace CleaningHelper.Gui
     /// </summary>
     public partial class ResultsWindow : Window
     {
-        internal MainViewModel ViewModel { get; set; }
+        public ResultsViewModel ViewModel { get; set; }
 
-        public ResultsWindow()
+        public ResultsWindow(List<List<Concept>> inferringPath = null)
         {
             InitializeComponent();
+
+            ViewModel = new ResultsViewModel(inferringPath);
+            DataContext = ViewModel;
         }
     }
 }

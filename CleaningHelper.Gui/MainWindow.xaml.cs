@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using CleaningHelper.Core;
 
 namespace CleaningHelper.Gui
 {
@@ -26,21 +27,15 @@ namespace CleaningHelper.Gui
 
         private void ShowConsultationWindow()
         {
-            var consultationWindow = new ConsultationWindow
-            {
-                ViewModel = _viewModel
-            };
-
+            var consultationWindow = new ConsultationWindow(_viewModel.Model);
+            
             consultationWindow.ShowDialog();
         }
 
         private void ShowResultsWindow()
         {
-            var resultsWindow = new ResultsWindow
-            {
-                ViewModel = _viewModel
-            };
-
+            var resultsWindow = new ResultsWindow();
+            
             resultsWindow.ShowDialog();
         }
 
