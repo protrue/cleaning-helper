@@ -5,7 +5,7 @@ namespace CleaningHelper.Gui
 {
     public partial class ConsultationWindow : Window
     {
-        internal ApplicationViewModel ViewModel { get; set; }
+        internal MainViewModel ViewModel { get; set; }
 
         public ConsultationWindow()
         {

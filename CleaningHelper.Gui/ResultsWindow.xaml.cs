@@ -20,7 +20,7 @@ namespace CleaningHelper.Gui
     /// </summary>
     public partial class ResultsWindow : Window
     {
-        internal ApplicationViewModel ViewModel { get; set; }
+        internal MainViewModel ViewModel { get; set; }
 
         public ResultsWindow()
         {

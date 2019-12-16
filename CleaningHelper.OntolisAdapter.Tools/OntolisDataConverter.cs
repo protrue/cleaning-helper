@@ -21,8 +21,8 @@ namespace CleaningHelper.OntolisAdapter.Tools
             foreach (var ontolisRelation in ontolisDataObject.OntolisRelations)
             {
                 var firstConcept = conceptsDictionary[ontolisRelation.SourceNodeId];
-                var secontConcept = conceptsDictionary[ontolisRelation.DestinationNodeId];
-                semanticNetwork.AddRelation(ontolisRelation.Name, firstConcept, secontConcept);
+                var secondConcept = conceptsDictionary[ontolisRelation.DestinationNodeId];
+                semanticNetwork.AddRelation(ontolisRelation.Name, firstConcept, secondConcept);
             }
 
             return semanticNetwork;

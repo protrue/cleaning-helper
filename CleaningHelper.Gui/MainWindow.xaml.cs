@@ -1,8 +1,10 @@
-﻿using CleaningHelper.ViewModel;
+﻿using System.Configuration;
+using CleaningHelper.ViewModel;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 
 namespace CleaningHelper.Gui
 {
@@ -11,82 +13,55 @@ namespace CleaningHelper.Gui
     /// </summary>
     public partial class MainWindow
     {
-        private ApplicationViewModel viewModel;
-
-        private string applicationStatePath = "ApplicationState.json";
-
+        private readonly MainViewModel _viewModel;
+        
         public MainWindow()
         {
             InitializeComponent();
 
-            viewModel = new ApplicationViewModel();
+            _viewModel = new MainViewModel();
 
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
-               
-        private void SetPathToOntolisButton_Click(object sender, RoutedEventArgs e)
+
+        private void ShowConsultationWindow()
         {
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Ontolis executable file (ontolis.exe)|ontolis.exe";
-            var result = openFileDialog.ShowDialog();
-            if (result == true)
+            var consultationWindow = new ConsultationWindow
             {
-                viewModel.PathToOntolis = openFileDialog.FileName;
-            }
+                ViewModel = _viewModel
+            };
+
+            consultationWindow.ShowDialog();
         }
 
-        private void LoadModelButton_Click(object sender, RoutedEventArgs e)
+        private void ShowResultsWindow()
         {
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Ontolis ontology file (*.ont)|*.ont";
-            var result = openFileDialog.ShowDialog();
-            if (result == true)
+            var resultsWindow = new ResultsWindow
             {
-                viewModel.PathToModel = openFileDialog.FileName;
-            }
-        }
+                ViewModel = _viewModel
+            };
 
-        private void EditModelButton_Click(object sender, RoutedEventArgs e)
-        {
-            var ontolisRunner = new OntolisAdapter.Tools.OntolisRunner(viewModel.PathToOntolis);
-            ontolisRunner.RunOntolis();
+            resultsWindow.ShowDialog();
         }
 
         private void StartConsultationButton_Click(object sender, RoutedEventArgs e)
         {
-            var consultationWindow = new ConsultationWindow();
-            consultationWindow.ViewModel = viewModel;
-            consultationWindow.ShowDialog();
+            ShowConsultationWindow();
         }
 
         private void ShowResultsButton_Click(object sender, RoutedEventArgs e)
         {
-            var resultsWindow = new ResultsWindow();
-            resultsWindow.ViewModel = viewModel;
-            resultsWindow.ShowDialog();
+            ShowResultsWindow();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(applicationStatePath))
-            {
-                var stateJson = File.ReadAllText(applicationStatePath);
-                var state = JsonConvert.DeserializeObject<ApplicationState>(stateJson);
-                viewModel.PathToOntolis = state.PathToOntolis;
-                viewModel.PathToModel = state.PathToModel;
-            }
+            _viewModel.LoadStateCommand.Execute();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var state = new ApplicationState
-            {
-                PathToModel = viewModel.PathToModel,
-                PathToOntolis = viewModel.PathToOntolis
-            };
-
-            var stateJson = JsonConvert.SerializeObject(state);
-            File.WriteAllText(applicationStatePath, stateJson);
+            _viewModel.SaveStateCommand.Execute();
         }
     }
 }
