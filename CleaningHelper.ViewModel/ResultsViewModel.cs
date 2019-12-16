@@ -33,10 +33,7 @@ namespace CleaningHelper.ViewModel
 
         public string ResultView
         {
-            get
-            {
-                return string.Join(Environment.NewLine, SemanticNetwork.GetResultSlotsOfSituation(Result));
-            }
+            get { return Result.Name; }
         }
 
         public List<List<Concept>> InferringPath
@@ -57,13 +54,11 @@ namespace CleaningHelper.ViewModel
                 var result = new ObservableCollection<TreeViewItem>();
                 for (var i = 0; i < InferringPath.Count; i++)
                 {
-                    //var node = new Node { Name = $"{i + 1}" };
-                    var tvi = new TreeViewItem() {Header = $"{i + 1}"};
+                    var tvi = new TreeViewItem {Header = $"{i + 1}"};
                     result.Add(tvi);
                     foreach (var concept in InferringPath[i])
                     {
-                        tvi.Items.Add(new TreeViewItem() {Header = concept.Name});
-                        //node.Nodes.Add(new Node { Name = concept.Name });
+                        tvi.Items.Add(new TreeViewItem {Header = concept.Name});
                     }
                 }
 
