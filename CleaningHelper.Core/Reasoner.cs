@@ -122,6 +122,10 @@ namespace CleaningHelper.Core
                 {
                     startIndex--;
                 }
+                else
+                {
+                    break;
+                }
             }
             
             return _inferringPath[startIndex].Last();
