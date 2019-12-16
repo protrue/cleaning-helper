@@ -99,15 +99,24 @@ class Ontology:
             for order, value_node in enumerate(slot_values_nodes.values()):
                 self.add_relation('#' + str(order), values_node['id'], value_node['id'])
 
-    def add_questions_to_slots(self, questions):
+    def add_slots_descriptions(self, slot_descriptions):
+        result_slot_node = self.create_node('Цель')
+        self.add_node(result_slot_node)
+
         for slot_name, info in self.slot_node_by_name.items():
             slot_node = info[0]
 
-            question = questions.get(slot_name, slot_name + '?')
+            is_requested, question = slot_descriptions.get(slot_name, (1, ''))
+
+            if not question:
+                question = slot_name + '?'
+
             question_node = self.create_node(question)
             self.add_node(question_node)
-
             self.add_relation('has', slot_node['id'], question_node['id'])
+
+            if not is_requested:
+                self.add_relation('is_a', slot_node['id'], result_slot_node['id'])
 
     def create_node(self, value):
         node = {'id': self.get_next_id(),
@@ -151,14 +160,13 @@ def convert(frames_filename, questions_filename):
     with open(questions_filename, 'r') as csv_file:
         reader = csv.reader(csv_file, delimiter=';')
         next(reader)
-        questions = {row[0]: row[1] for row in reader}
+        slot_descriptions = {row[0]: (int(row[1]), row[2]) for row in reader}
 
-    ontology.add_questions_to_slots(questions)
-
+    ontology.add_slots_descriptions(slot_descriptions)
 
     with open("cleaning.ont", "w", encoding='utf8') as ont_file:
         json.dump(ontology.ont_as_dict, ont_file, indent=4)
 
 
 if __name__ == '__main__':
-    convert('Выведение пятен - фреймы.csv', 'Выведение пятен - вопросы.csv')
+    convert('Выведение пятен - фреймы.csv', 'Выведение пятен - слоты.csv')
