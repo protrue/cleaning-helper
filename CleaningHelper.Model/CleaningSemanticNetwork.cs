@@ -69,5 +69,12 @@ namespace CleaningHelper.Model
                 .Select(semanticNetwork.GetSlotByInstance);
             return situationSlots.Where(semanticNetwork.IsSlotResult);
         }
+        
+        public static Concept GetSituationNameConcept(this SemanticNetwork semanticNetwork, Concept situation)
+        {
+            return semanticNetwork.Relations.WithName("name").GetEndConcepts(situation).FirstOrDefault() ??
+                   throw new Exception("Situation node has no name relation");
+        }
+
     }
 }

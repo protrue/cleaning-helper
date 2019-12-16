@@ -35,7 +35,10 @@ namespace CleaningHelper.ViewModel
         {
             get
             {
-                return string.Join(Environment.NewLine, SemanticNetwork.GetResultSlotsOfSituation(Result));
+                var slots_info = SemanticNetwork.GetSituationSlotInstancesConcepts(Result).Where(x =>
+                    SemanticNetwork.IsSlotResult(SemanticNetwork.GetSlotByInstance(x))).Select(x =>
+                    SemanticNetwork.GetSlotByInstance(x).Name + ": " + SemanticNetwork.GetSlotValue(x).Name);
+                return string.Join(Environment.NewLine, slots_info);
             }
         }
 
@@ -44,7 +47,7 @@ namespace CleaningHelper.ViewModel
             get => _inferringPath;
             set
             {
-                _inferringPath = value; 
+                _inferringPath = value;
                 OnPropertyChanged(nameof(InferringPath));
                 OnPropertyChanged(nameof(InferringPathView));
             }
@@ -62,7 +65,8 @@ namespace CleaningHelper.ViewModel
                     result.Add(tvi);
                     foreach (var concept in InferringPath[i])
                     {
-                        tvi.Items.Add(new TreeViewItem() {Header = concept.Name});
+                        var situationText = concept.Name + ": " + SemanticNetwork.GetSituationNameConcept(concept).Name;
+                        tvi.Items.Add(new TreeViewItem() {Header = situationText});
                         //node.Nodes.Add(new Node { Name = concept.Name });
                     }
                 }
@@ -71,7 +75,8 @@ namespace CleaningHelper.ViewModel
             }
         }
 
-        public ResultsViewModel(SemanticNetwork semanticNetwork = null, Concept result = null, List<List<Concept>> inferringPath = null)
+        public ResultsViewModel(SemanticNetwork semanticNetwork = null, Concept result = null,
+            List<List<Concept>> inferringPath = null)
         {
             SemanticNetwork = semanticNetwork;
             Result = result;

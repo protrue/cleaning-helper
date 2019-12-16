@@ -41,7 +41,8 @@ namespace CleaningHelper.Core
                 var foundCandidate = false;
                 foreach (var candidate in _currentLevelCandidates)
                 {
-                    _inferringPath.Last().Add(candidate);
+                    if (!_inferringPath.Last().Contains(candidate))
+                        _inferringPath.Last().Add(candidate);
                     if (_semanticNetwork.IsLeafSituation(candidate))
                     {
                         AnswerFound = true;
