@@ -60,7 +60,6 @@ namespace CleaningHelper.ViewModel
                 var result = new ObservableCollection<TreeViewItem>();
                 for (var i = 0; i < InferringPath.Count; i++)
                 {
-                    //var node = new Node { Name = $"{i + 1}" };
                     var tvi = new TreeViewItem() {Header = $"{i + 1}"};
                     result.Add(tvi);
                     foreach (var concept in InferringPath[i])
