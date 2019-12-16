@@ -7,7 +7,6 @@ namespace CleaningHelper.Model
 {
     public static class CleaningSemanticNetwork
     {
-
         public static Concept GetRootSituationFrame(this SemanticNetwork semanticNetwork)
         {
             var situationNameConcepts = semanticNetwork.Concepts.WithName("Ситуация");
@@ -15,11 +14,13 @@ namespace CleaningHelper.Model
                 throw new Exception("Cleaning semantic network must contain exactly one concept \"Ситуация\"");
             var situationNameConcept = situationNameConcepts.First();
             var situationNode = semanticNetwork.Relations.GetStartConcepts(situationNameConcept)
-                                    .FirstOrDefault() ?? throw new Exception("Cleaning ontology has no node that has name \"Ситуация\"");
+                                    .FirstOrDefault() ??
+                                throw new Exception("Cleaning ontology has no node that has name \"Ситуация\"");
             return situationNode;
         }
 
-        public static IEnumerable<Concept> GetSituationSlotInstancesConcepts(this SemanticNetwork semanticNetwork, Concept situationFrame)
+        public static IEnumerable<Concept> GetSituationSlotInstancesConcepts(this SemanticNetwork semanticNetwork,
+            Concept situationFrame)
         {
             var unnamedSlotsConcept =
                 semanticNetwork.Relations.WithName("has").GetEndConcepts(situationFrame).FirstOrDefault() ??
@@ -39,7 +40,7 @@ namespace CleaningHelper.Model
             return semanticNetwork.Relations.WithName("value").GetEndConcepts(slotInstance).FirstOrDefault() ??
                    throw new Exception("Slot instance node has no value relation");
         }
-        
+
         public static IEnumerable<Concept> GetSlotDomainValues(this SemanticNetwork semanticNetwork, Concept slot)
         {
             var slotEndConcepts = semanticNetwork.Relations.WithName("has").GetEndConcepts(slot);
@@ -48,10 +49,25 @@ namespace CleaningHelper.Model
                 throw new Exception("Slot has no unnamed node for values");
             return semanticNetwork.Relations.GetEndConcepts(unnamedValuesConcept);
         }
-        
+
         public static bool IsLeafSituation(this SemanticNetwork semanticNetwork, Concept situation)
         {
             return !semanticNetwork.Relations.GetDirectDescendantConcepts(situation).Any();
+        }
+
+        public static bool IsSlotResult(this SemanticNetwork semanticNetwork, Concept slot)
+        {
+            var goalConcept = semanticNetwork.Concepts.WithName("Цель").FirstOrDefault() ??
+                              throw new Exception("Semantic network must contain the \"Цель\" node");
+            return semanticNetwork.Relations.WithName("is_a").GetEndConcepts(slot).Contains(goalConcept);
+        }
+
+        public static IEnumerable<Concept> GetResultSlotsOfSituation(this SemanticNetwork semanticNetwork,
+            Concept situation)
+        {
+            var situationSlots = semanticNetwork.GetSituationSlotInstancesConcepts(situation)
+                .Select(semanticNetwork.GetSlotByInstance);
+            return situationSlots.Where(semanticNetwork.IsSlotResult);
         }
     }
 }

@@ -38,6 +38,7 @@ namespace CleaningHelper.Sandbox
 
             var resultConcept = reasoner.GetResultSituation();
             Console.WriteLine(resultConcept);
+            Console.WriteLine(String.Join(", ", semanticNetwork.GetResultSlotsOfSituation(resultConcept)));
 
             foreach (var list in reasoner.InferringPath)
             {

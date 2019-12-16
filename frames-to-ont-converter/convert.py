@@ -1,5 +1,6 @@
 import csv
 import json
+from pprint import pprint
 
 BASIC_ONT = '''{
     "last_id": "0",
@@ -163,6 +164,8 @@ def convert(frames_filename, questions_filename):
         slot_descriptions = {row[0]: (int(row[1]), row[2]) for row in reader}
 
     ontology.add_slots_descriptions(slot_descriptions)
+
+    pprint(ontology.ont_as_dict)
 
     with open("cleaning.ont", "w", encoding='utf8') as ont_file:
         json.dump(ontology.ont_as_dict, ont_file, indent=4)

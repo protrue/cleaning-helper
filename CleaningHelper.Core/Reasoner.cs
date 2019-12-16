@@ -55,6 +55,9 @@ namespace CleaningHelper.Core
                         Concept slot = _semanticNetwork.GetSlotByInstance(slotInstance);
                         Concept slotValue = _semanticNetwork.GetSlotValue(slotInstance);
                 
+                        if (_semanticNetwork.IsSlotResult(slot))
+                            continue;
+                        
                         if (!_memory.ContainsKey(slot))
                         {
                             _askSlot = slot;
@@ -105,6 +108,23 @@ namespace CleaningHelper.Core
             if (AnswerIsLeaf)
                 return _inferringPath.Last().Last();
             return _inferringPath[_inferringPath.Count - 1].Last();
+
+        }
+        
+        public Concept GetLowestSituationWithResultSlots()
+        {
+            if (!AnswerFound) return null;
+            var startIndex = AnswerIsLeaf ? _inferringPath.Count - 1 : _inferringPath.Count - 2;
+            
+            while (startIndex > 0)
+            {
+                if (_semanticNetwork.GetResultSlotsOfSituation(_inferringPath[startIndex].Last()).Any())
+                {
+                    startIndex--;
+                }
+            }
+            
+            return _inferringPath[startIndex].Last();
 
         }
 
