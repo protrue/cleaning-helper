@@ -66,7 +66,7 @@ namespace CleaningHelper.ViewModel
                     {
                         var situationText = concept.Name + ": " + SemanticNetwork.GetSituationNameConcept(concept).Name;
                         var slotsInfo = SemanticNetwork.GetSituationSlotInstancesConcepts(concept).Select(x =>
-                            SemanticNetwork.GetSlotByInstance(x).Name + ": " +
+                            '\t' + SemanticNetwork.GetSlotByInstance(x).Name + ": " +
                             SemanticNetwork.GetSlotValue(x).Name);
                         situationText += Environment.NewLine + string.Join(Environment.NewLine, slotsInfo);
                         tvi.Items.Add(new TreeViewItem() {Header = situationText});
