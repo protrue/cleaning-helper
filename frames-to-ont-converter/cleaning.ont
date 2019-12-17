@@ -1,5 +1,5 @@
 {
-    "last_id": "289",
+    "last_id": "345",
     "namespaces": {
         "default": "http://knova.ru/user/1572791144722",
         "ontolis-avis": "http://knova.ru/ontolis-avis",
@@ -431,7 +431,7 @@
         },
         {
             "id": 134,
-            "name": "\u0421\u0432\u0435\u0436\u0435\u0435 \u0437\u0430\u0433\u0440\u044f\u0437\u043d\u0435\u043d\u0438\u0435 \u0436\u0438\u0440\u043e\u043c \u0434\u0435\u043b\u0438\u043a\u0430\u0442\u043d\u044b\u0445 \u0441\u0432\u0435\u0442\u043b\u044b\u0445 \u0442\u043a\u0430\u043d\u0435\u0439,  \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043d\u0435\u043b\u044c\u0437\u044f \u0441\u0442\u0438\u0440\u0430\u0442\u044c",
+            "name": "\u0421\u0432\u0435\u0436\u0435\u0435 \u0437\u0430\u0433\u0440\u044f\u0437\u043d\u0435\u043d\u0438\u0435 \u0436\u0438\u0440\u043e\u043c \u0434\u0435\u043b\u0438\u043a\u0430\u0442\u043d\u044b\u0445 \u0441\u0432\u0435\u0442\u043b\u044b\u0445 \u0442\u043a\u0430\u043d\u0435\u0439, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043d\u0435\u043b\u044c\u0437\u044f \u0441\u0442\u0438\u0440\u0430\u0442\u044c \u0438 \u043d\u0435\u043b\u044c\u0437\u044f \u0433\u043b\u0430\u0434\u0438\u0442\u044c",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
@@ -564,7 +564,7 @@
         },
         {
             "id": 177,
-            "name": "\u0421\u0432\u0435\u0436\u0435\u0435 \u0437\u0430\u0433\u0440\u044f\u0437\u043d\u0435\u043d\u0438\u0435 \u0436\u0438\u0440\u043e\u043c \u0434\u0435\u043b\u0438\u043a\u0430\u0442\u043d\u044b\u0445 \u0441\u0432\u0435\u0442\u043b\u044b\u0445 \u0442\u043a\u0430\u043d\u0435\u0439, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043d\u0435\u043b\u044c\u0437\u044f \u0441\u0442\u0438\u0440\u0430\u0442\u044c",
+            "name": "\u0421\u0432\u0435\u0436\u0435\u0435 \u0437\u0430\u0433\u0440\u044f\u0437\u043d\u0435\u043d\u0438\u0435 \u0436\u0438\u0440\u043e\u043c \u0434\u0435\u043b\u0438\u043a\u0430\u0442\u043d\u044b\u0445 \u0441\u0432\u0435\u0442\u043b\u044b\u0445 \u0442\u043a\u0430\u043d\u0435\u0439, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043c\u043e\u0436\u043d\u043e \u0441\u0442\u0438\u0440\u0430\u0442\u044c \u0438 \u043d\u0435\u043b\u044c\u0437\u044f \u0433\u043b\u0430\u0434\u0438\u0442\u044c",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
@@ -662,7 +662,7 @@
         },
         {
             "id": 209,
-            "name": "\u0421\u0432\u0435\u0436\u0435\u0435 \u0437\u0430\u0433\u0440\u044f\u0437\u043d\u0435\u043d\u0438\u0435 \u0436\u0438\u0440\u043e\u043c \u0434\u0435\u043b\u0438\u043a\u0430\u0442\u043d\u044b\u0445 \u0441\u0432\u0435\u0442\u043b\u044b\u0445 \u0442\u043a\u0430\u043d\u0435\u0439, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043d\u0435\u043b\u044c\u0437\u044f \u0441\u0442\u0438\u0440\u0430\u0442\u044c",
+            "name": "\u0421\u0432\u0435\u0436\u0435\u0435 \u0437\u0430\u0433\u0440\u044f\u0437\u043d\u0435\u043d\u0438\u0435 \u0436\u0438\u0440\u043e\u043c \u0434\u0435\u043b\u0438\u043a\u0430\u0442\u043d\u044b\u0445 \u0441\u0432\u0435\u0442\u043b\u044b\u0445 \u0442\u043a\u0430\u043d\u0435\u0439, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043c\u043e\u0436\u043d\u043e \u0441\u0442\u0438\u0440\u0430\u0442\u044c \u0438 \u043c\u043e\u0436\u043d\u043e \u0433\u043b\u0430\u0434\u0438\u0442\u044c",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
@@ -711,13 +711,48 @@
         },
         {
             "id": 228,
+            "name": 14,
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 229,
+            "name": "\u0421\u0432\u0435\u0436\u0435\u0435 \u0437\u0430\u0433\u0440\u044f\u0437\u043d\u0435\u043d\u0438\u0435 \u0436\u0438\u0440\u043e\u043c \u0434\u0435\u043b\u0438\u043a\u0430\u0442\u043d\u044b\u0445 \u0441\u0432\u0435\u0442\u043b\u044b\u0445 \u0442\u043a\u0430\u043d\u0435\u0439, \u043d\u0435 \u043d\u0443\u0436\u043d\u0430 \u0441\u0442\u0438\u0440\u043a\u0430, \u043d\u0443\u0436\u043d\u0430 \u0433\u043b\u0430\u0436\u043a\u0430",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 232,
             "name": "_",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
         },
         {
-            "id": 236,
+            "id": 234,
+            "name": "_",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 238,
+            "name": 15,
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 239,
+            "name": "\u0421\u0432\u0435\u0436\u0435\u0435 \u0437\u0430\u0433\u0440\u044f\u0437\u043d\u0435\u043d\u0438\u0435 \u0436\u0438\u0440\u043e\u043c \u0434\u0435\u043b\u0438\u043a\u0430\u0442\u043d\u044b\u0445 \u0441\u0432\u0435\u0442\u043b\u044b\u0445 \u0442\u043a\u0430\u043d\u0435\u0439, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043d\u0435\u043b\u044c\u0437\u044f \u0441\u0442\u0438\u0440\u0430\u0442\u044c \u0438 \u043c\u043e\u0436\u043d\u043e \u0433\u043b\u0430\u0434\u0438\u0442\u044c",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 242,
             "name": "_",
             "namespace": "",
             "position_x": 0,
@@ -731,15 +766,15 @@
             "position_y": 0
         },
         {
-            "id": 247,
+            "id": 248,
             "name": "_",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
         },
         {
-            "id": 250,
-            "name": "_",
+            "id": 251,
+            "name": "\u041f\u0440\u043e\u043c\u043e\u043a\u0430\u0448\u043a\u0430",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
@@ -753,13 +788,27 @@
         },
         {
             "id": 256,
-            "name": "_",
+            "name": "45",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
         },
         {
-            "id": 260,
+            "id": 258,
+            "name": 16,
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 259,
+            "name": "\u0421\u0432\u0435\u0436\u0435\u0435 \u0437\u0430\u0433\u0440\u044f\u0437\u043d\u0435\u043d\u0438\u0435 \u0436\u0438\u0440\u043e\u043c \u0434\u0435\u043b\u0438\u043a\u0430\u0442\u043d\u044b\u0445 \u0441\u0432\u0435\u0442\u043b\u044b\u0445 \u0442\u043a\u0430\u043d\u0435\u0439, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043d\u0435\u043b\u044c\u0437\u044f \u0441\u0442\u0438\u0440\u0430\u0442\u044c \u0438 \u043c\u043e\u0436\u043d\u043e \u0433\u043b\u0430\u0434\u0438\u0442\u044c",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 262,
             "name": "_",
             "namespace": "",
             "position_x": 0,
@@ -773,70 +822,168 @@
             "position_y": 0
         },
         {
-            "id": 268,
-            "name": "\u0426\u0435\u043b\u044c",
+            "id": 267,
+            "name": "\u0418\u0441\u043a\u0443\u0441\u0441\u0442\u0432\u0435\u043d\u043d\u0430\u044f",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
         },
         {
             "id": 269,
-            "name": "\u0418\u043d\u0433\u0440\u0435\u0434\u0438\u0435\u043d\u0442?",
+            "name": "_",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
         },
         {
             "id": 272,
-            "name": "\u0420\u0435\u0446\u0435\u043f\u0442?",
+            "name": "\u0410\u043c\u043c\u0438\u0430\u043a, \u0445\u043b\u043e\u043f\u043a\u043e\u0432\u0430\u044f \u0442\u043a\u0430\u043d\u044c",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
         },
         {
-            "id": 275,
-            "name": "\u041a\u0430\u043a\u0438\u043c \u0432\u0435\u0449\u0435\u0441\u0442\u0432\u043e\u043c \u0437\u0430\u043b\u044f\u043f\u0430\u043b\u0438\u0441\u044c?",
+            "id": 274,
+            "name": "_",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
         },
         {
             "id": 277,
-            "name": "\u0412\u043e\u0437\u0440\u0430\u0441\u0442 \u043f\u044f\u0442\u043d\u0430?",
+            "name": "47",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
         },
         {
             "id": 279,
+            "name": "_",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 289,
+            "name": "_",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 299,
+            "name": "_",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 302,
+            "name": "_",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 305,
+            "name": "_",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 308,
+            "name": "_",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 311,
+            "name": "_",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 315,
+            "name": "_",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 319,
+            "name": "_",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 324,
+            "name": "\u0426\u0435\u043b\u044c",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 325,
+            "name": "\u0418\u043d\u0433\u0440\u0435\u0434\u0438\u0435\u043d\u0442?",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 328,
+            "name": "\u0420\u0435\u0446\u0435\u043f\u0442?",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 331,
+            "name": "\u041a\u0430\u043a\u0438\u043c \u0432\u0435\u0449\u0435\u0441\u0442\u0432\u043e\u043c \u0437\u0430\u043b\u044f\u043f\u0430\u043b\u0438\u0441\u044c?",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 333,
+            "name": "\u0412\u043e\u0437\u0440\u0430\u0441\u0442 \u043f\u044f\u0442\u043d\u0430?",
+            "namespace": "",
+            "position_x": 0,
+            "position_y": 0
+        },
+        {
+            "id": 335,
             "name": "\u0422\u0438\u043f \u0442\u043a\u0430\u043d\u0438?",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
         },
         {
-            "id": 281,
+            "id": 337,
             "name": "\u0426\u0432\u0435\u0442 \u0442\u043a\u0430\u043d\u0438?",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
         },
         {
-            "id": 283,
+            "id": 339,
             "name": "\u041d\u0443\u0436\u043d\u0430 \u0441\u0442\u0438\u0440\u043a\u0430?",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
         },
         {
-            "id": 285,
+            "id": 341,
             "name": "\u0414\u043e\u043f\u0443\u0441\u0442\u0438\u043c\u0430 \u043b\u0438 \u0433\u043b\u0430\u0436\u043a\u0430?",
             "namespace": "",
             "position_x": 0,
             "position_y": 0
         },
         {
-            "id": 287,
+            "id": 343,
             "name": "\u0422\u043a\u0430\u043d\u044c?",
             "namespace": "",
             "position_x": 0,
@@ -1741,296 +1888,541 @@
             "namespace": ""
         },
         {
-            "id": 229,
-            "source_node_id": 7,
-            "destination_node_id": 228,
-            "name": "has",
-            "namespace": ""
-        },
-        {
             "id": 230,
             "source_node_id": 228,
-            "destination_node_id": 9,
-            "name": "#0",
+            "destination_node_id": 229,
+            "name": "name",
             "namespace": ""
         },
         {
             "id": 231,
             "source_node_id": 228,
-            "destination_node_id": 32,
-            "name": "#1",
-            "namespace": ""
-        },
-        {
-            "id": 232,
-            "source_node_id": 228,
-            "destination_node_id": 54,
-            "name": "#2",
+            "destination_node_id": 101,
+            "name": "is_a",
             "namespace": ""
         },
         {
             "id": 233,
             "source_node_id": 228,
-            "destination_node_id": 148,
-            "name": "#3",
-            "namespace": ""
-        },
-        {
-            "id": 234,
-            "source_node_id": 228,
-            "destination_node_id": 190,
-            "name": "#4",
+            "destination_node_id": 232,
+            "name": "has",
             "namespace": ""
         },
         {
             "id": 235,
-            "source_node_id": 228,
-            "destination_node_id": 221,
-            "name": "#5",
-            "namespace": ""
-        },
-        {
-            "id": 237,
-            "source_node_id": 13,
-            "destination_node_id": 236,
-            "name": "has",
-            "namespace": ""
-        },
-        {
-            "id": 238,
-            "source_node_id": 236,
-            "destination_node_id": 15,
+            "source_node_id": 232,
+            "destination_node_id": 234,
             "name": "#0",
             "namespace": ""
         },
         {
-            "id": 239,
-            "source_node_id": 236,
-            "destination_node_id": 37,
-            "name": "#1",
+            "id": 236,
+            "source_node_id": 234,
+            "destination_node_id": 129,
+            "name": "name",
+            "namespace": ""
+        },
+        {
+            "id": 237,
+            "source_node_id": 234,
+            "destination_node_id": 206,
+            "name": "value",
             "namespace": ""
         },
         {
             "id": 240,
-            "source_node_id": 236,
-            "destination_node_id": 59,
-            "name": "#2",
+            "source_node_id": 238,
+            "destination_node_id": 239,
+            "name": "name",
             "namespace": ""
         },
         {
             "id": 241,
-            "source_node_id": 236,
-            "destination_node_id": 153,
-            "name": "#3",
-            "namespace": ""
-        },
-        {
-            "id": 242,
-            "source_node_id": 236,
-            "destination_node_id": 195,
-            "name": "#4",
+            "source_node_id": 238,
+            "destination_node_id": 228,
+            "name": "is_a",
             "namespace": ""
         },
         {
             "id": 243,
-            "source_node_id": 236,
-            "destination_node_id": 226,
-            "name": "#5",
+            "source_node_id": 238,
+            "destination_node_id": 242,
+            "name": "has",
             "namespace": ""
         },
         {
             "id": 245,
-            "source_node_id": 25,
+            "source_node_id": 242,
             "destination_node_id": 244,
-            "name": "has",
+            "name": "#0",
             "namespace": ""
         },
         {
             "id": 246,
             "source_node_id": 244,
-            "destination_node_id": 27,
-            "name": "#0",
+            "destination_node_id": 141,
+            "name": "name",
             "namespace": ""
         },
         {
-            "id": 248,
-            "source_node_id": 47,
-            "destination_node_id": 247,
-            "name": "has",
+            "id": 247,
+            "source_node_id": 244,
+            "destination_node_id": 143,
+            "name": "value",
             "namespace": ""
         },
         {
             "id": 249,
-            "source_node_id": 247,
-            "destination_node_id": 49,
-            "name": "#0",
+            "source_node_id": 242,
+            "destination_node_id": 248,
+            "name": "#1",
             "namespace": ""
         },
         {
-            "id": 251,
-            "source_node_id": 69,
-            "destination_node_id": 250,
-            "name": "has",
+            "id": 250,
+            "source_node_id": 248,
+            "destination_node_id": 7,
+            "name": "name",
             "namespace": ""
         },
         {
             "id": 252,
-            "source_node_id": 250,
-            "destination_node_id": 71,
-            "name": "#0",
+            "source_node_id": 248,
+            "destination_node_id": 251,
+            "name": "value",
             "namespace": ""
         },
         {
             "id": 254,
-            "source_node_id": 89,
+            "source_node_id": 242,
             "destination_node_id": 253,
-            "name": "has",
+            "name": "#2",
             "namespace": ""
         },
         {
             "id": 255,
             "source_node_id": 253,
-            "destination_node_id": 91,
-            "name": "#0",
+            "destination_node_id": 13,
+            "name": "name",
             "namespace": ""
         },
         {
             "id": 257,
-            "source_node_id": 109,
+            "source_node_id": 253,
             "destination_node_id": 256,
-            "name": "has",
+            "name": "value",
             "namespace": ""
         },
         {
-            "id": 258,
-            "source_node_id": 256,
-            "destination_node_id": 111,
-            "name": "#0",
-            "namespace": ""
-        },
-        {
-            "id": 259,
-            "source_node_id": 256,
-            "destination_node_id": 164,
-            "name": "#1",
+            "id": 260,
+            "source_node_id": 258,
+            "destination_node_id": 259,
+            "name": "name",
             "namespace": ""
         },
         {
             "id": 261,
-            "source_node_id": 129,
-            "destination_node_id": 260,
-            "name": "has",
-            "namespace": ""
-        },
-        {
-            "id": 262,
-            "source_node_id": 260,
-            "destination_node_id": 131,
-            "name": "#0",
+            "source_node_id": 258,
+            "destination_node_id": 228,
+            "name": "is_a",
             "namespace": ""
         },
         {
             "id": 263,
-            "source_node_id": 260,
-            "destination_node_id": 206,
-            "name": "#1",
+            "source_node_id": 258,
+            "destination_node_id": 262,
+            "name": "has",
             "namespace": ""
         },
         {
             "id": 265,
-            "source_node_id": 141,
+            "source_node_id": 262,
             "destination_node_id": 264,
-            "name": "has",
+            "name": "#0",
             "namespace": ""
         },
         {
             "id": 266,
             "source_node_id": 264,
-            "destination_node_id": 143,
-            "name": "#0",
+            "destination_node_id": 141,
+            "name": "name",
             "namespace": ""
         },
         {
-            "id": 267,
+            "id": 268,
             "source_node_id": 264,
-            "destination_node_id": 185,
-            "name": "#1",
+            "destination_node_id": 267,
+            "name": "value",
             "namespace": ""
         },
         {
             "id": 270,
-            "source_node_id": 7,
+            "source_node_id": 262,
             "destination_node_id": 269,
-            "name": "has",
+            "name": "#1",
             "namespace": ""
         },
         {
             "id": 271,
-            "source_node_id": 7,
-            "destination_node_id": 268,
-            "name": "is_a",
+            "source_node_id": 269,
+            "destination_node_id": 7,
+            "name": "name",
             "namespace": ""
         },
         {
             "id": 273,
-            "source_node_id": 13,
+            "source_node_id": 269,
             "destination_node_id": 272,
-            "name": "has",
+            "name": "value",
             "namespace": ""
         },
         {
-            "id": 274,
-            "source_node_id": 13,
-            "destination_node_id": 268,
-            "name": "is_a",
+            "id": 275,
+            "source_node_id": 262,
+            "destination_node_id": 274,
+            "name": "#2",
             "namespace": ""
         },
         {
             "id": 276,
-            "source_node_id": 25,
-            "destination_node_id": 275,
-            "name": "has",
+            "source_node_id": 274,
+            "destination_node_id": 13,
+            "name": "name",
             "namespace": ""
         },
         {
             "id": 278,
-            "source_node_id": 47,
+            "source_node_id": 274,
             "destination_node_id": 277,
-            "name": "has",
+            "name": "value",
             "namespace": ""
         },
         {
             "id": 280,
-            "source_node_id": 69,
+            "source_node_id": 7,
             "destination_node_id": 279,
             "name": "has",
             "namespace": ""
         },
         {
+            "id": 281,
+            "source_node_id": 279,
+            "destination_node_id": 9,
+            "name": "#0",
+            "namespace": ""
+        },
+        {
             "id": 282,
-            "source_node_id": 89,
-            "destination_node_id": 281,
-            "name": "has",
+            "source_node_id": 279,
+            "destination_node_id": 32,
+            "name": "#1",
+            "namespace": ""
+        },
+        {
+            "id": 283,
+            "source_node_id": 279,
+            "destination_node_id": 54,
+            "name": "#2",
             "namespace": ""
         },
         {
             "id": 284,
-            "source_node_id": 109,
-            "destination_node_id": 283,
-            "name": "has",
+            "source_node_id": 279,
+            "destination_node_id": 148,
+            "name": "#3",
+            "namespace": ""
+        },
+        {
+            "id": 285,
+            "source_node_id": 279,
+            "destination_node_id": 190,
+            "name": "#4",
             "namespace": ""
         },
         {
             "id": 286,
-            "source_node_id": 129,
-            "destination_node_id": 285,
-            "name": "has",
+            "source_node_id": 279,
+            "destination_node_id": 221,
+            "name": "#5",
+            "namespace": ""
+        },
+        {
+            "id": 287,
+            "source_node_id": 279,
+            "destination_node_id": 251,
+            "name": "#6",
             "namespace": ""
         },
         {
             "id": 288,
+            "source_node_id": 279,
+            "destination_node_id": 272,
+            "name": "#7",
+            "namespace": ""
+        },
+        {
+            "id": 290,
+            "source_node_id": 13,
+            "destination_node_id": 289,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 291,
+            "source_node_id": 289,
+            "destination_node_id": 15,
+            "name": "#0",
+            "namespace": ""
+        },
+        {
+            "id": 292,
+            "source_node_id": 289,
+            "destination_node_id": 37,
+            "name": "#1",
+            "namespace": ""
+        },
+        {
+            "id": 293,
+            "source_node_id": 289,
+            "destination_node_id": 59,
+            "name": "#2",
+            "namespace": ""
+        },
+        {
+            "id": 294,
+            "source_node_id": 289,
+            "destination_node_id": 153,
+            "name": "#3",
+            "namespace": ""
+        },
+        {
+            "id": 295,
+            "source_node_id": 289,
+            "destination_node_id": 195,
+            "name": "#4",
+            "namespace": ""
+        },
+        {
+            "id": 296,
+            "source_node_id": 289,
+            "destination_node_id": 226,
+            "name": "#5",
+            "namespace": ""
+        },
+        {
+            "id": 297,
+            "source_node_id": 289,
+            "destination_node_id": 256,
+            "name": "#6",
+            "namespace": ""
+        },
+        {
+            "id": 298,
+            "source_node_id": 289,
+            "destination_node_id": 277,
+            "name": "#7",
+            "namespace": ""
+        },
+        {
+            "id": 300,
+            "source_node_id": 25,
+            "destination_node_id": 299,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 301,
+            "source_node_id": 299,
+            "destination_node_id": 27,
+            "name": "#0",
+            "namespace": ""
+        },
+        {
+            "id": 303,
+            "source_node_id": 47,
+            "destination_node_id": 302,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 304,
+            "source_node_id": 302,
+            "destination_node_id": 49,
+            "name": "#0",
+            "namespace": ""
+        },
+        {
+            "id": 306,
+            "source_node_id": 69,
+            "destination_node_id": 305,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 307,
+            "source_node_id": 305,
+            "destination_node_id": 71,
+            "name": "#0",
+            "namespace": ""
+        },
+        {
+            "id": 309,
+            "source_node_id": 89,
+            "destination_node_id": 308,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 310,
+            "source_node_id": 308,
+            "destination_node_id": 91,
+            "name": "#0",
+            "namespace": ""
+        },
+        {
+            "id": 312,
+            "source_node_id": 109,
+            "destination_node_id": 311,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 313,
+            "source_node_id": 311,
+            "destination_node_id": 111,
+            "name": "#0",
+            "namespace": ""
+        },
+        {
+            "id": 314,
+            "source_node_id": 311,
+            "destination_node_id": 164,
+            "name": "#1",
+            "namespace": ""
+        },
+        {
+            "id": 316,
+            "source_node_id": 129,
+            "destination_node_id": 315,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 317,
+            "source_node_id": 315,
+            "destination_node_id": 131,
+            "name": "#0",
+            "namespace": ""
+        },
+        {
+            "id": 318,
+            "source_node_id": 315,
+            "destination_node_id": 206,
+            "name": "#1",
+            "namespace": ""
+        },
+        {
+            "id": 320,
             "source_node_id": 141,
-            "destination_node_id": 287,
+            "destination_node_id": 319,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 321,
+            "source_node_id": 319,
+            "destination_node_id": 143,
+            "name": "#0",
+            "namespace": ""
+        },
+        {
+            "id": 322,
+            "source_node_id": 319,
+            "destination_node_id": 185,
+            "name": "#1",
+            "namespace": ""
+        },
+        {
+            "id": 323,
+            "source_node_id": 319,
+            "destination_node_id": 267,
+            "name": "#2",
+            "namespace": ""
+        },
+        {
+            "id": 326,
+            "source_node_id": 7,
+            "destination_node_id": 325,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 327,
+            "source_node_id": 7,
+            "destination_node_id": 324,
+            "name": "is_a",
+            "namespace": ""
+        },
+        {
+            "id": 329,
+            "source_node_id": 13,
+            "destination_node_id": 328,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 330,
+            "source_node_id": 13,
+            "destination_node_id": 324,
+            "name": "is_a",
+            "namespace": ""
+        },
+        {
+            "id": 332,
+            "source_node_id": 25,
+            "destination_node_id": 331,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 334,
+            "source_node_id": 47,
+            "destination_node_id": 333,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 336,
+            "source_node_id": 69,
+            "destination_node_id": 335,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 338,
+            "source_node_id": 89,
+            "destination_node_id": 337,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 340,
+            "source_node_id": 109,
+            "destination_node_id": 339,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 342,
+            "source_node_id": 129,
+            "destination_node_id": 341,
+            "name": "has",
+            "namespace": ""
+        },
+        {
+            "id": 344,
+            "source_node_id": 141,
+            "destination_node_id": 343,
             "name": "has",
             "namespace": ""
         }
