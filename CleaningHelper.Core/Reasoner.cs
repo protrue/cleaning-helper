@@ -43,6 +43,7 @@ namespace CleaningHelper.Core
                 {
                     if (!_inferringPath.Last().Contains(candidate))
                         _inferringPath.Last().Add(candidate);
+                    
                     if (_semanticNetwork.IsLeafSituation(candidate))
                     {
                         AnswerFound = true;
