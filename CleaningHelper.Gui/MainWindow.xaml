@@ -69,8 +69,7 @@
             IsEnabled="{Binding Path=IsEditModelButtonEnabled}"
             Grid.Row="2"
             Grid.Column="0"
-            Margin="35 20 35 50"
-            Command="{Binding RunOntolisCommand}"/>
+            Margin="35 20 35 50" Click="EditModelButton_Click"/>
         <Button
             x:Name="StartConsultationButton"
             Content="Запуск консультации"

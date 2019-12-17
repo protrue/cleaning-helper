@@ -1,0 +1,43 @@
+﻿<Window x:Class="CleaningHelper.Gui.EditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CleaningHelper.Gui"
+        xmlns:gs="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
+        xmlns:ext="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+        mc:Ignorable="d"
+        Title="Редактор"
+        Icon="Resources/icon.ico"
+        Height="600"
+        Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox
+            Header="Визуализация"
+            Grid.Column="0">
+            <ext:ZoomControl
+                Name="ZoomControl">
+                <gs:GraphLayout
+                    Name="GraphLayout"
+                    LayoutAlgorithmType="Tree"
+                    OverlapRemovalAlgorithmType="FSA"
+                    HighlightAlgorithmType="Simple" PreviewMouseLeftButtonDown="GraphLayout_PreviewMouseLeftButtonDown">
+                </gs:GraphLayout>
+            </ext:ZoomControl>
+        </GroupBox>
+
+        <GroupBox
+            Header="Инспектор"
+            Grid.Column="1">
+            <ListView
+                Name="InspectorListView">
+            </ListView>
+        </GroupBox>
+        
+    </Grid>
+</Window>
