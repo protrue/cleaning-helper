@@ -43,14 +43,7 @@ namespace CleaningHelper.Core
                 {
                     if (!_inferringPath.Last().Contains(candidate))
                         _inferringPath.Last().Add(candidate);
-                    
-                    if (_semanticNetwork.IsLeafSituation(candidate))
-                    {
-                        AnswerFound = true;
-                        AnswerIsLeaf = true;
-                        break;
-                    }
-                    
+
                     var candidateSuits = true;
                     foreach (var slotInstance in _semanticNetwork.GetSituationSlotInstancesConcepts(candidate))
                     {
@@ -78,10 +71,19 @@ namespace CleaningHelper.Core
 
                     if (candidateSuits)
                     {
-                        _currentLevelCandidates = GetDescendantConcepts(candidate);
-                        _inferringPath.Add(new List<Concept>());
-                        foundCandidate = true;
-                        break;
+                        if (_semanticNetwork.IsLeafSituation(candidate))
+                        {
+                            AnswerFound = true;
+                            AnswerIsLeaf = true;
+                            break;
+                        }
+                        else
+                        {
+                            _currentLevelCandidates = GetDescendantConcepts(candidate);
+                            _inferringPath.Add(new List<Concept>());
+                            foundCandidate = true;
+                            break;
+                        }
                     }
                 }
                 if (_askSlot != null || AnswerFound)
