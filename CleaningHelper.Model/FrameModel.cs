@@ -136,7 +136,7 @@ namespace CleaningHelper.Model
 
         private void FrameOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (!(sender is Frame frame) || e.PropertyName != nameof(Frame.Parent)) 
+            if (!(sender is Frame frame) || e.PropertyName != nameof(Frame.Parent) || frame == _frameToDelete) 
                 return;
 
             var parent = frame.Parent;

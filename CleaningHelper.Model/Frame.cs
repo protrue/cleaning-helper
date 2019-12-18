@@ -109,7 +109,7 @@ namespace CleaningHelper.Model
         {
             if (newParent == null)
             {
-                oldParent.Children.Remove(this);
+                oldParent?.Children.Remove(this);
             }
             else
             {

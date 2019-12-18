@@ -56,8 +56,8 @@
                 Header="Визуализация">
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Top" LastChildFill="False">
-                        <Button Name="AddFrameButton" Content="Добавить" Margin="10 5" Padding="5"></Button>
-                        <Button Name="RemoveFrameButton" Content="Удалить" Margin="10 5" Padding="5"></Button>
+                        <Button Name="AddFrameButton" Content="Добавить" Margin="10 5" Padding="5" Click="AddFrameButton_OnClick"></Button>
+                        <Button Name="RemoveFrameButton" Content="Удалить" Margin="10 5" Padding="5" Click="RemoveFrameButton_OnClick" IsEnabled="{Binding Path=IsFrameSelected}"></Button>
                     </DockPanel>
 
                     <ext:ZoomControl
@@ -70,7 +70,7 @@
                             <gs:GraphLayout.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="Добавить"></MenuItem>
-                                    <MenuItem Header="Удалить"></MenuItem>
+                                    <MenuItem Header="Удалить" IsEnabled="{Binding Path=IsFrameSelected}" Click="RemoveFrameButton_OnClick"></MenuItem>
                                 </ContextMenu>
                             </gs:GraphLayout.ContextMenu>
                         </gs:GraphLayout>
@@ -82,11 +82,11 @@
             Header="Инспектор слотов фрейма"
             Grid.Column="1">
                 <DockPanel LastChildFill="True">
-                    <TextBlock
+                    <TextBox
                         DockPanel.Dock="Top"
-                        Text="{Binding Path=SelectedFrame.Name}"
+                        Text="{Binding Path=SelectedFrame.Name, UpdateSourceTrigger=PropertyChanged}"
                         Padding="5">
-                    </TextBlock>
+                    </TextBox>
                     <DataGrid
                         Name="SlotsDataGrid"
                         ItemsSource="{Binding Path=SelectedFrame.Slots}"
@@ -95,15 +95,15 @@
                             <ContextMenu>
                                 <MenuItem
                                     Name="AddSlotMenuItem"
-                                    Header="Добавить" Click="AddSlotMenuItem_Click">
+                                    Header="Добавить" Click="AddSlotMenuItem_Click" IsEnabled="{Binding Path=IsFraneSelected}">
                                 </MenuItem>
                                 <MenuItem
                                     Name="EditSlotMenuItem"
-                                    Header="Редактировать домен">
+                                    Header="Редактировать домен" IsEnabled="{Binding Path=IsSlotSelected}" Click="EditSlotMenuItem_OnClick">
                                 </MenuItem>
                                 <MenuItem
                                     Name="RemoveSlotMenuItem"
-                                    Header="Удалить">
+                                    Header="Удалить" IsEnabled="{Binding Path=IsSlotSelected}" Click="RemoveSlotMenuItem_OnClick">
                                 </MenuItem>
                             </ContextMenu>
                         </DataGrid.ContextMenu>

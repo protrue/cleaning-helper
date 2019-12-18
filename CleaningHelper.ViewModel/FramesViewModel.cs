@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -10,6 +11,7 @@ namespace CleaningHelper.ViewModel
 {
     public class FramesViewModel : INotifyPropertyChanged
     {
+        private BidirectionalGraph<object, IEdge<object>> _graph; 
         private Frame _selectedFrame;
         private FrameSlot _selectedSlot;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -19,16 +21,16 @@ namespace CleaningHelper.ViewModel
         {
             get
             {
-                var graph = new BidirectionalGraph<object, IEdge<object>>();
+                _graph = new BidirectionalGraph<object, IEdge<object>>();
 
                 foreach (var frame in FrameModel.Frames)
-                    graph.AddVertex(frame);
+                    _graph.AddVertex(frame);
 
                 foreach (var frame in FrameModel.Frames)
                     foreach (var frameChild in frame.Children)
-                        graph.AddEdge(new Edge<object>(frame, frameChild));
+                        _graph.AddEdge(new Edge<object>(frame, frameChild));
 
-                return graph;
+                return _graph;
             }
         }
 
@@ -51,6 +53,10 @@ namespace CleaningHelper.ViewModel
                 OnPropertyChanged(nameof(SelectedSlot));
             }
         }
+
+        public bool IsFrameSelected => SelectedFrame != null;
+        
+        public bool IsSlotSelected => SelectedSlot != null;
 
         public FrameModel TestFrameModel
         {
@@ -75,6 +81,7 @@ namespace CleaningHelper.ViewModel
                     new Frame("Ситуация"),
                     new Frame("Загрязнение"),
                     new Frame("Ужасное загрязнение"),
+                    new Frame("Лёгкое загрязнение"), 
                 };
 
                 var frameModel = new FrameModel();
@@ -82,6 +89,7 @@ namespace CleaningHelper.ViewModel
                 frames[0].Slots.Add(new FrameSlot("Имя слота", domains[0], domains[0].Values[0]));
                 frames[1].Parent = frames[0];
                 frames[2].Parent = frames[1];
+                frames[3].Parent = frames[1];
 
                 foreach (var domain in domains)
                 {

@@ -55,9 +55,32 @@ namespace CleaningHelper.Gui
             domainWindow.ShowDialog();
         }
 
+        private void AddFrameButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.FrameModel.Frames.Add(new Frame("Новый фрейм"));
+            GraphLayout.Graph = ViewModel.Graph;
+        }
+
+        private void RemoveFrameButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.FrameModel.Frames.Remove(ViewModel.SelectedFrame);
+            GraphLayout.Graph = ViewModel.Graph;
+        }
+
         private void AddSlotMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            ViewModel.SelectedFrame.Slots.Add(new FrameSlot("новый слот", ViewModel.FrameModel.Domains[0]));
+        }
 
+        private void RemoveSlotMenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SelectedFrame.Slots.Remove(ViewModel.SelectedSlot);
+        }
+
+        private void EditSlotMenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            var domainWindow = new DomainsWindow(ViewModel.FrameModel);
+            domainWindow.ShowDialog();
         }
     }
 }
