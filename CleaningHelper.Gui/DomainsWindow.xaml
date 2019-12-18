@@ -23,7 +23,7 @@
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Name="AddDomainMenuItem" Header="Добавить" Click="AddDomainMenuItem_Click"></MenuItem>
-                        <MenuItem Name="RemoveDomainMenuItem"  Header="Удалить" Click="RemoveDomainMenuItem_Click"></MenuItem>
+                        <MenuItem Name="RemoveDomainMenuItem"  Header="Удалить" Click="RemoveDomainMenuItem_Click" IsEnabled="{Binding Path=IsRemoveDomainAvailable}"></MenuItem>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.Columns>
@@ -45,7 +45,7 @@
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Name="AddDomainValueMenuItem" Header="Добавить" Click="AddDomainValueMenuItem_Click"></MenuItem>
-                            <MenuItem Name="RemoveDomainValueMenuItem" Header="Удалить" Click="RemoveDomainValueMenuItem_Click"></MenuItem>
+                            <MenuItem Name="RemoveDomainValueMenuItem" Header="Удалить" Click="RemoveDomainValueMenuItem_Click" IsEnabled="{Binding Path=IsRemoveValueAvailable}"></MenuItem>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                     <DataGrid.Columns>

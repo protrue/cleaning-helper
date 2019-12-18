@@ -38,6 +38,10 @@ namespace CleaningHelper.ViewModel
             }
         }
 
+        public bool IsRemoveDomainAvailable => SelectedDomain != null;
+
+        public bool IsRemoveValueAvailable => SelectedValue != null;
+
         public DomainsViewModel(FrameModel frameModel)
         {
             FrameModel = frameModel;

@@ -34,6 +34,10 @@ namespace CleaningHelper.Gui
             ViewModel = new FramesViewModel();
             DataContext = ViewModel;
             GraphLayout.Graph = ViewModel.Graph;
+
+            DomainComboBoxColumn.ItemsSource = ViewModel.FrameModel.Domains;
+            DomainComboBoxColumn.DisplayMemberPath = "Name";
+            DomainComboBoxColumn.SelectedItemBinding = new Binding("Domain");
         }
 
         private void GraphLayout_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -49,6 +53,11 @@ namespace CleaningHelper.Gui
         {
             var domainWindow = new DomainsWindow(ViewModel.FrameModel);
             domainWindow.ShowDialog();
+        }
+
+        private void AddSlotMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

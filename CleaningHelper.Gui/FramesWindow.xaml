@@ -7,6 +7,7 @@
         xmlns:gs="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
         xmlns:ext="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
         xmlns:model="clr-namespace:CleaningHelper.Model;assembly=CleaningHelper.Model"
+        xmlns:vm="clr-namespace:CleaningHelper.ViewModel;assembly=CleaningHelper.ViewModel"
         mc:Ignorable="d"
         Title="Редактор фреймов"
         Icon="Resources/icon.ico"
@@ -65,7 +66,6 @@
                             Name="GraphLayout"
                             LayoutAlgorithmType="Tree"
                             OverlapRemovalAlgorithmType="FSA"
-                            HighlightAlgorithmType="Simple"
                             PreviewMouseLeftButtonDown="GraphLayout_PreviewMouseLeftButtonDown">
                             <gs:GraphLayout.ContextMenu>
                                 <ContextMenu>
@@ -95,7 +95,7 @@
                             <ContextMenu>
                                 <MenuItem
                                     Name="AddSlotMenuItem"
-                                    Header="Добавить">
+                                    Header="Добавить" Click="AddSlotMenuItem_Click">
                                 </MenuItem>
                                 <MenuItem
                                     Name="EditSlotMenuItem"
@@ -112,14 +112,34 @@
                         Header="Имя" 
                         Binding="{Binding Path=Name}"
                         Width="*"/>
-                            <DataGridTextColumn
-                        Header="Тип"
-                        Binding="{Binding Path=Domain.Name}"
-                        Width="*"/>
-                            <DataGridTextColumn
-                        Header="Значение"
-                        Binding="{Binding Path=Value.Text}"
-                        Width="*"/>
+                            <DataGridComboBoxColumn 
+                                x:Name="DomainComboBoxColumn"
+                                Header="Тип"
+                                Width="*"
+                                ItemsSource="{Binding Path=FrameModel.Domains}"
+                                DisplayMemberPath="Name"
+                                SelectedItemBinding="{Binding Path=SelectedSlot.Domain}"/>
+                            <DataGridComboBoxColumn
+                                x:Name="ValueComboBoxColumn"
+                                Header="Значение"
+                                Width="*"
+                                DisplayMemberPath="Text"
+                                SelectedItemBinding="{Binding Path=SelectedSlot.Value}">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter
+                                            Property="ItemsSource"
+                                            Value="{Binding Path=Domain.Values}"/>
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter
+                                            Property="ItemsSource"
+                                            Value="{Binding Path=Domain.Values}"/>
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>

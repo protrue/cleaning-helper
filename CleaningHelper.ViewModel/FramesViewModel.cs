@@ -47,7 +47,7 @@ namespace CleaningHelper.ViewModel
             get => _selectedSlot;
             set
             {
-                _selectedSlot = value; 
+                _selectedSlot = value;
                 OnPropertyChanged(nameof(SelectedSlot));
             }
         }
@@ -56,21 +56,43 @@ namespace CleaningHelper.ViewModel
         {
             get
             {
+                var domains = new[]
+                {
+                    new FrameSlotDomain("Логический", new[]
+                    {
+                        new FrameSlotDomainValue("Да"),
+                        new FrameSlotDomainValue("Нет"),
+                    }),
+                    new FrameSlotDomain("Ткань", new[]
+                    {
+                        new FrameSlotDomainValue("Хлопок"),
+                        new FrameSlotDomainValue("Синтетика"),
+                    }),
+                };
+
+                var frames = new[]
+                {
+                    new Frame("Ситуация"),
+                    new Frame("Загрязнение"),
+                    new Frame("Ужасное загрязнение"),
+                };
+
                 var frameModel = new FrameModel();
 
-                var domain = new FrameSlotDomain("Логический");
-                domain.Values.Add("Да");
-                domain.Values.Add("Нет");
-                frameModel.Domains.Add(domain);
+                frames[0].Slots.Add(new FrameSlot("Имя слота", domains[0], domains[0].Values[0]));
+                frames[1].Parent = frames[0];
+                frames[2].Parent = frames[1];
 
-                frameModel.Frames.Add(new Frame("Ситуация"));
-                frameModel.Frames.Add(new Frame("Загрязнение"));
-                frameModel.Frames.Add(new Frame("Ужасное загрязнение"));
+                foreach (var domain in domains)
+                {
+                    frameModel.Domains.Add(domain);
+                }
 
-                frameModel[0].Slots.Add(new FrameSlot("Имя слота", domain));
-                frameModel[1].Parent = frameModel[0];
-                frameModel[2].Parent = frameModel[1];
-                
+                foreach (var frame in frames)
+                {
+                    frameModel.Frames.Add(frame);
+                }
+
                 return frameModel;
             }
         }
