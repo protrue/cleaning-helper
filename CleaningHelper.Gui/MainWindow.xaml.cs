@@ -57,5 +57,11 @@ namespace CleaningHelper.Gui
         {
             ViewModel.SaveStateCommand.Execute();
         }
+
+        private void EditModelButton_Click(object sender, RoutedEventArgs e)
+        {
+            var editorWindow = new FramesWindow();
+            editorWindow.ShowDialog();
+        }
     }
 }
