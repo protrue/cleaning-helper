@@ -1,81 +1,150 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using CleaningHelper.Model.Annotations;
 
 namespace CleaningHelper.Model
 {
-    public class Frame
+    public class Frame : INotifyPropertyChanged
     {
-        private readonly List<Frame> _children;
         private Frame _parent;
-        private readonly List<IFrameSlot> _slots;
+        private string _name;
 
         /// <summary>
         /// Имя фрейма
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
 
         /// <summary>
         /// Родительский фрейм
         /// </summary>
-        public Frame Parent => _parent;
+        public Frame Parent
+        {
+            get => _parent;
+            set
+            {
+                Frame oldParent = _parent;
+                _parent = value;
+                ProcessParentChange(oldParent, value);
+                OnPropertyChanged(nameof(Parent));
+            }
+        }
 
         /// <summary>
         /// Список фреймов-наследников
         /// </summary>
-        public IReadOnlyList<Frame> Children => _children.AsReadOnly();
+        public ObservableCollection<Frame> Children { get; }
 
         /// <summary>
         /// Список слотов
         /// </summary>
-        public List<IFrameSlot> Slots => _slots;
+        public ObservableCollection<FrameSlot> Slots { get; }
 
         public Frame(string name)
         {
             Name = name;
-            _children = new List<Frame>();
-            _slots = new List<IFrameSlot>();
+            Children = new ObservableCollection<Frame>();
+            Slots = new ObservableCollection<FrameSlot>();
+
+            Children.CollectionChanged += ChildrenOnCollectionChanged;
+            Slots.CollectionChanged += SlotsOnCollectionChanged;
         }
 
-        /// <summary>
-        /// Устанавливает родителя текущего фрейма, добавляет текущий фрейм в список наследников parent
-        /// </summary>
-        /// <param name="parent">Родительский фрейм</param>
-        public void SetParent(Frame parent)
+        private void SlotsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            _parent = parent;
-            parent._children.Add(this);
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    foreach (var newItem in e.NewItems)
+                    {
+                        var addedSlot = newItem as FrameSlot;
+                        ProcessAddedSlot(addedSlot);
+                    }
+                    break;
+            }
         }
 
-        /// <summary>
-        /// Добавляет текущему фрейму в список наследников child, устанавливает родительский фрейм у child
-        /// </summary>
-        /// <param name="child">Фрейм-наследник</param>
-        public void AddChild(Frame child)
+        private void ProcessAddedSlot(FrameSlot addedSlot)
         {
-            if (child == null)
-                throw new ArgumentNullException(nameof(child));
+            //if (Slots.Contains(addedSlot))
+            //{
+            //    Slots.Remove(addedSlot);
+            //    throw new ArgumentException("Такой слот уже есть у этого фрейма", nameof(addedSlot));
+            //}
+        }
 
-            if (_children.Contains(child))
-                throw new ArgumentException("Фрейм уже является наследником", nameof(child));
+        private void ChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    foreach (var newItem in e.NewItems)
+                    {
+                        var addedChild = newItem as Frame;
+                        ProcessAddedChild(addedChild);
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    foreach (var oldItem in e.OldItems)
+                    {
+                        var removedChild = oldItem as Frame;
+                        ProcessAddedChild(removedChild);
+                    }
+                    break;
+            }
+        }
 
-            _children.Add(child);
+        private void ProcessParentChange(Frame oldParent, Frame newParent)
+        {
+            if (newParent == null)
+            {
+                oldParent.Children.Remove(this);
+            }
+            else
+            {
+                newParent.Children.Add(this);
+            }
+        }
+
+        private void ProcessAddedChild(Frame child)
+        {
+            //if (child == null)
+            //    throw new ArgumentNullException(nameof(child));
+
+            //if (Children.Contains(child))
+            //    throw new ArgumentException("Фрейм уже является наследником", nameof(child));
+
             child._parent = this;
         }
 
-        /// <summary>
-        /// Удаляет у текущего фрейма из списка наследников child, устанавливает null в родительский фрейм у child 
-        /// </summary>
-        /// <param name="child">Фрейм-наследник</param>
-        public void RemoveChild(Frame child)
+        private void ProcessRemovedChild(Frame child)
         {
-            if (child == null)
-                throw new ArgumentNullException(nameof(child));
+            //if (child == null)
+            //    throw new ArgumentNullException(nameof(child));
 
-            if (!_children.Contains(child))
-                new ArgumentException("Нет такого фрейма-наследника", nameof(child));
+            //if (!Children.Contains(child))
+            //    new ArgumentException("Нет такого фрейма-наследника", nameof(child));
 
-            _children.Remove(child);
             child._parent = null;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

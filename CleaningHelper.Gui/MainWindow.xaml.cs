@@ -60,7 +60,7 @@ namespace CleaningHelper.Gui
 
         private void EditModelButton_Click(object sender, RoutedEventArgs e)
         {
-            var editorWindow = new EditorWindow();
+            var editorWindow = new FramesWindow();
             editorWindow.ShowDialog();
         }
     }
