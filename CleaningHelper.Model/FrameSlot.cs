@@ -9,6 +9,7 @@ namespace CleaningHelper.Model
     /// <summary>
     /// Слот фреймого типа (указатель на другой фрейм)
     /// </summary>
+    [Serializable]
     public class FrameSlot : Slot
     {
         private Frame _frame;
@@ -26,6 +27,7 @@ namespace CleaningHelper.Model
             {
                 _frame = value;
                 OnPropertyChanged(nameof(Frame));
+                OnPropertyChanged(nameof(ValueAsString));
             }
         }
 
@@ -34,7 +36,5 @@ namespace CleaningHelper.Model
         {
             Frame = frame;
         }
-
-
     }
 }

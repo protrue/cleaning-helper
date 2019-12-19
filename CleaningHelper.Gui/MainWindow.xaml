@@ -1,131 +1,76 @@
-﻿<Window x:Class="CleaningHelper.Gui.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CleaningHelper.Gui"
-        mc:Ignorable="d"
-        Title="Химчистка"
-        Height="600"
-        Width="800"
-        WindowStartupLocation="CenterScreen"
-        Icon="Resources/icon.ico"
-        Loaded="Window_Loaded"
-        Closing="Window_Closing">
-
-    <Grid Margin="50">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-
+﻿<Window
+    x:Class="CleaningHelper.Gui.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:CleaningHelper.Gui"
+    mc:Ignorable="d"
+    Title="Химчистка"
+    Height="600"
+    Width="800"
+    WindowStartupLocation="CenterScreen"
+    Icon="Resources/icon.ico"
+    Loaded="Window_Loaded"
+    Closing="Window_Closing">
+    <Window.Resources>
+        <Style
+            TargetType="Button">
+            <Setter
+                Property="Margin"
+                Value="10" />
+            <Setter
+                Property="Padding"
+                Value="5" />
+        </Style>
+    </Window.Resources>
+    <StackPanel
+        Margin="50">
         <GroupBox
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            Content="Ontolis"
-            Margin="5" />
+            Header="Модель">
+            <StackPanel>
+                <GroupBox
+                    Header="Текущая модель:"
+                    Margin="10"
+                    Padding="5">
+                    <TextBox
+                        Text="{Binding Path=PathToModel}"
+                        IsReadOnly="True" />
+                </GroupBox>
+                <Button
+                    Content="Создать"
+                    Command="{Binding CreateModelCommand}" />
+                <Button
+                    Content="Загрузить"
+                    Command="{Binding LoadModelCommand}" />
+                <Button
+                    Content="Сохранить"
+                    Command="{Binding SaveModelCommand}" />
+                <Button
+                    Name="EditFramesButton"
+                    Content="Изменить фреймы"
+                    IsEnabled="{Binding Path=IsEditModelButtonEnabled}"
+                    Click="EditFramesButton_OnClick" />
+                <Button
+                    Name="EditDomainsButton"
+                    Content="Изменить домены"
+                    IsEnabled="{Binding Path=IsEditModelButtonEnabled}"
+                    Click="EditDomainsButton_OnClick" />
+            </StackPanel>
+        </GroupBox>
         <GroupBox
-            Grid.Row="1"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            Grid.RowSpan="2"
-            Content="Модель"
-            Margin="5"></GroupBox>
-        <GroupBox
-            Grid.Row="3"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            Grid.RowSpan="2"
-            Content="Консультация"
-            Margin="5" />
-
-        <Button
-            x:Name="SetPathToOntolisButton"
-            Content="Указать путь к Ontolis"
-            Grid.Row="0"
-            Grid.Column="0"
-            Margin="35"
-            Command="{Binding SetPathToOntolisCommand}"/>
-        <Button
-            x:Name="LoadModelButton"
-            Content="Загрузить модель"
-            Grid.Row="1"
-            Grid.Column="0"
-            Margin="35 50 35 20"
-            Command="{Binding LoadModelCommand}"/>
-        <Button
-            x:Name="EditModelButton"
-            Content="Редактировать модель"
-            IsEnabled="{Binding Path=IsEditModelButtonEnabled}"
-            Grid.Row="2"
-            Grid.Column="0"
-            Margin="35 20 35 50" Click="EditModelButton_Click"/>
-        <Button
-            x:Name="StartConsultationButton"
-            Content="Запуск консультации"
-            IsEnabled="{Binding Path=IsStartConsultationButtonEnabled}"
-            Grid.Column="0"
-            Grid.Row="3"
-            Margin="35 50 35 20"
-            Click="StartConsultationButton_Click" />
-        <Button
-            x:Name="ShowResultsButton"
-            Content="Просмотр результатов"
-            Grid.Row="4"
-            Grid.Column="0"
-            Margin="35 20 35 50"
-            Click="ShowResultsButton_Click" />
-
-        <Grid
-            Grid.Row="0"
-            Grid.Column="1"
-            Grid.ColumnSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Label
-                Content="Путь к Ontolis:"
-                Grid.Row="0"
-                VerticalAlignment="Bottom"/>
-            <TextBox
-                Text="{Binding Path=PathToOntolis}"
-                IsReadOnly="True"
-                Grid.Row="1"
-                VerticalAlignment="Top"
-                Margin="0 0 15 0"/>
-        </Grid>
-
-        <Grid
-            Grid.Row="1"
-            Grid.Column="1"
-            Grid.RowSpan="2"
-            Grid.ColumnSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Label
-                Content="Текущая модель:"
-                Grid.Row="0"
-                VerticalAlignment="Bottom"/>
-            <TextBox
-                Text="{Binding Path=PathToModel}"
-                IsReadOnly="True"
-                Grid.Row="1"
-                VerticalAlignment="Top"
-                Margin="0 0 15 0"/>
-        </Grid>
-    </Grid>
-
+            Header="Консультация">
+            <StackPanel>
+                <Button
+                    x:Name="StartConsultationButton"
+                    Content="Запуск консультации"
+                    IsEnabled="{Binding Path=IsStartConsultationButtonEnabled}"
+                    Click="StartConsultationButton_Click" />
+                <Button
+                    x:Name="ShowResultsButton"
+                    Content="Просмотр результатов"
+                    Click="ShowResultsButton_Click" />
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
 </Window>

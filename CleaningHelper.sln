@@ -9,15 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleaningHelper.Core", "Clea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleaningHelper.Gui", "CleaningHelper.Gui\CleaningHelper.Gui.csproj", "{CDE0869C-F2D7-4BF3-A806-DC4484D0DEAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleaningHelper.OntolisAdapter.DataModel", "CleaningHelper.OntolisAdapter.DataModel\CleaningHelper.OntolisAdapter.DataModel.csproj", "{F3A3594C-5FA6-4197-A66B-C302908E85C6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleaningHelper.OntolisAdapter.Tools", "CleaningHelper.OntolisAdapter.Tools\CleaningHelper.OntolisAdapter.Tools.csproj", "{DD2DD835-3EC1-41FA-88AA-23B1E4BA6A98}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleaningHelper.Tests", "CleaningHelper.Tests\CleaningHelper.Tests.csproj", "{D86AB59B-0C6F-4406-AF52-A29F1E89AC6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleaningHelper.Sandbox", "CleaningHelper.Sandbox\CleaningHelper.Sandbox.csproj", "{E2147A26-4AC6-499C-B5C7-9D7BDFD8AFC6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleaningHelper.ViewModel", "CleaningHelper.ViewModel\CleaningHelper.ViewModel.csproj", "{E111507A-7312-4351-90DB-327025E99CAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleaningHelper.Tools", "CleaningHelper.Tools\CleaningHelper.Tools.csproj", "{71253C76-731A-4106-B0A8-CEA7DC18D4D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +35,6 @@ Global
 		{CDE0869C-F2D7-4BF3-A806-DC4484D0DEAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDE0869C-F2D7-4BF3-A806-DC4484D0DEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDE0869C-F2D7-4BF3-A806-DC4484D0DEAA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3A3594C-5FA6-4197-A66B-C302908E85C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3A3594C-5FA6-4197-A66B-C302908E85C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3A3594C-5FA6-4197-A66B-C302908E85C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3A3594C-5FA6-4197-A66B-C302908E85C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DD2DD835-3EC1-41FA-88AA-23B1E4BA6A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD2DD835-3EC1-41FA-88AA-23B1E4BA6A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD2DD835-3EC1-41FA-88AA-23B1E4BA6A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD2DD835-3EC1-41FA-88AA-23B1E4BA6A98}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D86AB59B-0C6F-4406-AF52-A29F1E89AC6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D86AB59B-0C6F-4406-AF52-A29F1E89AC6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D86AB59B-0C6F-4406-AF52-A29F1E89AC6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,6 +47,10 @@ Global
 		{E111507A-7312-4351-90DB-327025E99CAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E111507A-7312-4351-90DB-327025E99CAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E111507A-7312-4351-90DB-327025E99CAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71253C76-731A-4106-B0A8-CEA7DC18D4D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71253C76-731A-4106-B0A8-CEA7DC18D4D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71253C76-731A-4106-B0A8-CEA7DC18D4D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71253C76-731A-4106-B0A8-CEA7DC18D4D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

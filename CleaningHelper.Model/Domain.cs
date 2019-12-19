@@ -14,7 +14,8 @@ namespace CleaningHelper.Model
     /// <summary>
     /// Домен допустимых значений
     /// </summary>
-    public class Domain
+    [Serializable]
+    public class Domain : INotifyPropertyChanged
     {
         private string _name;
 
@@ -55,10 +56,12 @@ namespace CleaningHelper.Model
         public DomainValue this[string text] =>
             Values.First(v => v.Text == text);
 
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Domain(string name, IEnumerable<DomainValue> values = null)
         {
+            Name = name;
             Values = values == null
                 ? new ObservableCollection<DomainValue>()
                 : new ObservableCollection<DomainValue>(values);

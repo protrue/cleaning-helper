@@ -50,14 +50,6 @@
       <Project>{f918f926-daf3-4050-a9ff-76e60fc45078}</Project>
       <Name>CleaningHelper.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CleaningHelper.OntolisAdapter.DataModel\CleaningHelper.OntolisAdapter.DataModel.csproj">
-      <Project>{f3a3594c-5fa6-4197-a66b-c302908e85c6}</Project>
-      <Name>CleaningHelper.OntolisAdapter.DataModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CleaningHelper.OntolisAdapter.Tools\CleaningHelper.OntolisAdapter.Tools.csproj">
-      <Project>{dd2dd835-3ec1-41fa-88aa-23b1e4ba6a98}</Project>
-      <Name>CleaningHelper.OntolisAdapter.Tools</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,9 +4,11 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
+using CleaningHelper.Model.Annotations;
 using CleaningHelper.Model.Exceptions;
 
 namespace CleaningHelper.Model
@@ -14,11 +16,15 @@ namespace CleaningHelper.Model
     /// <summary>
     /// Фреймовая модель
     /// </summary>
-    public class FrameModel
+    [Serializable]
+    public class FrameModel : INotifyPropertyChanged
     {
         private readonly Domain _frameSlotDomain;
         private readonly Domain _textSlotDomain;
         private Frame _frameToDelete;
+
+        [field: NonSerialized]
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Фреймы модели
@@ -44,7 +50,7 @@ namespace CleaningHelper.Model
         /// <returns>Фрейм</returns>
         public Frame this[string name] => Frames.First(f => f.Name == name);
 
-        public Domain FrameSlotSlotDomain => _frameSlotDomain;
+        public Domain FrameSlotDomain => _frameSlotDomain;
 
         public Domain TextSlotDomain => _textSlotDomain;
 
@@ -55,6 +61,8 @@ namespace CleaningHelper.Model
 
             _frameSlotDomain = new Domain(FrameSlot.TypeFriendlyName);
             _textSlotDomain = new Domain(TextSlot.TypeFriendlyName);
+
+            _frameSlotDomain.Values.Add(string.Empty);
 
             Domains.Add(_frameSlotDomain);
             Domains.Add(_textSlotDomain);
@@ -88,6 +96,8 @@ namespace CleaningHelper.Model
                         break;
                     }
             }
+
+            OnPropertyChanged(nameof(Frames));
         }
 
         private void DomainsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -115,6 +125,8 @@ namespace CleaningHelper.Model
                         break;
                     }
             }
+
+            OnPropertyChanged(nameof(Domains));
         }
 
         private void ProcessAddedFrame(Frame frame)
@@ -167,6 +179,8 @@ namespace CleaningHelper.Model
 
             var parent = frame.Parent;
             ProcessExternallyAddedFrame(parent);
+
+            OnPropertyChanged(nameof(Frames));
         }
 
         private void FrameChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -196,6 +210,13 @@ namespace CleaningHelper.Model
                 Domains.Remove(domain);
                 throw new ArgumentException("Такой домен уже есть в модели", nameof(domain));
             }
+
+            domain.PropertyChanged += DomainOnPropertyChanged;
+        }
+
+        private void DomainOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Domains));
         }
 
         private void ProcessRemovedDomain(Domain domain)
@@ -204,7 +225,7 @@ namespace CleaningHelper.Model
 
             foreach (var frame in Frames)
                 foreach (var slot in frame.Slots.OfType<DomainSlot>())
-                    if (slot.Domain == domain)
+                    if (ReferenceEquals(slot.Domain, domain))
                         useList.Add(Tuple.Create(frame, slot));
 
             if (useList.Count > 0)
@@ -212,6 +233,8 @@ namespace CleaningHelper.Model
                 Domains.Add(domain);
                 throw new DomainIsInUseException(useList, domain);
             }
+
+            domain.PropertyChanged -= DomainOnPropertyChanged;
         }
 
         public List<Tuple<Frame, DomainSlot, Domain>> CheckDomainValueIntegrity(DomainValue valueToCheck)
@@ -224,7 +247,7 @@ namespace CleaningHelper.Model
                 {
                     var domain = slot.Domain;
 
-                    if (slot.Value == valueToCheck)
+                    if (ReferenceEquals(slot.Value, valueToCheck))
                     {
                         usedList.Add(Tuple.Create(frame, slot, domain));
                     }
@@ -254,6 +277,12 @@ namespace CleaningHelper.Model
             }
 
             return resetList;
+        }
+        
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
