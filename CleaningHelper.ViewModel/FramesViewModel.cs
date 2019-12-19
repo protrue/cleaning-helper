@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -11,9 +12,10 @@ namespace CleaningHelper.ViewModel
 {
     public class FramesViewModel : INotifyPropertyChanged
     {
-        private BidirectionalGraph<object, IEdge<object>> _graph; 
+        private BidirectionalGraph<object, IEdge<object>> _graph;
         private Frame _selectedFrame;
-        private FrameSlot _selectedFrameSlot;
+        private Slot _selectedSlot;
+        private string _selectedLayoutAlgorithm;
         public event PropertyChangedEventHandler PropertyChanged;
         public FrameModel FrameModel { get; set; }
 
@@ -28,7 +30,7 @@ namespace CleaningHelper.ViewModel
 
                 foreach (var frame in FrameModel.Frames)
                     foreach (var frameChild in frame.Children)
-                        _graph.AddEdge(new Edge<object>(frame, frameChild));
+                        _graph.AddEdge(new Edge<object>(frameChild, frame));
 
                 return _graph;
             }
@@ -41,22 +43,59 @@ namespace CleaningHelper.ViewModel
             {
                 _selectedFrame = value;
                 OnPropertyChanged(nameof(SelectedFrame));
+                OnPropertyChanged(nameof(IsFrameSelected));
             }
         }
 
-        public FrameSlot SelectedFrameSlot
+        public Slot SelectedSlot
         {
-            get => _selectedFrameSlot;
+            get => _selectedSlot;
             set
             {
-                _selectedFrameSlot = value;
-                OnPropertyChanged(nameof(SelectedFrameSlot));
+                _selectedSlot = value;
+                OnPropertyChanged(nameof(SelectedSlot));
+                OnPropertyChanged(nameof(IsSlotSelected));
+                OnPropertyChanged(nameof(IsSlotNameEditable));
+                OnPropertyChanged(nameof(IsSlotTypeEditable));
             }
         }
 
+        public List<string> LayoutAlgorithms => new List<string>(new []
+        {
+            "BoundedFR",
+            "Circular",
+            "CompoundFDP",
+            "EfficientSugiyama",
+            "FR",
+            "ISOM",
+            "KK",
+            "LinLog",
+            "Tree",
+        });
+
+        public string SelectedLayoutAlgorithm
+        {
+            get => _selectedLayoutAlgorithm;
+            set
+            {
+                _selectedLayoutAlgorithm = value;
+                OnPropertyChanged(nameof(SelectedLayoutAlgorithm));
+            }
+        }
+
+        public Domain SelectedDomain { get; set; }
+
+        public Domain SelectedDomainValue { get; set; }
+
+        public string DomainValueText { get; set; }
+
         public bool IsFrameSelected => SelectedFrame != null;
-        
-        public bool IsSlotSelected => SelectedFrameSlot != null;
+
+        public bool IsSlotSelected => SelectedSlot != null;
+
+        public bool IsSlotNameEditable => !SelectedSlot?.IsSystemSlot ?? false;
+
+        public bool IsSlotTypeEditable => !SelectedSlot?.IsSystemSlot ?? false;
 
         public FrameModel TestFrameModel
         {
@@ -68,12 +107,12 @@ namespace CleaningHelper.ViewModel
                     {
                         new DomainValue("Да"),
                         new DomainValue("Нет"),
-                    }), 
+                    }),
                     new Domain("Ткань", new[]
                     {
                         new DomainValue("Хлопок"),
                         new DomainValue("Синтетика"),
-                    }), 
+                    }),
                 };
 
                 var frames = new[]
@@ -81,12 +120,12 @@ namespace CleaningHelper.ViewModel
                     new Frame("Ситуация"),
                     new Frame("Загрязнение"),
                     new Frame("Ужасное загрязнение"),
-                    new Frame("Лёгкое загрязнение"), 
+                    new Frame("Лёгкое загрязнение"),
                 };
 
                 var frameModel = new FrameModel();
 
-                frames[0].Slots.Add(new DomainSlot("Имя слота", domains[0], domains[0][0]));
+                frames[0].Slots.Add(new DomainSlot("Имя слота", domains[0], domains[0].Values[0]));
                 frames[1].Parent = frames[0];
                 frames[2].Parent = frames[1];
                 frames[3].Parent = frames[1];
@@ -108,6 +147,8 @@ namespace CleaningHelper.ViewModel
         public FramesViewModel()
         {
             FrameModel = TestFrameModel;
+
+            SelectedLayoutAlgorithm = LayoutAlgorithms.Last();
         }
 
         [NotifyPropertyChangedInvocator]

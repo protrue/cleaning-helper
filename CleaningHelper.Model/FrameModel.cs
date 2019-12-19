@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
+using CleaningHelper.Model.Exceptions;
 
 namespace CleaningHelper.Model
 {
@@ -15,6 +16,8 @@ namespace CleaningHelper.Model
     /// </summary>
     public class FrameModel
     {
+        private readonly Domain _frameSlotDomain;
+        private readonly Domain _textSlotDomain;
         private Frame _frameToDelete;
 
         /// <summary>
@@ -41,10 +44,20 @@ namespace CleaningHelper.Model
         /// <returns>Фрейм</returns>
         public Frame this[string name] => Frames.First(f => f.Name == name);
 
+        public Domain FrameSlotSlotDomain => _frameSlotDomain;
+
+        public Domain TextSlotDomain => _textSlotDomain;
+
         public FrameModel()
         {
             Domains = new ObservableCollection<Domain>();
             Frames = new ObservableCollection<Frame>();
+
+            _frameSlotDomain = new Domain(FrameSlot.TypeFriendlyName);
+            _textSlotDomain = new Domain(TextSlot.TypeFriendlyName);
+
+            Domains.Add(_frameSlotDomain);
+            Domains.Add(_textSlotDomain);
 
             Domains.CollectionChanged += DomainsOnCollectionChanged;
             Frames.CollectionChanged += FramesOnCollectionChanged;
@@ -123,7 +136,10 @@ namespace CleaningHelper.Model
                     Domains.Add(domain);
             }
 
+            _frameSlotDomain.Values.Add(frame.Name);
+
             frame.Children.CollectionChanged += FrameChildrenOnCollectionChanged;
+            frame.PropertyChanged += FrameOnPropertyChanged;
         }
 
         private void ProcessRemovedFrame(Frame frame)
@@ -136,6 +152,9 @@ namespace CleaningHelper.Model
             {
                 frameChild.Parent = null;
             }
+
+            var domainValue = _frameSlotDomain.Values.First(v => v.Text == frame.Name);
+            _frameSlotDomain.Values.Remove(domainValue);
 
             frame.Children.CollectionChanged -= FrameChildrenOnCollectionChanged;
             frame.PropertyChanged -= FrameOnPropertyChanged;
@@ -166,7 +185,7 @@ namespace CleaningHelper.Model
 
         private void ProcessExternallyAddedFrame(Frame frame)
         {
-            if (!Frames.Contains(frame))
+            if (frame != null && !Frames.Contains(frame))
                 Frames.Add(frame);
         }
 

@@ -34,10 +34,6 @@ namespace CleaningHelper.Gui
             ViewModel = new FramesViewModel();
             DataContext = ViewModel;
             GraphLayout.Graph = ViewModel.Graph;
-
-            DomainComboBoxColumn.ItemsSource = ViewModel.FrameModel.Domains;
-            DomainComboBoxColumn.DisplayMemberPath = "Name";
-            DomainComboBoxColumn.SelectedItemBinding = new Binding("Domain");
         }
 
         private void GraphLayout_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -57,30 +53,110 @@ namespace CleaningHelper.Gui
 
         private void AddFrameButton_OnClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.FrameModel.Frames.Add(new Frame("Новый фрейм"));
-            GraphLayout.Graph = ViewModel.Graph;
+            try
+            {
+                ViewModel.FrameModel.Frames.Add(new Frame("Новый фрейм"));
+                UpdateGraphLayout();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         private void RemoveFrameButton_OnClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.FrameModel.Frames.Remove(ViewModel.SelectedFrame);
+            try
+            {
+                ViewModel.FrameModel.Frames.Remove(ViewModel.SelectedFrame);
+                UpdateGraphLayout();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+        }
+
+        private void UpdateGraphLayout()
+        {
             GraphLayout.Graph = ViewModel.Graph;
+            GraphLayout.UpdateLayout();
+            GraphLayout.RecalculateOverlapRemoval();
         }
 
-        private void AddSlotMenuItem_Click(object sender, RoutedEventArgs e)
+        private void AutoLayoutButton_OnClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.SelectedFrame.Slots.Add(new TextSlot("новый слот"));;
+            GraphLayout.UpdateLayout();
+            GraphLayout.RecalculateOverlapRemoval();
         }
 
-        private void RemoveSlotMenuItem_OnClick(object sender, RoutedEventArgs e)
+        private void AddSlotButton_OnClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.SelectedFrame.Slots.Remove(ViewModel.SelectedFrameSlot);
+            try
+            {
+                ViewModel.SelectedFrame.Slots.Add(new TextSlot("Новый слот"));
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
-        private void EditSlotMenuItem_OnClick(object sender, RoutedEventArgs e)
+        private void RemoveSlotButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var domainWindow = new DomainsWindow(ViewModel.FrameModel);
-            domainWindow.ShowDialog();
+            if (ViewModel.SelectedSlot.IsSystemSlot)
+                MessageBox.Show("Нельзя удалить системный слот");
+
+            try
+            {
+                ViewModel.SelectedFrame.Slots.Remove(ViewModel.SelectedSlot);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+        }
+
+        private void AddParentMenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            //try
+            //{
+                var frame = new Frame("Новый фрейм");
+                ViewModel.FrameModel.Frames.Add(frame);
+                ViewModel.SelectedFrame.Parent = frame;
+                UpdateGraphLayout();
+            //}
+            //catch (Exception exception)
+            //{
+            //    MessageBox.Show(exception.Message);
+            //}
+        }
+
+
+        private void AddChildMenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            //try
+            //{
+                var frame = new Frame("Новый фрейм");
+                ViewModel.FrameModel.Frames.Add(frame);
+                frame.Parent = ViewModel.SelectedFrame;
+                UpdateGraphLayout();
+            //}
+            //catch (Exception exception)
+            //{
+            //    MessageBox.Show(exception.Message);
+            //}
+        }
+
+        private void GraphLayout_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Source is VertexControl vertexControl
+                && (e.ChangedButton == MouseButton.Left 
+                    || e.ChangedButton == MouseButton.Right))
+            {
+                ViewModel.SelectedFrame = vertexControl.Vertex as Frame;
+                GraphLayout.HighlightVertex(ViewModel.SelectedFrame, "None");
+            }
         }
     }
 }

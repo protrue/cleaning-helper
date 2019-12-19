@@ -16,7 +16,7 @@ namespace CleaningHelper.Model
     {
         private string _name;
         private bool _isResult;
-        private bool _isSystemSlotSlot;
+        private bool _isSystemSlot;
         private bool _isRequestable;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -37,13 +37,13 @@ namespace CleaningHelper.Model
         /// <summary>
         /// Является ли слот системным
         /// </summary>
-        public bool IsSystemSlotSlot
+        public bool IsSystemSlot
         {
-            get => _isSystemSlotSlot;
+            get => _isSystemSlot;
             set
             {
-                _isSystemSlotSlot = value;
-                OnPropertyChanged(nameof(IsSystemSlotSlot));
+                _isSystemSlot = value;
+                OnPropertyChanged(nameof(IsSystemSlot));
             }
         }
 
@@ -73,10 +73,14 @@ namespace CleaningHelper.Model
             }
         }
 
+        public abstract string TypeAsString { get; }
+
+        public abstract string ValueAsString { get; }
+
         protected Slot(string name, bool isSystemSlot = false, bool isRequestable = false, bool isResult = false)
         {
             Name = name;
-            IsSystemSlotSlot = isSystemSlot;
+            IsSystemSlot = isSystemSlot;
             IsRequestable = isRequestable;
             IsResult = isResult;
         }
