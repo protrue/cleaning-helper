@@ -93,7 +93,8 @@ namespace CleaningHelper.ViewModel
         {
             var saveFileDialog = new SaveFileDialog()
             {
-                Filter = FileDialogFilter
+                Filter = FileDialogFilter,
+                FileName = DefaultPathToModel
             };
 
             var result = saveFileDialog.ShowDialog();

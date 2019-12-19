@@ -74,11 +74,13 @@
                     DockPanel.Dock="Top"
                     ItemsSource="{Binding Path=SelectedDomain.Values}"
                     SelectedItem="{Binding Path=SelectedValue}"
-                    AutoGenerateColumns="False">
+                    AutoGenerateColumns="False"
+                    IsReadOnly="{Binding Path=IsValuesReadOnly}">
                     <DataGrid.Columns>
                         <DataGridTextColumn
                             Binding="{Binding Path=Text}"
-                            Width="*"></DataGridTextColumn>
+                            Width="*"
+                            IsReadOnly="{Binding Path=IsValuesReadOnly}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>

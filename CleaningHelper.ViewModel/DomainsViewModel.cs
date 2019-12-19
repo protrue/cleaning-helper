@@ -29,6 +29,7 @@ namespace CleaningHelper.ViewModel
                 OnPropertyChanged(nameof(IsRemoveDomainAvailable));
                 OnPropertyChanged(nameof(IsAddValueAvailable));
                 OnPropertyChanged(nameof(IsRemoveValueAvailable));
+                OnPropertyChanged(nameof(IsValuesReadOnly));
             }
         }
 
@@ -52,6 +53,8 @@ namespace CleaningHelper.ViewModel
         public bool IsAddValueAvailable => SelectedDomain != null && !IsSelectedDomainSpecial;
 
         public bool IsRemoveValueAvailable => SelectedValue != null && !IsSelectedDomainSpecial;
+
+        public bool IsValuesReadOnly => IsSelectedDomainSpecial;
 
         public DomainsViewModel(FrameModel frameModel)
         {

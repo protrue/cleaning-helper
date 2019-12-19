@@ -21,6 +21,8 @@ namespace CleaningHelper.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         public FrameModel FrameModel { get; set; }
 
+        public readonly string DefaultLayoutAlgorithm = "LinLog";
+
         public BidirectionalGraph<object, IEdge<object>> Graph
         {
             get
@@ -273,53 +275,6 @@ namespace CleaningHelper.ViewModel
         public bool IsSlotTypeEditable => SelectedSlot != null && !SelectedSlot.IsSystemSlot;
 
 
-        public FrameModel TestFrameModel
-        {
-            get
-            {
-                var domains = new[]
-                {
-                    new Domain("Логический", new[]
-                    {
-                        new DomainValue("Да"),
-                        new DomainValue("Нет"),
-                    }),
-                    new Domain("Ткань", new[]
-                    {
-                        new DomainValue("Хлопок"),
-                        new DomainValue("Синтетика"),
-                    }),
-                };
-
-                var frames = new[]
-                {
-                    new Frame("Ситуация"),
-                    new Frame("Загрязнение"),
-                    new Frame("Ужасное загрязнение"),
-                    new Frame("Лёгкое загрязнение"),
-                };
-
-                var frameModel = new FrameModel();
-
-                frames[0].Slots.Add(new DomainSlot("Имя слота", domains[0], domains[0].Values[0]));
-                frames[1].Parent = frames[0];
-                frames[2].Parent = frames[1];
-                frames[3].Parent = frames[1];
-
-                foreach (var domain in domains)
-                {
-                    frameModel.Domains.Add(domain);
-                }
-
-                foreach (var frame in frames)
-                {
-                    frameModel.Frames.Add(frame);
-                }
-
-                return frameModel;
-            }
-        }
-
         public Visibility ComboBoxValueVisibility =>
             !(SelectedSlot is TextSlot) ? Visibility.Visible : Visibility.Collapsed;
 
@@ -328,11 +283,11 @@ namespace CleaningHelper.ViewModel
 
         public FramesViewModel(FrameModel frameModel)
         {
-            FrameModel = frameModel ?? TestFrameModel;
+            FrameModel = frameModel;
 
             FrameModel.PropertyChanged += FrameModelOnPropertyChanged;
 
-            SelectedLayoutAlgorithm = LayoutAlgorithms.Last();
+            SelectedLayoutAlgorithm = DefaultLayoutAlgorithm;
         }
 
         private void FrameModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
