@@ -13,6 +13,12 @@ namespace CleaningHelper.Model
     {
         private string _text;
 
+        public static string TypeFriendlyName => "Текст";
+
+        public override string TypeAsString => TextSlot.TypeFriendlyName;
+
+        public override string ValueAsString => Text ?? string.Empty;
+
         public string Text
         {
             get => _text;
@@ -27,5 +33,6 @@ namespace CleaningHelper.Model
         {
             Text = text ?? string.Empty;
         }
+
     }
 }

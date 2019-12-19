@@ -13,6 +13,10 @@ namespace CleaningHelper.Model
         private DomainValue _value;
         private Domain _domain;
 
+        public override string TypeAsString => Domain.Name;
+
+        public override string ValueAsString => Value?.Text ?? string.Empty;
+
         /// <summary>
         /// Домен слота
         /// </summary>
@@ -34,8 +38,7 @@ namespace CleaningHelper.Model
             get => _value;
             set
             {
-                if (!Domain.Values.Contains(value)
-                    && value != null)
+                if (value != null && !Domain.Values.Contains(value))
                     throw new ArgumentOutOfRangeException(nameof(value), "Значение должно быть из домена");
 
                 _value = value;
@@ -45,8 +48,8 @@ namespace CleaningHelper.Model
 
         public DomainSlot(string name, Domain domain, DomainValue value = null, bool isSystemSlot = false, bool isRequestable = false, bool isResult = false) : base(name, isSystemSlot, isRequestable, isResult)
         {
-            Value = value;
             Domain = domain;
+            Value = value;
         }
     }
 }

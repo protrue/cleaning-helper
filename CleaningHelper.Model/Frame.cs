@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using CleaningHelper.Model.Annotations;
+using CleaningHelper.Model.Exceptions;
 
 namespace CleaningHelper.Model
 {
@@ -76,7 +77,6 @@ namespace CleaningHelper.Model
 
         public Frame(string name)
         {
-            Name = name;
             Children = new ObservableCollection<Frame>();
             Slots = new ObservableCollection<Slot>();
 
@@ -87,15 +87,17 @@ namespace CleaningHelper.Model
             Slots.Add(_parentSystemSlot);
             Slots.Add(new TextSlot(RecipeSlotName, isSystemSlot: true));
 
+            Name = name;
+
             Children.CollectionChanged += ChildrenOnCollectionChanged;
             Slots.CollectionChanged += SlotsOnCollectionChanged;
         }
 
         public TextSlot GetNameSystemSlot() =>
-            Slots.OfType<TextSlot>().First(s => s.Name == NameSlotName && s.IsSystemSlotSlot);
+            Slots.OfType<TextSlot>().First(s => s.Name == NameSlotName && s.IsSystemSlot);
 
         public FrameSlot GetParentSystemSlot() =>
-            Slots.OfType<FrameSlot>().First(s => s.Name == ParentSlotName && s.IsSystemSlotSlot);
+            Slots.OfType<FrameSlot>().First(s => s.Name == ParentSlotName && s.IsSystemSlot);
 
         private void SlotsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -104,14 +106,32 @@ namespace CleaningHelper.Model
                 case NotifyCollectionChangedAction.Add:
                     foreach (var newItem in e.NewItems)
                     {
-                        var addedSlot = newItem as FrameSlot;
+                        var addedSlot = newItem as Slot;
                         ProcessAddedSlot(addedSlot);
                     }
                     break;
+                case NotifyCollectionChangedAction.Remove:
+                {
+                    foreach (var oldItem in e.OldItems)
+                    {
+                        var removedSlot = oldItem as Slot;
+                        ProcessRemovedSlot(removedSlot);
+                    }
+                    break;
+                }
             }
         }
 
-        private void ProcessAddedSlot(FrameSlot addedFrameSlot)
+        private void ProcessRemovedSlot(Slot removedSlot)
+        {
+            if (removedSlot.IsSystemSlot)
+            {
+                Slots.Add(removedSlot);
+                throw new RemoveSystemSlotAttemptException();
+            }
+        }
+
+        private void ProcessAddedSlot(Slot addedFrameSlot)
         {
             if (Slots.Count(s => ReferenceEquals(s, addedFrameSlot)) > 1)
             {

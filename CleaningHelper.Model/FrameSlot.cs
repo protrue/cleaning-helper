@@ -13,6 +13,12 @@ namespace CleaningHelper.Model
     {
         private Frame _frame;
 
+        public static string TypeFriendlyName => "Фрейм";
+
+        public override string TypeAsString => TypeFriendlyName;
+
+        public override string ValueAsString => Frame?.Name ?? string.Empty;
+
         public Frame Frame
         {
             get => _frame;
@@ -28,5 +34,7 @@ namespace CleaningHelper.Model
         {
             Frame = frame;
         }
+
+
     }
 }

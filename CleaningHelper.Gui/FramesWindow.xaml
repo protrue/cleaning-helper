@@ -40,9 +40,16 @@
 
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
             <MenuItem
-                Header="Редактировать домены"
-                Click="MenuItem_Click"></MenuItem>
+                HorizontalAlignment="Right"
+                Header="Редактировать перечислимые домены"
+                Click="MenuItem_Click">
+            </MenuItem>
         </Menu>
 
         <Grid>
@@ -53,11 +60,13 @@
 
             <GroupBox
                 Grid.Column="0"
-                Header="Визуализация">
+                Header="Фреймы">
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Top" LastChildFill="False">
                         <Button Name="AddFrameButton" Content="Добавить" Margin="10 5" Padding="5" Click="AddFrameButton_OnClick"></Button>
                         <Button Name="RemoveFrameButton" Content="Удалить" Margin="10 5" Padding="5" Click="RemoveFrameButton_OnClick" IsEnabled="{Binding Path=IsFrameSelected}"></Button>
+                        <Button Name="AutoLayoutButton" Content="Авторасположение" Margin="10 5" Padding="5" Click="AutoLayoutButton_OnClick"></Button>
+                        <ComboBox ItemsSource="{Binding Path=LayoutAlgorithms}" SelectedItem="{Binding Path=SelectedLayoutAlgorithm}" Margin="10 5" Padding="5"></ComboBox>
                     </DockPanel>
 
                     <ext:ZoomControl
@@ -65,13 +74,13 @@
                         Mode="Original">
                         <gs:GraphLayout
                             Name="GraphLayout"
-                            LayoutAlgorithmType="Tree"
+                            LayoutAlgorithmType="{Binding Path=SelectedLayoutAlgorithm}"
                             OverlapRemovalAlgorithmType="FSA"
-                            PreviewMouseLeftButtonDown="GraphLayout_PreviewMouseLeftButtonDown">
+                            PreviewMouseDown="GraphLayout_PreviewMouseDown">
                             <gs:GraphLayout.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Добавить"></MenuItem>
-                                    <MenuItem Header="Удалить" IsEnabled="{Binding Path=IsFrameSelected}" Click="RemoveFrameButton_OnClick"></MenuItem>
+                                    <MenuItem Name="AddParentMenuItem" Header="Добавить потомка" Click="AddParentMenuItem_OnClick"></MenuItem>
+                                    <MenuItem Name="AddChildMenuItem" Header="Добавить родителя" Click="AddChildMenuItem_OnClick"></MenuItem>
                                 </ContextMenu>
                             </gs:GraphLayout.ContextMenu>
                         </gs:GraphLayout>
@@ -80,67 +89,52 @@
             </GroupBox>
 
             <GroupBox
-            Header="Инспектор слотов фрейма"
+            Header="Слоты фрейма"
             Grid.Column="1">
-                <DockPanel LastChildFill="True">
-                    <TextBox
-                        DockPanel.Dock="Top"
-                        Text="{Binding Path=SelectedFrame.Name, UpdateSourceTrigger=PropertyChanged}"
-                        Padding="5">
-                    </TextBox>
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" >
+                        <Button Name="AddSlotButton" DockPanel.Dock="Top" Content="Добавить" Margin="10 5" Padding="5" IsEnabled="{Binding Path=IsFrameSelected}" Click="AddSlotButton_OnClick"></Button>
+                        <Button Name="RemoveSlotButton" DockPanel.Dock="Top" Content="Удалить" Margin="10 5" Padding="5" IsEnabled="{Binding Path=IsSlotSelected}" Click="RemoveSlotButton_OnClick"></Button>
+                    </StackPanel>
+                    <GroupBox DockPanel.Dock="Top" Header="Редактировать выбранный слот">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox Grid.Column="0" Text="{Binding Path=SelectedSlot.Name}" IsReadOnly="{Binding Path=IsSlotNameEditable}" Margin="5"></TextBox>
+                            <ComboBox Grid.Column="1" ItemsSource="{Binding Path=FrameModel.Domains}" DisplayMemberPath="Name" SelectedItem="SelectedDomain" IsReadOnly="{Binding Path=IsSlotTypeEditable}" Margin="5"></ComboBox>
+                            <ComboBox Grid.Column="2" Margin="5"></ComboBox>
+                            <TextBox Grid.Column="2" Margin="5"></TextBox>
+                        </Grid>
+                    </GroupBox>
+                    <ListBox></ListBox>
                     <DataGrid
                         Name="SlotsDataGrid"
                         ItemsSource="{Binding Path=SelectedFrame.Slots}"
-                        AutoGenerateColumns="False">
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem
-                                    Name="AddSlotMenuItem"
-                                    Header="Добавить" Click="AddSlotMenuItem_Click" IsEnabled="{Binding Path=IsFraneSelected}">
-                                </MenuItem>
-                                <MenuItem
-                                    Name="EditSlotMenuItem"
-                                    Header="Редактировать домен" IsEnabled="{Binding Path=IsSlotSelected}" Click="EditSlotMenuItem_OnClick">
-                                </MenuItem>
-                                <MenuItem
-                                    Name="RemoveSlotMenuItem"
-                                    Header="Удалить" IsEnabled="{Binding Path=IsSlotSelected}" Click="RemoveSlotMenuItem_OnClick">
-                                </MenuItem>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
+                        AutoGenerateColumns="False"
+                        SelectedItem="{Binding Path=SelectedSlot}">
                         <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Header="C" Binding="{Binding IsSystemSlot}" IsReadOnly="True"></DataGridCheckBoxColumn>
+                            <DataGridCheckBoxColumn Header="З" Binding="{Binding IsRequestable}"></DataGridCheckBoxColumn>
+                            <DataGridCheckBoxColumn Header="Р" Binding="{Binding IsResult}"></DataGridCheckBoxColumn>
                             <DataGridTextColumn
-                        Header="Имя" 
-                        Binding="{Binding Path=Name}"
-                        Width="*"/>
-                            <DataGridComboBoxColumn 
-                                x:Name="DomainComboBoxColumn"
+                                Header="Имя" 
+                                Binding="{Binding Path=Name, Mode=OneWay}"
+                                Width="*"
+                                IsReadOnly="True"/>
+                            <DataGridTextColumn 
                                 Header="Тип"
+                                Binding="{Binding Path=TypeAsString, Mode=OneWay}"
                                 Width="*"
-                                ItemsSource="{Binding Path=FrameModel.Domains}"
-                                DisplayMemberPath="Name"
-                                SelectedItemBinding="{Binding Path=SelectedSlot.Domain}"/>
-                            <DataGridComboBoxColumn
-                                x:Name="ValueComboBoxColumn"
+                                IsReadOnly="True"/>
+                            <DataGridTextColumn
                                 Header="Значение"
-                                Width="*"
-                                DisplayMemberPath="Text"
-                                SelectedItemBinding="{Binding Path=SelectedSlot.Value}">
-                                <DataGridComboBoxColumn.ElementStyle>
-                                    <Style TargetType="ComboBox">
-                                        <Setter
-                                            Property="ItemsSource"
-                                            Value="{Binding Path=Domain.Values}"/>
-                                    </Style>
-                                </DataGridComboBoxColumn.ElementStyle>
-                                <DataGridComboBoxColumn.EditingElementStyle>
-                                    <Style TargetType="ComboBox">
-                                        <Setter
-                                            Property="ItemsSource"
-                                            Value="{Binding Path=Domain.Values}"/>
-                                    </Style>
-                                </DataGridComboBoxColumn.EditingElementStyle>
-                            </DataGridComboBoxColumn>
+                                Binding="{Binding Path=ValueAsString, Mode=OneWay}"
+                                Width="*">
+                            </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
