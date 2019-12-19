@@ -33,7 +33,7 @@ namespace CleaningHelper.Gui
 
         private void AddDomainMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.FrameModel.Domains.Add(new FrameSlotDomain("новый домен"));
+            ViewModel.FrameModel.Domains.Add(new Domain("новый домен"));
         }
 
         private void RemoveDomainMenuItem_Click(object sender, RoutedEventArgs e)

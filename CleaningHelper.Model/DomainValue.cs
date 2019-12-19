@@ -9,7 +9,10 @@ using CleaningHelper.Model.Annotations;
 
 namespace CleaningHelper.Model
 {
-    public class FrameSlotDomainValue : INotifyPropertyChanged
+    /// <summary>
+    /// Значение домена
+    /// </summary>
+    public class DomainValue : INotifyPropertyChanged
     {
         private string _text;
 
@@ -23,15 +26,17 @@ namespace CleaningHelper.Model
             }
         }
 
-        public FrameSlotDomainValue(string text)
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public DomainValue(string text)
         {
             Text = text;
         }
 
-        public static implicit operator FrameSlotDomainValue(string text) =>
-            text == null ? null : new FrameSlotDomainValue(text);
+        public static implicit operator DomainValue(string text) =>
+            text == null ? null : new DomainValue(text);
 
-        protected bool Equals(FrameSlotDomainValue other)
+        protected bool Equals(DomainValue other)
         {
             return _text == other._text;
         }
@@ -41,16 +46,14 @@ namespace CleaningHelper.Model
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((FrameSlotDomainValue) obj);
+            return Equals((DomainValue) obj);
         }
 
         public override int GetHashCode()
         {
             return (_text != null ? _text.GetHashCode() : 0);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

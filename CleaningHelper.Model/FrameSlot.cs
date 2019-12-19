@@ -1,87 +1,32 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using CleaningHelper.Model.Annotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CleaningHelper.Model
 {
-
-    public class FrameSlot : INotifyPropertyChanged
+    /// <summary>
+    /// Слот фреймого типа (указатель на другой фрейм)
+    /// </summary>
+    public class FrameSlot : Slot
     {
-        private FrameSlotDomainValue _value;
-        private string _name;
-        private FrameSlotDomain _domain;
-        private bool _isResult;
+        private Frame _frame;
 
-        /// <summary>
-        /// Имя слота
-        /// </summary>
-        public string Name
+        public Frame Frame
         {
-            get => _name;
+            get => _frame;
             set
             {
-                _name = value; 
-                OnPropertyChanged(nameof(Name));
+                _frame = value;
+                OnPropertyChanged(nameof(Frame));
             }
         }
 
-        /// <summary>
-        /// Домен слота
-        /// </summary>
-        public FrameSlotDomain Domain
+        public FrameSlot(string name, Frame frame = null, bool isSystemSlot = false, bool isRequestable = false, bool isResult = false) :
+            base(name, isSystemSlot, isRequestable, isResult)
         {
-            get => _domain;
-            set
-            {
-                _domain = value; 
-                OnPropertyChanged(nameof(Domain));
-            }
-        }
-
-        /// <summary>
-        /// Значение слота
-        /// </summary>
-        public FrameSlotDomainValue Value
-        {
-            get => _value;
-            set
-            {
-                if (!Domain.Values.Contains(value) && value != null)
-                    throw new ArgumentOutOfRangeException(nameof(value), "Значение должно быть из домена");
-
-                _value = value;
-                OnPropertyChanged(nameof(Value));
-            }
-        }
-
-        /// <summary>
-        /// Является ли слот результатом
-        /// </summary>
-        public bool IsResult
-        {
-            get => _isResult;
-            set
-            {
-                _isResult = value;
-                OnPropertyChanged(nameof(IsResult));
-            }
-        }
-
-        public FrameSlot(string name, FrameSlotDomain domain, FrameSlotDomainValue value = null, bool isResult = false)
-        {
-            Name = name;
-            Domain = domain;
-            Value = value;
-            IsResult = isResult;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Frame = frame;
         }
     }
 }

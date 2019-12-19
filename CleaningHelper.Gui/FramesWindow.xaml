@@ -61,12 +61,15 @@
                     </DockPanel>
 
                     <ext:ZoomControl
-                        Name="ZoomControl">
+                        Name="ZoomControl"
+                        Mode="Original"
+                        ModifierMode="None">
                         <gs:GraphLayout
                             Name="GraphLayout"
                             LayoutAlgorithmType="Tree"
                             OverlapRemovalAlgorithmType="FSA"
-                            PreviewMouseLeftButtonDown="GraphLayout_PreviewMouseLeftButtonDown">
+                            PreviewMouseLeftButtonDown="GraphLayout_PreviewMouseLeftButtonDown"
+                            LayoutMode="Compound">
                             <gs:GraphLayout.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="Добавить"></MenuItem>

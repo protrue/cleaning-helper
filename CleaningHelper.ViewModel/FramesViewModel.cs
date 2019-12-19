@@ -13,7 +13,7 @@ namespace CleaningHelper.ViewModel
     {
         private BidirectionalGraph<object, IEdge<object>> _graph; 
         private Frame _selectedFrame;
-        private FrameSlot _selectedSlot;
+        private FrameSlot _selectedFrameSlot;
         public event PropertyChangedEventHandler PropertyChanged;
         public FrameModel FrameModel { get; set; }
 
@@ -44,19 +44,19 @@ namespace CleaningHelper.ViewModel
             }
         }
 
-        public FrameSlot SelectedSlot
+        public FrameSlot SelectedFrameSlot
         {
-            get => _selectedSlot;
+            get => _selectedFrameSlot;
             set
             {
-                _selectedSlot = value;
-                OnPropertyChanged(nameof(SelectedSlot));
+                _selectedFrameSlot = value;
+                OnPropertyChanged(nameof(SelectedFrameSlot));
             }
         }
 
         public bool IsFrameSelected => SelectedFrame != null;
         
-        public bool IsSlotSelected => SelectedSlot != null;
+        public bool IsSlotSelected => SelectedFrameSlot != null;
 
         public FrameModel TestFrameModel
         {
@@ -64,16 +64,16 @@ namespace CleaningHelper.ViewModel
             {
                 var domains = new[]
                 {
-                    new FrameSlotDomain("Логический", new[]
+                    new Domain("Логический", new[]
                     {
-                        new FrameSlotDomainValue("Да"),
-                        new FrameSlotDomainValue("Нет"),
-                    }),
-                    new FrameSlotDomain("Ткань", new[]
+                        new DomainValue("Да"),
+                        new DomainValue("Нет"),
+                    }), 
+                    new Domain("Ткань", new[]
                     {
-                        new FrameSlotDomainValue("Хлопок"),
-                        new FrameSlotDomainValue("Синтетика"),
-                    }),
+                        new DomainValue("Хлопок"),
+                        new DomainValue("Синтетика"),
+                    }), 
                 };
 
                 var frames = new[]
@@ -86,7 +86,7 @@ namespace CleaningHelper.ViewModel
 
                 var frameModel = new FrameModel();
 
-                frames[0].Slots.Add(new FrameSlot("Имя слота", domains[0], domains[0].Values[0]));
+                frames[0].Slots.Add(new DomainSlot("Имя слота", domains[0], domains[0][0]));
                 frames[1].Parent = frames[0];
                 frames[2].Parent = frames[1];
                 frames[3].Parent = frames[1];

@@ -10,6 +10,9 @@ using System.Xml.Schema;
 
 namespace CleaningHelper.Model
 {
+    /// <summary>
+    /// Фреймовая модель
+    /// </summary>
     public class FrameModel
     {
         private Frame _frameToDelete;
@@ -22,15 +25,25 @@ namespace CleaningHelper.Model
         /// <summary>
         /// Домены модели
         /// </summary>
-        public ObservableCollection<FrameSlotDomain> Domains { get; }
+        public ObservableCollection<Domain> Domains { get; }
 
+        /// <summary>
+        /// Фрейм по индексу
+        /// </summary>
+        /// <param name="index">Индекс</param>
+        /// <returns>Фрейм</returns>
         public Frame this[int index] => Frames[index];
 
+        /// <summary>
+        /// Фрейм по имени
+        /// </summary>
+        /// <param name="name">Имя фрейма</param>
+        /// <returns>Фрейм</returns>
         public Frame this[string name] => Frames.First(f => f.Name == name);
 
         public FrameModel()
         {
-            Domains = new ObservableCollection<FrameSlotDomain>();
+            Domains = new ObservableCollection<Domain>();
             Frames = new ObservableCollection<Frame>();
 
             Domains.CollectionChanged += DomainsOnCollectionChanged;
@@ -72,7 +85,7 @@ namespace CleaningHelper.Model
                     {
                         foreach (var newItem in e.NewItems)
                         {
-                            var domain = newItem as FrameSlotDomain;
+                            var domain = newItem as Domain;
                             ProcessAddedDomain(domain);
                         }
 
@@ -82,7 +95,7 @@ namespace CleaningHelper.Model
                     {
                         foreach (var oldItem in e.OldItems)
                         {
-                            var domain = oldItem as FrameSlotDomain;
+                            var domain = oldItem as Domain;
                             ProcessRemovedDomain(domain);
                         }
 
@@ -93,16 +106,16 @@ namespace CleaningHelper.Model
 
         private void ProcessAddedFrame(Frame frame)
         {
-            //if (frame == null)
-            //    throw new ArgumentNullException(nameof(frame), "Фрейм не может быть null");
+            if (frame == null)
+                throw new ArgumentNullException(nameof(frame), "Фрейм не может быть null");
 
-            //if (Frames.Count(f => ReferenceEquals(f, frame)) > 1)
-            //{
-            //    Frames.Remove(frame);
-            //    throw new ArgumentException("Такой фрейм уже есть в модели", nameof(frame));
-            //}
+            if (Frames.Count(f => ReferenceEquals(f, frame)) > 1)
+            {
+                Frames.Remove(frame);
+                throw new ArgumentException("Такой фрейм уже есть в модели", nameof(frame));
+            }
 
-            foreach (var slot in frame.Slots)
+            foreach (var slot in frame.Slots.OfType<DomainSlot>())
             {
                 var domain = slot.Domain;
 
@@ -115,12 +128,6 @@ namespace CleaningHelper.Model
 
         private void ProcessRemovedFrame(Frame frame)
         {
-            //if (frame == null)
-            //    throw new ArgumentNullException(nameof(frame), "Фрейм не может быть null");
-
-            //if (!Frames.Contains(frame))
-            //    throw new ArgumentException("Такого фрейма нет в модели", nameof(frame));
-
             _frameToDelete = frame;
 
             frame.Parent = null;
@@ -163,27 +170,21 @@ namespace CleaningHelper.Model
                 Frames.Add(frame);
         }
 
-        public void ProcessAddedDomain(FrameSlotDomain domain)
+        private void ProcessAddedDomain(Domain domain)
         {
-            //if (Domains.Contains(domain))
-            //{
-            //    Domains.Remove(domain);
-            //    throw new ArgumentException("Такой домен уже есть в модели", nameof(domain));
-            //}
+            if (Domains.Count(d => ReferenceEquals(d, domain)) > 1)
+            {
+                Domains.Remove(domain);
+                throw new ArgumentException("Такой домен уже есть в модели", nameof(domain));
+            }
         }
 
-        public void ProcessRemovedDomain(FrameSlotDomain domain)
+        private void ProcessRemovedDomain(Domain domain)
         {
-            //if (domain == null)
-            //    throw new ArgumentNullException(nameof(domain), "Домен не может быть null");
-
-            //if (!Domains.Contains(domain))
-            //    throw new ArgumentException("Такого домена нет в модели", nameof(domain));
-
-            var useList = new List<Tuple<Frame, FrameSlot>>();
+            var useList = new List<Tuple<Frame, DomainSlot>>();
 
             foreach (var frame in Frames)
-                foreach (var slot in frame.Slots)
+                foreach (var slot in frame.Slots.OfType<DomainSlot>())
                     if (slot.Domain == domain)
                         useList.Add(Tuple.Create(frame, slot));
 
@@ -194,13 +195,13 @@ namespace CleaningHelper.Model
             }
         }
 
-        public List<Tuple<Frame, FrameSlot, FrameSlotDomain>> CheckDomainValueIntegrity(FrameSlotDomainValue valueToCheck)
+        public List<Tuple<Frame, DomainSlot, Domain>> CheckDomainValueIntegrity(DomainValue valueToCheck)
         {
-            var usedList = new List<Tuple<Frame, FrameSlot, FrameSlotDomain>>();
+            var usedList = new List<Tuple<Frame, DomainSlot, Domain>>();
 
             foreach (var frame in Frames)
             {
-                foreach (var slot in frame.Slots)
+                foreach (var slot in frame.Slots.OfType<DomainSlot>())
                 {
                     var domain = slot.Domain;
 
@@ -214,13 +215,13 @@ namespace CleaningHelper.Model
             return usedList;
         }
 
-        public List<Tuple<Frame, FrameSlot, FrameSlotDomain, FrameSlotDomainValue>> RestoreDomainValueIntegrity()
+        public List<Tuple<Frame, DomainSlot, Domain, DomainValue>> RestoreDomainValueIntegrity()
         {
-            var resetList = new List<Tuple<Frame, FrameSlot, FrameSlotDomain, FrameSlotDomainValue>>();
+            var resetList = new List<Tuple<Frame, DomainSlot, Domain, DomainValue>>();
 
             foreach (var frame in Frames)
             {
-                foreach (var slot in frame.Slots)
+                foreach (var slot in frame.Slots.OfType<DomainSlot>())
                 {
                     var domain = slot.Domain;
                     var value = slot.Value;

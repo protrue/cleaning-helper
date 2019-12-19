@@ -69,12 +69,12 @@ namespace CleaningHelper.Gui
 
         private void AddSlotMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.SelectedFrame.Slots.Add(new FrameSlot("новый слот", ViewModel.FrameModel.Domains[0]));
+            ViewModel.SelectedFrame.Slots.Add(new TextSlot("новый слот"));;
         }
 
         private void RemoveSlotMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.SelectedFrame.Slots.Remove(ViewModel.SelectedSlot);
+            ViewModel.SelectedFrame.Slots.Remove(ViewModel.SelectedFrameSlot);
         }
 
         private void EditSlotMenuItem_OnClick(object sender, RoutedEventArgs e)

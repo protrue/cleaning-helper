@@ -43,14 +43,17 @@
     <Compile Include="DomainIsInUseException.cs" />
     <Compile Include="Frame.cs" />
     <Compile Include="FrameModel.cs" />
+    <Compile Include="DomainSlot.cs" />
+    <Compile Include="DomainValue.cs" />
     <Compile Include="FrameSlot.cs" />
-    <Compile Include="FrameSlotDomainValue.cs" />
+    <Compile Include="Slot.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relation.cs" />
     <Compile Include="SemanticNetwork.cs" />
     <Compile Include="SemanticNetworkExtensions.cs" />
-    <Compile Include="FrameSlotDomain.cs" />
+    <Compile Include="Domain.cs" />
+    <Compile Include="TextSlot.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

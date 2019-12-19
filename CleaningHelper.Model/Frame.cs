@@ -1,27 +1,50 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CleaningHelper.Model.Annotations;
 
 namespace CleaningHelper.Model
 {
+    /// <summary>
+    /// Фрейм
+    /// </summary>
     public class Frame : INotifyPropertyChanged
     {
-        private Frame _parent;
-        private string _name;
+        private readonly TextSlot _nameSystemSlot;
+        private readonly FrameSlot _parentSystemSlot;
+
+        public readonly string NameSlotName = "Имя";
+        public readonly string ParentSlotName = "Родитель";
+        public readonly string RecipeSlotName = "Рецепт";
+
+        /// <summary>
+        /// Слот по индексу
+        /// </summary>
+        /// <param name="index">Индекс</param>
+        /// <returns>Слот</returns>
+        public Slot this[int index] => Slots[index];
+
+        /// <summary>
+        /// Слот по имени
+        /// </summary>
+        /// <param name="name">Имя слота</param>
+        /// <returns>Слот</returns>
+        public Slot this[string name] => Slots.First(s => s.Name == name);
 
         /// <summary>
         /// Имя фрейма
         /// </summary>
         public string Name
         {
-            get => _name;
+            get => _nameSystemSlot.Text;
             set
             {
-                _name = value;
+                _nameSystemSlot.Text = value;
                 OnPropertyChanged(nameof(Name));
             }
         }
@@ -31,11 +54,11 @@ namespace CleaningHelper.Model
         /// </summary>
         public Frame Parent
         {
-            get => _parent;
+            get => _parentSystemSlot.Frame;
             set
             {
-                Frame oldParent = _parent;
-                _parent = value;
+                var oldParent = _parentSystemSlot.Frame;
+                _parentSystemSlot.Frame = value;
                 ProcessParentChange(oldParent, value);
                 OnPropertyChanged(nameof(Parent));
             }
@@ -49,17 +72,30 @@ namespace CleaningHelper.Model
         /// <summary>
         /// Список слотов
         /// </summary>
-        public ObservableCollection<FrameSlot> Slots { get; }
+        public ObservableCollection<Slot> Slots { get; }
 
         public Frame(string name)
         {
             Name = name;
             Children = new ObservableCollection<Frame>();
-            Slots = new ObservableCollection<FrameSlot>();
+            Slots = new ObservableCollection<Slot>();
+
+            _nameSystemSlot = new TextSlot(NameSlotName, isSystemSlot: true);
+            _parentSystemSlot = new FrameSlot(ParentSlotName, isSystemSlot: true);
+
+            Slots.Add(_nameSystemSlot);
+            Slots.Add(_parentSystemSlot);
+            Slots.Add(new TextSlot(RecipeSlotName, isSystemSlot: true));
 
             Children.CollectionChanged += ChildrenOnCollectionChanged;
             Slots.CollectionChanged += SlotsOnCollectionChanged;
         }
+
+        public TextSlot GetNameSystemSlot() =>
+            Slots.OfType<TextSlot>().First(s => s.Name == NameSlotName && s.IsSystemSlotSlot);
+
+        public FrameSlot GetParentSystemSlot() =>
+            Slots.OfType<FrameSlot>().First(s => s.Name == ParentSlotName && s.IsSystemSlotSlot);
 
         private void SlotsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -75,13 +111,13 @@ namespace CleaningHelper.Model
             }
         }
 
-        private void ProcessAddedSlot(FrameSlot addedSlot)
+        private void ProcessAddedSlot(FrameSlot addedFrameSlot)
         {
-            //if (Slots.Contains(addedSlot))
-            //{
-            //    Slots.Remove(addedSlot);
-            //    throw new ArgumentException("Такой слот уже есть у этого фрейма", nameof(addedSlot));
-            //}
+            if (Slots.Count(s => ReferenceEquals(s, addedFrameSlot)) > 1)
+            {
+                Slots.Remove(addedFrameSlot);
+                throw new ArgumentException("Такой слот уже есть у этого фрейма", nameof(addedFrameSlot));
+            }
         }
 
         private void ChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -99,7 +135,7 @@ namespace CleaningHelper.Model
                     foreach (var oldItem in e.OldItems)
                     {
                         var removedChild = oldItem as Frame;
-                        ProcessAddedChild(removedChild);
+                        ProcessRemovedChild(removedChild, e.OldItems);
                     }
                     break;
             }
@@ -119,24 +155,18 @@ namespace CleaningHelper.Model
 
         private void ProcessAddedChild(Frame child)
         {
-            //if (child == null)
-            //    throw new ArgumentNullException(nameof(child));
+            if (child == null)
+                throw new ArgumentNullException(nameof(child));
 
-            //if (Children.Contains(child))
-            //    throw new ArgumentException("Фрейм уже является наследником", nameof(child));
+            if (Children.Count(c => ReferenceEquals(c, child)) > 1)
+                throw new ArgumentException("Фрейм уже является наследником", nameof(child));
 
-            child._parent = this;
+            child._parentSystemSlot.Frame = this;
         }
 
-        private void ProcessRemovedChild(Frame child)
+        private void ProcessRemovedChild(Frame child, IList oldItems)
         {
-            //if (child == null)
-            //    throw new ArgumentNullException(nameof(child));
-
-            //if (!Children.Contains(child))
-            //    new ArgumentException("Нет такого фрейма-наследника", nameof(child));
-
-            child._parent = null;
+            child._parentSystemSlot.Frame = null;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

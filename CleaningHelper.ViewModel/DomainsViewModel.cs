@@ -12,13 +12,13 @@ namespace CleaningHelper.ViewModel
 {
     public class DomainsViewModel : INotifyPropertyChanged
     {
-        private FrameSlotDomain _selectedDomain;
-        private FrameSlotDomainValue _selectedValue;
+        private Domain _selectedDomain;
+        private DomainValue _selectedValue;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public FrameModel FrameModel { get; set; }
 
-        public FrameSlotDomain SelectedDomain
+        public Domain SelectedDomain
         {
             get => _selectedDomain;
             set
@@ -28,7 +28,7 @@ namespace CleaningHelper.ViewModel
             }
         }
 
-        public FrameSlotDomainValue SelectedValue
+        public DomainValue SelectedValue
         {
             get => _selectedValue;
             set
