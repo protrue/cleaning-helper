@@ -47,9 +47,11 @@ namespace CleaningHelper.ViewModel
             }
         }
 
-        public bool IsEditModelButtonEnabled => File.Exists(PathToOntolis) && Model != null;
+//        public bool IsEditModelButtonEnabled => File.Exists(PathToOntolis) && Model != null;
+        public bool IsEditModelButtonEnabled => true;
 
-        public bool IsStartConsultationButtonEnabled => Model != null;
+//        public bool IsStartConsultationButtonEnabled => Model != null;
+        public bool IsStartConsultationButtonEnabled => true;
 
         public OntolisDataObject OntolisDataObject
         {

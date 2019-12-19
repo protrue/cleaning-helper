@@ -32,13 +32,13 @@ namespace CleaningHelper.Model
         public static Concept GetSlotByInstance(this SemanticNetwork semanticNetwork, Concept slotInstance)
         {
             return semanticNetwork.Relations.WithName("name").GetEndConcepts(slotInstance).FirstOrDefault() ??
-                   throw new Exception("Slot instance node has no name relation");
+                   throw new Exception("FrameSlot instance node has no name relation");
         }
 
         public static Concept GetSlotValue(this SemanticNetwork semanticNetwork, Concept slotInstance)
         {
             return semanticNetwork.Relations.WithName("value").GetEndConcepts(slotInstance).FirstOrDefault() ??
-                   throw new Exception("Slot instance node has no value relation");
+                   throw new Exception("FrameSlot instance node has no value relation");
         }
 
         public static IEnumerable<Concept> GetSlotDomainValues(this SemanticNetwork semanticNetwork, Concept slot)
@@ -46,7 +46,7 @@ namespace CleaningHelper.Model
             var slotEndConcepts = semanticNetwork.Relations.WithName("has").GetEndConcepts(slot);
             var unnamedValuesConcept =
                 slotEndConcepts.FirstOrDefault(x => semanticNetwork.Concepts.GetUnnamed().Contains(x)) ??
-                throw new Exception("Slot has no unnamed node for values");
+                throw new Exception("FrameSlot has no unnamed node for values");
             return semanticNetwork.Relations.GetEndConcepts(unnamedValuesConcept);
         }
 
