@@ -256,20 +256,43 @@ namespace CleaningHelper.Core
 
         private Frame _getMostCommonSubframe()
         {
-            var used_subframes = new List<FrameSlot>();
+            var subframes_count = new Dictionary<Frame, int>();
 
             foreach (var frame in _model.Frames)
             {
-                used_subframes.AddRange(frame.Slots.Where(x => x is FrameSlot && !x.IsSystemSlot)
-                    .Select(x => x as FrameSlot));
+                foreach (var subframe in frame.Slots.Where(x => x is FrameSlot && !x.IsSystemSlot)
+                    .Select(x => x as FrameSlot))
+                {
+                    if (!subframes_count.ContainsKey(subframe.Frame))
+                        subframes_count[subframe.Frame] = 0;
+                    subframes_count[subframe.Frame] += 1;
+                }
             }
+            
+            if (subframes_count.Count == 0)
+                return null;
+            return subframes_count.OrderBy(x => x.Value).LastOrDefault().Key;
 
-            return used_subframes.FirstOrDefault()?.Frame;
+            // return used_subframes.FirstOrDefault()?.Frame;
 
-            var maxUsed = used_subframes.Max(x => used_subframes.Count(y => y == x));
-            var result = used_subframes.FirstOrDefault(x => used_subframes.Count(y => y == x) == maxUsed);
-            var frameSlot = result as FrameSlot;
-            return frameSlot?.Frame;
+            // var maxUsed = used_subframes.Max(x => used_subframes.Count(y => y == x));
+            // var result = used_subframes.FirstOrDefault(x => used_subframes.Count(y => y == x) == maxUsed);
+            // var frameSlot = result as FrameSlot;
+            // return frameSlot?.Frame;
+            // var used_subframes = new List<FrameSlot>();
+            //
+            // foreach (var frame in _model.Frames)
+            // {
+            //     used_subframes.AddRange(frame.Slots.Where(x => x is FrameSlot && !x.IsSystemSlot)
+            //         .Select(x => x as FrameSlot));
+            // }
+            //
+            // // return used_subframes.FirstOrDefault()?.Frame;
+            //
+            // var maxUsed = used_subframes.Max(x => used_subframes.Count(y => y == x));
+            // var result = used_subframes.FirstOrDefault(x => used_subframes.Count(y => y == x) == maxUsed);
+            // var frameSlot = result as FrameSlot;
+            // return frameSlot?.Frame;
         }
 
         private Frame _getAnyLeaf()

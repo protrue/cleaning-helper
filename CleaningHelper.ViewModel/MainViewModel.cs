@@ -85,6 +85,10 @@ namespace CleaningHelper.ViewModel
                     /* 15 */ new Frame("Старое кровавое на светлом хлопке"),
                     /* 16 */ new Frame("Старое кровавое на тёмном хлопке"),   
                     
+                    /* 17 */ new Frame("Неделикатная ткань"),
+                    /* 18 */ new Frame("Тёмный лён"),
+                    /* 19 */ new Frame("Старое жирное на тёмном льне"),
+                    // /* 20 */ new Frame("Тёмный деним"),
                     
                 };
                 
@@ -133,6 +137,19 @@ namespace CleaningHelper.ViewModel
                 
                 frames[15].Slots.Add(new FrameSlot("Тип пятна", frames[13]));
                 frames[15].Parent = frames[3];
+                
+                frames[16].Slots.Add(new FrameSlot("Тип пятна", frames[13]));
+                frames[16].Parent = frames[4];
+                
+                frames[17].Slots.Add(new DomainSlot("Деликатная", domains[0], domains[0][1]));
+                frames[17].Parent = frames[1];
+                
+                frames[18].Slots.Add(new DomainSlot("Цвет ткани", domains[2], domains[2][1], false, true));
+                frames[18].Slots.Add(new DomainSlot("Ткань", domains[3], domains[3][2], false, true));
+                frames[18].Parent = frames[17];
+                
+                frames[19].Slots.Add(new FrameSlot("Тип пятна", frames[10]));
+                frames[19].Parent = frames[18];
                 
                 foreach (var domain in domains)
                 {
