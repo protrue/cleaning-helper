@@ -76,7 +76,7 @@ namespace CleaningHelper.Core
                     continue;
                 }
 
-                var topFrameSlotsSuits = checkSlotsSuits(_bindingStack.Peek());
+                var topFrameSlotsSuits = CheckSlotsSuits(_bindingStack.Peek());
                 Console.WriteLine("Top frame " + _bindingStack.Peek().Name + " " +  (topFrameSlotsSuits));
                 if (topFrameSlotsSuits == true)
                 {
@@ -104,7 +104,7 @@ namespace CleaningHelper.Core
                 }
                 else
                 {
-                    var slot = findFirstSlotToAsk(_bindingStack.Peek());
+                    var slot = FindFirstSlotToAsk(_bindingStack.Peek());
                     if (slot.IsRequestable)
                     {
                         _askSlot = slot;
@@ -124,10 +124,10 @@ namespace CleaningHelper.Core
             {
                 var frames = _model.Frames.Where(x =>
                     x.Slots.Where(z => z is FrameSlot).Select(y => (y as FrameSlot).Frame).Contains(subframe));
-                var suitFrames = frames.Where(x => checkSlotsSuits(x) == true && !_bindedFrames.ContainsKey(x));
+                var suitFrames = frames.Where(x => CheckSlotsSuits(x) == true && !_bindedFrames.ContainsKey(x));
                 if (suitFrames.Count() != 0)
                     return suitFrames.First();
-                var unusedFrames = frames.Where(x => checkSlotsSuits(x) == null && !_bindedFrames.ContainsKey(x));
+                var unusedFrames = frames.Where(x => CheckSlotsSuits(x) == null && !_bindedFrames.ContainsKey(x));
                 if (unusedFrames.Count() != 0)
                     return unusedFrames.FirstOrDefault();
 
@@ -136,10 +136,10 @@ namespace CleaningHelper.Core
                     frames = frames.Select(x => x.Parent);
                     if (frames.Contains(null))
                         return null;
-                    suitFrames = frames.Where(x => checkSlotsSuits(x) == true && !_bindedFrames.ContainsKey(x));
+                    suitFrames = frames.Where(x => CheckSlotsSuits(x) == true && !_bindedFrames.ContainsKey(x));
                     if (suitFrames.Count() != 0)
                         return suitFrames.First();
-                    unusedFrames = frames.Where(x => checkSlotsSuits(x) == null && !_bindedFrames.ContainsKey(x));
+                    unusedFrames = frames.Where(x => CheckSlotsSuits(x) == null && !_bindedFrames.ContainsKey(x));
                     if (unusedFrames.Count() != 0)
                         return unusedFrames.FirstOrDefault();
                 }
@@ -155,10 +155,10 @@ namespace CleaningHelper.Core
                         .Select(x => x as FrameSlot));
                 }
                
-                var suitFrames = subframes.Where(x => checkSlotsSuits(x.Frame) == true && !_bindedFrames.ContainsKey(x.Frame));
+                var suitFrames = subframes.Where(x => CheckSlotsSuits(x.Frame) == true && !_bindedFrames.ContainsKey(x.Frame));
                 if (suitFrames.Count() != 0)
                     return suitFrames.First()?.Frame;
-                var unusedFrames = subframes.Where(x => checkSlotsSuits(x.Frame) == null && !_bindedFrames.ContainsKey(x.Frame));
+                var unusedFrames = subframes.Where(x => CheckSlotsSuits(x.Frame) == null && !_bindedFrames.ContainsKey(x.Frame));
                 return unusedFrames.FirstOrDefault()?.Frame;
             }
             
@@ -169,7 +169,7 @@ namespace CleaningHelper.Core
             _memory[_askSlot.Name] = value;
         }
 
-        private Slot findFirstSlotToAsk(Frame frame)
+        private Slot FindFirstSlotToAsk(Frame frame)
         {
             foreach (var slot in frame.Slots)
             {
@@ -183,7 +183,42 @@ namespace CleaningHelper.Core
             throw new Exception($"Frame {frame} was expected to have unasked slots");
         }
 
-        private bool? checkSlotsSuits(Frame frame)
+        public Frame GetAnswer()
+        {
+            var result = _resultFrame;
+            while (result != null && result.Parent != null)
+                result = result.Parent;
+            if (result != null)
+                return result;
+            
+            if (_bindedSubframe != null)
+                return _bindedSubframe; // must not happen
+            return null;
+        }
+        
+        public FrameModel GetInferringPath()
+        {
+            var model = new FrameModel();
+            var result = _resultFrame;
+            
+            while (result != null)
+            {
+                model.Frames.Add(result);
+                result = result.Parent;
+            }
+            
+            var subframe = _bindedSubframe;
+            
+            while (subframe != null)
+            {
+                model.Frames.Add(subframe);
+                subframe = subframe.Parent;
+            }
+
+            return model;
+        }
+
+        private bool? CheckSlotsSuits(Frame frame)
         {
             var hasUnsetSlots = false;
             foreach (var slot in frame.Slots)
