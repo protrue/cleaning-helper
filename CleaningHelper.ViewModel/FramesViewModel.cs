@@ -44,7 +44,7 @@ namespace CleaningHelper.ViewModel
                     {
                         if (slot is FrameSlot frameSlot && frameSlot.Frame != null && !frameSlot.IsSystemSlot)
                         {
-                            graph.AddEdge(new AlternateEdge(frame, frameSlot.Frame)
+                            graph.AddEdge(new AlternateEdge(frameSlot.Frame, frame)
                             {
                                 EdgeColor = Colors.Blue
                             });
