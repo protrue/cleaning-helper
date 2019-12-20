@@ -16,6 +16,10 @@ namespace CleaningHelper.ViewModel
     public class ConsultationViewModel : INotifyPropertyChanged
     {
         private FrameModel _frameModel;
+        private string _questionText;
+        private ObservableCollection<DomainValue> _answersList = new ObservableCollection<DomainValue>();
+        private DomainValue _selectedAnswer;
+        private Frame _result;
         
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -28,19 +32,100 @@ namespace CleaningHelper.ViewModel
                 OnPropertyChanged(nameof(FrameModel));
             }
         }
+        
+        public Frame Result
+        {
+            get => _result;
+            set
+            {
+                _result = value;
+                OnPropertyChanged(nameof(Result));
+            }
+        }
 
-        public Reasoner Reasoner { get; set; }
+        public DownUpReasoner Reasoner { get; set; }
 
         public ConsultationViewModel(FrameModel frameModel)
         {
             FrameModel = frameModel;
-            Reasoner = new Reasoner();
+            Reasoner = new DownUpReasoner(frameModel, new []{"Ингредиент", "Рецепт"});
         }
+
+        public Command SetAnswerCommand => new Command(parameter =>
+        {
+            if (SelectedAnswer == null || Reasoner.AnswerFound)
+                return;
+            
+            Reasoner.SetAnswer(SelectedAnswer);
+
+            if (!Reasoner.AnswerFound)
+                SetQuestionCommand.Execute();
+            else
+                Result = Reasoner.GetAnswer();
+        });
+
+        public Command SetResultCommand => new Command(parameter => { });
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        
+        public string QuestionText
+        {
+            get => _questionText;
+            set
+            {
+                _questionText = value;
+                OnPropertyChanged(nameof(QuestionText));
+            }
+        }
+        
+        public ObservableCollection<DomainValue> AnswersList
+        {
+            get => _answersList;
+            set
+            {
+                _answersList = value;
+                OnPropertyChanged(nameof(AnswersList));
+            }
+        }
+        
+        public DomainValue SelectedAnswer
+        {
+            get => _selectedAnswer;
+            set
+            {
+                _selectedAnswer = value;
+                OnPropertyChanged(nameof(SelectedAnswer));
+            }
+        }
+        
+        public Command SetQuestionCommand => new Command(parameter =>
+        {
+            var slot = Reasoner.GetNextValueToAsk();
+
+            if (Reasoner.AnswerFound)
+            {
+                Result = Reasoner.GetAnswer();
+                return;
+            }
+
+            if (slot == null)
+            {
+                Result = null;
+                return;
+            }
+
+            QuestionText = $"{slot.Name}?";
+            AnswersList.Clear();
+            foreach (var slotDomainValue in slot.Domain.Values)
+            {
+                AnswersList.Add(slotDomainValue);
+            }
+
+            SelectedAnswer = AnswersList.FirstOrDefault();
+        });
     }
 }

@@ -28,6 +28,8 @@ namespace CleaningHelper.Core
             _goalSlotNames = goalSlotNames;
         }
 
+        public bool AnswerFound { get => _bindedSubframe != null && _resultFrame != null; }
+
         public DomainSlot GetNextValueToAsk()
         {
             if (_bindingCandidate == null)
@@ -196,14 +198,14 @@ namespace CleaningHelper.Core
             return null;
         }
         
-        public FrameModel GetInferringPath()
+        public List<Frame> GetInferringPath()
         {
-            var model = new FrameModel();
+            var selectedFrames = new List<Frame>();
             var result = _resultFrame;
             
             while (result != null)
             {
-                model.Frames.Add(result);
+                selectedFrames.Add(result);
                 result = result.Parent;
             }
             
@@ -211,11 +213,11 @@ namespace CleaningHelper.Core
             
             while (subframe != null)
             {
-                model.Frames.Add(subframe);
+                selectedFrames.Add(subframe);
                 subframe = subframe.Parent;
             }
 
-            return model;
+            return selectedFrames;
         }
 
         private bool? CheckSlotsSuits(Frame frame)

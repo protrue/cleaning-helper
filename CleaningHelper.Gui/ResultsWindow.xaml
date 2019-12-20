@@ -66,6 +66,16 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <local:EdgeColorConverter
+            x:Key="edgeToEdgeColorConverter" />
+        <Style
+            TargetType="{x:Type gs:EdgeControl}">
+            <Style.Setters>
+                <Setter
+                    Property="Foreground"
+                    Value="{Binding RelativeSource={RelativeSource Self},Path=Edge.EdgeColor,Converter={StaticResource edgeToEdgeColorConverter}}" />
+            </Style.Setters>
+        </Style>
     </Window.Resources>
     <Grid
         Margin="50">

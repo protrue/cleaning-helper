@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CleaningHelper.Model;
+using Frame = CleaningHelper.Model.Frame;
 
 namespace CleaningHelper.Gui
 {
@@ -23,11 +24,11 @@ namespace CleaningHelper.Gui
     {
         public ResultsViewModel ViewModel { get; set; }
 
-        public ResultsWindow(FrameModel frameModel)
+        public ResultsWindow(FrameModel frameModel, List<Frame> selectedFrames)
         {
             InitializeComponent();
 
-            ViewModel = new ResultsViewModel(frameModel);
+            ViewModel = new ResultsViewModel(frameModel, selectedFrames);
             DataContext = ViewModel;
             GraphLayout.Graph = ViewModel.Graph;
         }
