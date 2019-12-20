@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CleaningHelper.Core;
 using CleaningHelper.Model;
-using CleaningHelper.OntolisAdapter.Tools;
 
 namespace CleaningHelper.Sandbox
 {
@@ -43,11 +42,6 @@ namespace CleaningHelper.Sandbox
                 new DomainValue("Свежее"),
                 new DomainValue("Старое"),
             }),
-            new Domain("Тип пятна", new[]
-            {
-                new DomainValue("Свежее жирное"),
-                new DomainValue("Старое жирное"),
-            }),
         };
         private static FrameModel TestFrameModel
         {
@@ -63,6 +57,9 @@ namespace CleaningHelper.Sandbox
                     new Frame("Свежее жирное на светлом хлопке"),
                     new Frame("Старое жирное на светлом хлопке"),
                     new Frame("Старое жирное на тёмном хлопке"),
+                    new Frame("Жирное пятно"),
+                    new Frame("Свежее жирное пятно"),
+                    new Frame("Старое жирное пятно"),
                 };
                 
                 var frameModel = new FrameModel();
@@ -70,22 +67,31 @@ namespace CleaningHelper.Sandbox
                 frames[1].Slots.Add(new DomainSlot("Тип ткани", domains[1], domains[1][0]));
                 frames[1].Parent = frames[0];
                 
-                frames[1].Slots.Add(new DomainSlot("Деликатная", domains[0], domains[0][0]));
+                frames[2].Slots.Add(new DomainSlot("Деликатная", domains[0], domains[0][0]));
                 frames[2].Parent = frames[1];
                 
-                frames[3].Slots.Add(new DomainSlot("Цвет ткани", domains[2], domains[2][0]));
+                frames[3].Slots.Add(new DomainSlot("Цвет ткани", domains[2], domains[2][0], false, true));
+                frames[3].Slots.Add(new DomainSlot("Ткань", domains[3], domains[3][0], false, true));
                 frames[3].Parent = frames[2];
                 
-                frames[4].Slots.Add(new DomainSlot("Цвет ткани", domains[2], domains[2][1]));
+                frames[4].Slots.Add(new DomainSlot("Цвет ткани", domains[2], domains[2][1], false, true));
+                frames[4].Slots.Add(new DomainSlot("Ткань", domains[3], domains[3][0], false, true));
                 frames[4].Parent = frames[2];
                 
-                frames[5].Slots.Add(new DomainSlot("Тип пятна", domains[6], domains[6][0]));
+                frames[8].Slots.Add(new DomainSlot("Вещество", domains[4], domains[4][0], false, true));
+                
+                frames[9].Slots.Add(new DomainSlot("Возраст пятна", domains[5], domains[5][0], false, true));
+                frames[9].Parent = frames[8];
+                frames[10].Slots.Add(new DomainSlot("Возраст пятна", domains[5], domains[5][1], false, true));
+                frames[10].Parent = frames[8];
+                
+                frames[5].Slots.Add(new FrameSlot("Тип пятна", frames[9]));
                 frames[5].Parent = frames[3];
                 
-                frames[6].Slots.Add(new DomainSlot("Тип пятна", domains[6], domains[6][1]));
+                frames[6].Slots.Add(new FrameSlot("Тип пятна", frames[10]));
                 frames[6].Parent = frames[3];
                 
-                frames[7].Slots.Add(new DomainSlot("Тип пятна", domains[6], domains[6][1]));
+                frames[7].Slots.Add(new FrameSlot("Тип пятна", frames[10]));
                 frames[7].Parent = frames[4];
 
                 foreach (var domain in domains)
@@ -106,11 +112,16 @@ namespace CleaningHelper.Sandbox
             
             var reasoner = new DownUpReasoner(TestFrameModel, new []{"Ингредиент"});
 
-            var slot = reasoner.GetNextValueToAsk();
-            Console.WriteLine(slot + "?");
-            reasoner.SetAnswer(domains[6][0]);
-            slot = reasoner.GetNextValueToAsk();
-            Console.WriteLine(slot + "?");
+            while (true)
+            {
+                var slot = reasoner.GetNextValueToAsk();
+                if (slot == null)
+                    break;
+                Console.WriteLine(slot + "?");
+                Console.WriteLine(String.Join(", ", slot.Domain.Values.Select(x => x.Text)));
+                var valId = int.Parse(Console.ReadLine());
+                reasoner.SetAnswer(slot.Domain.Values[valId]);
+            }
             
             // while (!reasoner.AnswerFound)
             // {

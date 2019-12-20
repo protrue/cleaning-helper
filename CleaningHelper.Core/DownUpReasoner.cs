@@ -12,12 +12,15 @@ namespace CleaningHelper.Core
         private Dictionary<String, DomainValue> _memory = new Dictionary<string, DomainValue>();
 
         private Frame _bindingCandidate = null;
-        private Stack<Stack<Frame>> _bindingStacks = new Stack<Stack<Frame>>();
-        
+        private Stack<Frame> _bindingStack = new Stack<Frame>();
+
         private Dictionary<Frame, bool> _bindedFrames = new Dictionary<Frame, bool>();
         private Slot _askSlot;
 
-        private Frame _bindedSubframe;
+        private Frame _bindedSubframe = null;
+        private Frame _resultFrame;
+
+        private List<Frame> Candidates = new List<Frame>();
 
         public DownUpReasoner(FrameModel model, IEnumerable<String> goalSlotNames)
         {
@@ -30,56 +33,137 @@ namespace CleaningHelper.Core
             if (_bindingCandidate == null)
             {
                 _bindingCandidate = _getFirstCandidate();
-                Console.WriteLine("First candidate is ", _bindingCandidate);
-                
-                _bindingStacks.Push(new Stack<Frame>(new []{_bindingCandidate}));
+                Console.WriteLine("First candidate is ", _bindingCandidate.Name);
+
+                _bindingStack.Push(_bindingCandidate);
             }
 
             while (true)
             {
-                if (_bindingStacks.Count == 0)
+                if (_bindingStack.Count == 0 && _resultFrame != null)
                 {
-                    Console.WriteLine("The binding stacks are empty");
+                    Console.WriteLine("The binding stack is empty");
                     return null;
                 }
 
-                if (_bindingStacks.Peek().Count == 0)
+                if (_bindingStack.Count == 0)
                 {
-                    _bindingStacks.Pop();
-                    continue;
-                }
-                
-                var topFrameSlotsSuits = checkSlotsSuits(_bindingStacks.Peek().Peek());
-                if (topFrameSlotsSuits == true)
-                {   
-                    _bindedFrames[_bindingStacks.Peek().Peek()] = true;
-                    if (_bindingStacks.Peek().Peek().Parent != null)
-                        _bindingStacks.Peek().Push(_bindingStacks.Peek().Peek().Parent);
+                    if (_bindedSubframe != null)
+                    {
+                        Console.WriteLine("Subframe bound " + _bindedSubframe.Name);
+                        var cand = GetCandidateFrame(_bindedSubframe);
+                        if (cand == null)
+                        {
+                            Console.WriteLine("Candidate not found");
+                            return null;
+                        }
+                        Console.WriteLine("Next candidate is " + cand.Name);
+                        _bindingStack.Push(cand);
+                    }
                     else
                     {
-                        _bindingStacks.Peek().Clear();
+                        Console.WriteLine("Subframe not bound. Go to next candidate");
+                        var cand = GetCandidateFrame(null);
+                        if (cand == null)
+                        {
+                            Console.WriteLine("Candidate not found");
+                            return null;
+                        }
+                        Console.WriteLine("Next candidate is " + cand.Name);
+                        _bindingStack.Push(cand);
+                    }
+
+                    continue;
+                }
+
+                var topFrameSlotsSuits = checkSlotsSuits(_bindingStack.Peek());
+                Console.WriteLine("Top frame " + _bindingStack.Peek().Name + " " +  (topFrameSlotsSuits));
+                if (topFrameSlotsSuits == true)
+                {
+                    _bindedFrames[_bindingStack.Peek()] = true;
+                    if (_bindingStack.Peek().Parent != null)
+                        _bindingStack.Push(_bindingStack.Peek().Parent);
+                    else
+                    {
+                        if (_bindedSubframe == null)
+                            _bindedSubframe = _bindingStack.Last();
+                        else
+                            _resultFrame = _bindingStack.Last();
+                        _bindingStack.Clear();
                     }
                 }
                 else if (topFrameSlotsSuits == false)
                 {
-                    //_bindedFrames[_bindingStacks.Last()] = false;
-                    foreach (var frame in _bindingStacks)
+                    _bindedFrames[_bindingStack.Last()] = false;
+                    foreach (var frame in _bindingStack)
                     {
                         _bindedFrames[frame] = false;
                     }
-                    _bindingStacks.Clear();
+
+                    _bindingStack.Clear();
                 }
                 else
                 {
-                    var slot = findFirstSlotToAsk(_bindingStacks.Last());
-                    _askSlot = slot;
-                    return (DomainSlot) _askSlot;
+                    var slot = findFirstSlotToAsk(_bindingStack.Peek());
+                    if (slot.IsRequestable)
+                    {
+                        _askSlot = slot;
+                        return (DomainSlot) _askSlot;
+                    }
+
+                    _memory[slot.Name] = (slot as DomainSlot).Value;
                 }
             }
 
             return null;
         }
-        
+
+        private Frame GetCandidateFrame(Frame subframe)
+        {
+            if (subframe != null)
+            {
+                var frames = _model.Frames.Where(x =>
+                    x.Slots.Where(z => z is FrameSlot).Select(y => (y as FrameSlot).Frame).Contains(subframe));
+                var suitFrames = frames.Where(x => checkSlotsSuits(x) == true && !_bindedFrames.ContainsKey(x));
+                if (suitFrames.Count() != 0)
+                    return suitFrames.First();
+                var unusedFrames = frames.Where(x => checkSlotsSuits(x) == null && !_bindedFrames.ContainsKey(x));
+                if (unusedFrames.Count() != 0)
+                    return unusedFrames.FirstOrDefault();
+
+                while (true)
+                {
+                    frames = frames.Select(x => x.Parent);
+                    if (frames.Contains(null))
+                        return null;
+                    suitFrames = frames.Where(x => checkSlotsSuits(x) == true && !_bindedFrames.ContainsKey(x));
+                    if (suitFrames.Count() != 0)
+                        return suitFrames.First();
+                    unusedFrames = frames.Where(x => checkSlotsSuits(x) == null && !_bindedFrames.ContainsKey(x));
+                    if (unusedFrames.Count() != 0)
+                        return unusedFrames.FirstOrDefault();
+                }
+            }
+            else
+            {
+                
+                var subframes = new List<FrameSlot>();
+
+                foreach (var frame in _model.Frames)
+                {
+                    subframes.AddRange(frame.Slots.Where(x => x is FrameSlot && !x.IsSystemSlot)
+                        .Select(x => x as FrameSlot));
+                }
+               
+                var suitFrames = subframes.Where(x => checkSlotsSuits(x.Frame) == true && !_bindedFrames.ContainsKey(x.Frame));
+                if (suitFrames.Count() != 0)
+                    return suitFrames.First()?.Frame;
+                var unusedFrames = subframes.Where(x => checkSlotsSuits(x.Frame) == null && !_bindedFrames.ContainsKey(x.Frame));
+                return unusedFrames.FirstOrDefault()?.Frame;
+            }
+            
+        }
+
         public void SetAnswer(DomainValue value)
         {
             _memory[_askSlot.Name] = value;
@@ -135,19 +219,22 @@ namespace CleaningHelper.Core
 
         private Frame _getMostCommonSubframe()
         {
-            var used_subframes = new List<Slot>();
+            var used_subframes = new List<FrameSlot>();
 
             foreach (var frame in _model.Frames)
             {
-                used_subframes.AddRange(frame.Slots.Where(x => x is FrameSlot));
+                used_subframes.AddRange(frame.Slots.Where(x => x is FrameSlot && !x.IsSystemSlot)
+                    .Select(x => x as FrameSlot));
             }
+
+            return used_subframes.FirstOrDefault()?.Frame;
 
             var maxUsed = used_subframes.Max(x => used_subframes.Count(y => y == x));
             var result = used_subframes.FirstOrDefault(x => used_subframes.Count(y => y == x) == maxUsed);
             var frameSlot = result as FrameSlot;
             return frameSlot?.Frame;
         }
-        
+
         private Frame _getAnyLeaf()
         {
             foreach (var frame in _model.Frames)
@@ -155,7 +242,7 @@ namespace CleaningHelper.Core
                 if (frame.Children.Count == 0)
                     return frame;
             }
-            
+
             return null;
         }
     }
