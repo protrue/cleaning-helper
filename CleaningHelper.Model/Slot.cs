@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using CleaningHelper.Model.Annotations;
@@ -15,6 +16,8 @@ namespace CleaningHelper.Model
     [Serializable]
     public abstract class Slot : INotifyPropertyChanged
     {
+        private readonly List<Delegate> _serializableDelegates;
+
         private string _name;
         private bool _isResult;
         private bool _isSystemSlot;
@@ -85,12 +88,43 @@ namespace CleaningHelper.Model
             IsSystemSlot = isSystemSlot;
             IsRequestable = isRequestable;
             IsResult = isResult;
+
+            _serializableDelegates = new List<Delegate>();
         }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        [OnSerializing]
+        public void OnSerializing(StreamingContext context)
+        {
+            _serializableDelegates.Clear();
+            var handler = PropertyChanged;
+
+            if (handler != null)
+            {
+                foreach (var invocation in handler.GetInvocationList())
+                {
+                    if (invocation.Target.GetType().IsSerializable)
+                    {
+                        _serializableDelegates.Add(invocation);
+                    }
+                }
+            }
+        }
+
+        [OnDeserialized]
+        public void OnDeserialized(StreamingContext context)
+        {
+            if (_serializableDelegates == null) return;
+
+            foreach (var invocation in _serializableDelegates)
+            {
+                PropertyChanged += (PropertyChangedEventHandler)invocation;
+            }
         }
     }
 }

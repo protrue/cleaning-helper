@@ -78,9 +78,16 @@ namespace CleaningHelper.Gui
 
         private void UpdateGraphLayout()
         {
-            GraphLayout.Graph = ViewModel.Graph;
-            //GraphLayout.RecalculateOverlapRemoval();
-            //GraphLayout.UpdateLayout();
+            try
+            {
+                GraphLayout.Graph = ViewModel.Graph;
+                //GraphLayout.RecalculateOverlapRemoval();
+                //GraphLayout.UpdateLayout();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         private void AutoLayoutButton_OnClick(object sender, RoutedEventArgs e)
@@ -119,34 +126,34 @@ namespace CleaningHelper.Gui
 
         private void AddParentMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            var frame = new Frame("Новый фрейм");
-            ViewModel.FrameModel.Frames.Add(frame);
-            frame.Parent = ViewModel.SelectedFrame;
-            
-            UpdateGraphLayout();
-            //}
-            //catch (Exception exception)
-            //{
-            //    MessageBox.Show(exception.Message);
-            //}
+            try
+            {
+                var frame = new Frame("Новый фрейм");
+                ViewModel.FrameModel.Frames.Add(frame);
+                frame.Parent = ViewModel.SelectedFrame;
+
+                UpdateGraphLayout();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
 
         private void AddChildMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            var frame = new Frame("Новый фрейм");
-            ViewModel.FrameModel.Frames.Add(frame);
-            ViewModel.SelectedFrame.Parent = frame;
-            UpdateGraphLayout();
-            //}
-            //catch (Exception exception)
-            //{
-            //    MessageBox.Show(exception.Message);
-            //}
+            try
+            {
+                var frame = new Frame("Новый фрейм");
+                ViewModel.FrameModel.Frames.Add(frame);
+                ViewModel.SelectedFrame.Parent = frame;
+                UpdateGraphLayout();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         private void GraphLayout_PreviewMouseDown(object sender, MouseButtonEventArgs e)

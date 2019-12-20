@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using CleaningHelper.Model.Annotations;
@@ -15,6 +16,8 @@ namespace CleaningHelper.Model
     [Serializable]
     public class DomainValue : INotifyPropertyChanged
     {
+        private readonly List<Delegate> _serializableDelegates;
+
         private string _text;
 
         public string Text
@@ -33,6 +36,8 @@ namespace CleaningHelper.Model
         public DomainValue(string text)
         {
             Text = text;
+
+            _serializableDelegates = new List<Delegate>();
         }
 
         public static implicit operator DomainValue(string text) =>
@@ -63,5 +68,34 @@ namespace CleaningHelper.Model
         }
 
         public override string ToString() => Text;
+
+        [OnSerializing]
+        public void OnSerializing(StreamingContext context)
+        {
+            _serializableDelegates.Clear();
+            var handler = PropertyChanged;
+
+            if (handler != null)
+            {
+                foreach (var invocation in handler.GetInvocationList())
+                {
+                    if (invocation.Target.GetType().IsSerializable)
+                    {
+                        _serializableDelegates.Add(invocation);
+                    }
+                }
+            }
+        }
+
+        [OnDeserialized]
+        public void OnDeserialized(StreamingContext context)
+        {
+            if (_serializableDelegates == null) return;
+
+            foreach (var invocation in _serializableDelegates)
+            {
+                PropertyChanged += (PropertyChangedEventHandler)invocation;
+            }
+        }
     }
 }
