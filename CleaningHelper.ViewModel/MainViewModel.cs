@@ -66,17 +66,26 @@ namespace CleaningHelper.ViewModel
             {
                 var frames = new[]
                 {
-                    new Frame("Ткань"),
-                    new Frame("Натуральная ткань"),
-                    new Frame("Деликатная ткань"),
-                    new Frame("Светлый хлопок"),
-                    new Frame("Тёмный хлопок"),
-                    new Frame("Свежее жирное на светлом хлопке"),
-                    new Frame("Старое жирное на светлом хлопке"),
-                    new Frame("Старое жирное на тёмном хлопке"),
-                    new Frame("Жирное пятно"),
-                    new Frame("Свежее жирное пятно"),
-                    new Frame("Старое жирное пятно"),
+                    /* 0 */ new Frame("Ткань"),
+                    /* 1 */ new Frame("Натуральная ткань"),
+                    /* 2 */ new Frame("Деликатная ткань"),
+                    /* 3 */ new Frame("Светлый хлопок"),
+                    /* 4 */ new Frame("Тёмный хлопок"),
+                    /* 5 */ new Frame("Свежее жирное на светлом хлопке"),
+                    /* 6 */ new Frame("Старое жирное на светлом хлопке"),
+                    /* 7 */ new Frame("Старое жирное на тёмном хлопке"),
+                    /* 8 */ new Frame("Жирное пятно"),
+                    /* 9 */ new Frame("Свежее жирное пятно"),
+                    /* 10 */ new Frame("Старое жирное пятно"),
+                   
+                    /* 11 */ new Frame("Кровавое пятно"),
+                    /* 12 */ new Frame("Свежее кровавое пятно"),
+                    /* 13 */ new Frame("Старое кровавое пятно"),
+                    /* 14 */ new Frame("Свежее кровавое на светлом хлопке"),
+                    /* 15 */ new Frame("Старое кровавое на светлом хлопке"),
+                    /* 16 */ new Frame("Старое кровавое на тёмном хлопке"),   
+                    
+                    
                 };
                 
                 var frameModel = new FrameModel();
@@ -110,7 +119,21 @@ namespace CleaningHelper.ViewModel
                 
                 frames[7].Slots.Add(new FrameSlot("Тип пятна", frames[10]));
                 frames[7].Parent = frames[4];
+                
+                frames[11].Slots.Add(new DomainSlot("Вещество", domains[4], domains[4][1], false, true));
 
+                frames[12].Slots.Add(new DomainSlot("Возраст пятна", domains[5], domains[5][0], false, true));
+                frames[12].Parent = frames[11];
+                
+                frames[13].Slots.Add(new DomainSlot("Возраст пятна", domains[5], domains[5][1], false, true));
+                frames[13].Parent = frames[11];
+                
+                frames[14].Slots.Add(new FrameSlot("Тип пятна", frames[12]));
+                frames[14].Parent = frames[3];
+                
+                frames[15].Slots.Add(new FrameSlot("Тип пятна", frames[13]));
+                frames[15].Parent = frames[3];
+                
                 foreach (var domain in domains)
                 {
                     frameModel.Domains.Add(domain);

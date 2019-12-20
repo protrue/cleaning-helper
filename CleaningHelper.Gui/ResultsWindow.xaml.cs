@@ -24,11 +24,11 @@ namespace CleaningHelper.Gui
     {
         public ResultsViewModel ViewModel { get; set; }
 
-        public ResultsWindow(FrameModel frameModel, List<Frame> selectedFrames)
+        public ResultsWindow(FrameModel frameModel, List<Frame> selectedFrames, Frame result)
         {
             InitializeComponent();
 
-            ViewModel = new ResultsViewModel(frameModel, selectedFrames);
+            ViewModel = new ResultsViewModel(frameModel, selectedFrames, result);
             DataContext = ViewModel;
             GraphLayout.Graph = ViewModel.Graph;
         }

@@ -22,7 +22,7 @@ namespace CleaningHelper.Gui
 
         private void ShowResultsWindow()
         {
-            var resultsWindow = new ResultsWindow(ViewModel.FrameModel, ViewModel.Reasoner.GetInferringPath());
+            var resultsWindow = new ResultsWindow(ViewModel.FrameModel, ViewModel.Reasoner.GetInferringPath(), ViewModel.Result);
             resultsWindow.ShowDialog();
         }
 

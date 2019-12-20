@@ -24,6 +24,7 @@ namespace CleaningHelper.ViewModel
 
         public FrameModel FrameModel { get; set; }
         public List<Frame> SelectedFrames { get; }
+        public Frame Result { get; }
 
         public List<string> LayoutAlgorithms => new List<string>(new[]
         {
@@ -80,10 +81,11 @@ namespace CleaningHelper.ViewModel
             }
         }
 
-        public ResultsViewModel(FrameModel frameModel, List<Frame> selectedFrames)
+        public ResultsViewModel(FrameModel frameModel, List<Frame> selectedFrames, Frame result)
         {
             SelectedLayoutAlgorithm = DefaultLayoutAlgorithm;
             SelectedFrames = selectedFrames;
+            Result = result;
             FrameModel = frameModel;
         }
 

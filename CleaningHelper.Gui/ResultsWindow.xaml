@@ -89,7 +89,7 @@
             Header="Результат:"
             Grid.Row="0">
             <Label
-                Content="{Binding Path=ResultView}"></Label>
+                Content="{Binding Path=Result.Name}"></Label>
         </GroupBox>
         <GroupBox
             Header="Объяснение:"
