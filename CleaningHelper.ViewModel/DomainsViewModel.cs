@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using CleaningHelper.Model;
 using CleaningHelper.ViewModel.Annotations;
 
@@ -25,6 +26,10 @@ namespace CleaningHelper.ViewModel
             {
                 _selectedDomain = value;
                 OnPropertyChanged(nameof(SelectedDomain));
+                OnPropertyChanged(nameof(IsRemoveDomainAvailable));
+                OnPropertyChanged(nameof(IsAddValueAvailable));
+                OnPropertyChanged(nameof(IsRemoveValueAvailable));
+                OnPropertyChanged(nameof(IsValuesReadOnly));
             }
         }
 
@@ -33,14 +38,23 @@ namespace CleaningHelper.ViewModel
             get => _selectedValue;
             set
             {
-                _selectedValue = value; 
+                _selectedValue = value;
                 OnPropertyChanged(nameof(SelectedValue));
+                OnPropertyChanged(nameof(IsRemoveValueAvailable));
             }
         }
 
-        public bool IsRemoveDomainAvailable => SelectedDomain != null;
+        private bool IsSelectedDomainSpecial => SelectedDomain == FrameModel.FrameSlotDomain ||
+                                                SelectedDomain == FrameModel.TextSlotDomain;
 
-        public bool IsRemoveValueAvailable => SelectedValue != null;
+
+        public bool IsRemoveDomainAvailable => SelectedDomain != null && !IsSelectedDomainSpecial;
+
+        public bool IsAddValueAvailable => SelectedDomain != null && !IsSelectedDomainSpecial;
+
+        public bool IsRemoveValueAvailable => SelectedValue != null && !IsSelectedDomainSpecial;
+
+        public bool IsValuesReadOnly => IsSelectedDomainSpecial;
 
         public DomainsViewModel(FrameModel frameModel)
         {

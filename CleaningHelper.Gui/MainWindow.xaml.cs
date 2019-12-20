@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using CleaningHelper.Core;
+using CleaningHelper.Tools;
 
 namespace CleaningHelper.Gui
 {
@@ -26,7 +27,7 @@ namespace CleaningHelper.Gui
 
         private void ShowConsultationWindow()
         {
-            var consultationWindow = new ConsultationWindow(ViewModel.Model);
+            var consultationWindow = new ConsultationWindow(ViewModel.FrameModel);
             
             consultationWindow.ShowDialog();
         }
@@ -58,9 +59,15 @@ namespace CleaningHelper.Gui
             ViewModel.SaveStateCommand.Execute();
         }
 
-        private void EditModelButton_Click(object sender, RoutedEventArgs e)
+        private void EditDomainsButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var editorWindow = new FramesWindow();
+            var domainsWindow = new DomainsWindow(ViewModel.FrameModel);
+            domainsWindow.ShowDialog();
+        }
+
+        private void EditFramesButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var editorWindow = new FramesWindow(ViewModel.FrameModel);
             editorWindow.ShowDialog();
         }
     }

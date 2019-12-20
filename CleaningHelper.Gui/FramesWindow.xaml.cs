@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,25 +28,23 @@ namespace CleaningHelper.Gui
     {
         public FramesViewModel ViewModel { get; set; }
 
-        public FramesWindow()
+        public FramesWindow(FrameModel frameModel)
         {
             InitializeComponent();
 
-            ViewModel = new FramesViewModel();
+            ViewModel = new FramesViewModel(frameModel);
             DataContext = ViewModel;
             GraphLayout.Graph = ViewModel.Graph;
+
+            ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
         }
 
-        private void GraphLayout_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.Source is VertexControl vertexControl)
-            {
-                ViewModel.SelectedFrame = vertexControl.Vertex as Frame;
-                GraphLayout.HighlightVertex(ViewModel.SelectedFrame, "None");
-            }
+            //UpdateGraphLayout();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void EditDomainsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var domainWindow = new DomainsWindow(ViewModel.FrameModel);
             domainWindow.ShowDialog();
@@ -80,8 +79,8 @@ namespace CleaningHelper.Gui
         private void UpdateGraphLayout()
         {
             GraphLayout.Graph = ViewModel.Graph;
-            GraphLayout.UpdateLayout();
-            GraphLayout.RecalculateOverlapRemoval();
+            //GraphLayout.RecalculateOverlapRemoval();
+            //GraphLayout.UpdateLayout();
         }
 
         private void AutoLayoutButton_OnClick(object sender, RoutedEventArgs e)
@@ -121,10 +120,11 @@ namespace CleaningHelper.Gui
         {
             //try
             //{
-                var frame = new Frame("Новый фрейм");
-                ViewModel.FrameModel.Frames.Add(frame);
-                ViewModel.SelectedFrame.Parent = frame;
-                UpdateGraphLayout();
+            var frame = new Frame("Новый фрейм");
+            ViewModel.FrameModel.Frames.Add(frame);
+            frame.Parent = ViewModel.SelectedFrame;
+            
+            UpdateGraphLayout();
             //}
             //catch (Exception exception)
             //{
@@ -137,10 +137,10 @@ namespace CleaningHelper.Gui
         {
             //try
             //{
-                var frame = new Frame("Новый фрейм");
-                ViewModel.FrameModel.Frames.Add(frame);
-                frame.Parent = ViewModel.SelectedFrame;
-                UpdateGraphLayout();
+            var frame = new Frame("Новый фрейм");
+            ViewModel.FrameModel.Frames.Add(frame);
+            ViewModel.SelectedFrame.Parent = frame;
+            UpdateGraphLayout();
             //}
             //catch (Exception exception)
             //{
@@ -151,7 +151,7 @@ namespace CleaningHelper.Gui
         private void GraphLayout_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.Source is VertexControl vertexControl
-                && (e.ChangedButton == MouseButton.Left 
+                && (e.ChangedButton == MouseButton.Left
                     || e.ChangedButton == MouseButton.Right))
             {
                 ViewModel.SelectedFrame = vertexControl.Vertex as Frame;

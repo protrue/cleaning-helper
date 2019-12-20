@@ -12,6 +12,7 @@ namespace CleaningHelper.Model
     /// <summary>
     /// Обобщение слота фрейма
     /// </summary>
+    [Serializable]
     public abstract class Slot : INotifyPropertyChanged
     {
         private string _name;
@@ -19,6 +20,7 @@ namespace CleaningHelper.Model
         private bool _isSystemSlot;
         private bool _isRequestable;
 
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

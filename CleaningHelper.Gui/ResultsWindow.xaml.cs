@@ -23,45 +23,12 @@ namespace CleaningHelper.Gui
     {
         public ResultsViewModel ViewModel { get; set; }
 
-        public ResultsWindow(SemanticNetwork semanticNetwork = null, Concept result = null, List<List<Concept>> inferringPath = null)
+        public ResultsWindow()
         {
             InitializeComponent();
 
-            ViewModel = new ResultsViewModel(semanticNetwork, result, inferringPath);
+            ViewModel = new ResultsViewModel();
             DataContext = ViewModel;
-        }
-
-        private void ExpandAll(bool isExpanded)
-        {
-            var firstItem = ResultsTreeView.Items.Cast<TreeViewItem>().FirstOrDefault();
-            if (firstItem == null) return;
-
-            var stack = new Stack<TreeViewItem>(firstItem.Items.Cast<TreeViewItem>());
-            while (stack.Count > 0)
-            {
-                var item = stack.Pop();
-
-                foreach (var child in item.Items)
-                {
-                    var childContainer = child as TreeViewItem ?? item.ItemContainerGenerator.ContainerFromItem(child) as TreeViewItem;
-
-                    stack.Push(childContainer);
-                }
-
-                item.Focus();
-                item.IsSelected = true;
-                item.IsExpanded = isExpanded;
-            }
-        }
-
-        private void ExpandAllButton_Click(object sender, RoutedEventArgs e)
-        {
-            ExpandAll(true);
-        }
-
-        private void CollapseAllButton_Click(object sender, RoutedEventArgs e)
-        {
-            ExpandAll(false);
         }
     }
 }

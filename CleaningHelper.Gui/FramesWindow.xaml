@@ -1,74 +1,103 @@
-﻿<Window x:Class="CleaningHelper.Gui.FramesWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CleaningHelper.Gui"
-        xmlns:gs="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
-        xmlns:ext="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
-        xmlns:model="clr-namespace:CleaningHelper.Model;assembly=CleaningHelper.Model"
-        xmlns:vm="clr-namespace:CleaningHelper.ViewModel;assembly=CleaningHelper.ViewModel"
-        mc:Ignorable="d"
-        Title="Редактор фреймов"
-        Icon="Resources/icon.ico"
-        Height="600"
-        Width="800">
-
+﻿<Window
+    x:Class="CleaningHelper.Gui.FramesWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:CleaningHelper.Gui"
+    xmlns:gs="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
+    xmlns:ext="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+    xmlns:model="clr-namespace:CleaningHelper.Model;assembly=CleaningHelper.Model"
+    xmlns:vm="clr-namespace:CleaningHelper.ViewModel;assembly=CleaningHelper.ViewModel"
+    mc:Ignorable="d"
+    Title="Редактор фреймов"
+    Icon="Resources/icon.ico"
+    Height="768"
+    Width="1024">
     <Window.Resources>
-        <DataTemplate x:Key="FrameTemplate" DataType="{x:Type model:Frame}">
-            <StackPanel Margin="5">
-                <TextBlock Text="{Binding Path=Name}"/>
+        <DataTemplate
+            x:Key="FrameTemplate"
+            DataType="{x:Type model:Frame}">
+            <StackPanel
+                Margin="5">
+                <TextBlock
+                    Text="{Binding Path=Name}" />
             </StackPanel>
         </DataTemplate>
-
-        <Style TargetType="{x:Type gs:VertexControl}">
-            <Setter Property="Template">
+        <Style
+            TargetType="{x:Type gs:VertexControl}">
+            <Setter
+                Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type gs:VertexControl}">
+                    <ControlTemplate
+                        TargetType="{x:Type gs:VertexControl}">
                         <Border
                             BorderBrush="Black"
                             BorderThickness="1">
                             <ContentPresenter
                                 Content="{TemplateBinding Vertex}"
-                                ContentTemplate="{StaticResource FrameTemplate}"/>
+                                ContentTemplate="{StaticResource FrameTemplate}" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
     </Window.Resources>
-
-    <DockPanel LastChildFill="True">
-        <Menu DockPanel.Dock="Top">
+    <DockPanel
+        LastChildFill="True">
+        <Menu
+            DockPanel.Dock="Top">
             <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <DockPanel HorizontalAlignment="Stretch"/>
+                    <DockPanel
+                        HorizontalAlignment="Stretch" />
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
             <MenuItem
+                Name="EditDomainsMenuItem"
                 HorizontalAlignment="Right"
                 Header="Редактировать перечислимые домены"
-                Click="MenuItem_Click">
-            </MenuItem>
+                Click="EditDomainsMenuItem_Click"></MenuItem>
         </Menu>
-
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition
+                    Width="7*"></ColumnDefinition>
+                <ColumnDefinition
+                    Width="5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-
             <GroupBox
                 Grid.Column="0"
                 Header="Фреймы">
                 <DockPanel>
-                    <DockPanel DockPanel.Dock="Top" LastChildFill="False">
-                        <Button Name="AddFrameButton" Content="Добавить" Margin="10 5" Padding="5" Click="AddFrameButton_OnClick"></Button>
-                        <Button Name="RemoveFrameButton" Content="Удалить" Margin="10 5" Padding="5" Click="RemoveFrameButton_OnClick" IsEnabled="{Binding Path=IsFrameSelected}"></Button>
-                        <Button Name="AutoLayoutButton" Content="Авторасположение" Margin="10 5" Padding="5" Click="AutoLayoutButton_OnClick"></Button>
-                        <ComboBox ItemsSource="{Binding Path=LayoutAlgorithms}" SelectedItem="{Binding Path=SelectedLayoutAlgorithm}" Margin="10 5" Padding="5"></ComboBox>
+                    <DockPanel
+                        DockPanel.Dock="Top"
+                        LastChildFill="False">
+                        <Button
+                            Name="AddFrameButton"
+                            Content="Добавить"
+                            Margin="10 5"
+                            Padding="5"
+                            Click="AddFrameButton_OnClick"></Button>
+                        <Button
+                            Name="RemoveFrameButton"
+                            Content="Удалить"
+                            Margin="10 5"
+                            Padding="5"
+                            Click="RemoveFrameButton_OnClick"
+                            IsEnabled="{Binding Path=IsFrameSelected}"></Button>
+                        <Button
+                            Name="AutoLayoutButton"
+                            Content="Авторасположение"
+                            Margin="10 5"
+                            Padding="5"
+                            Click="AutoLayoutButton_OnClick"></Button>
+                        <ComboBox
+                            ItemsSource="{Binding Path=LayoutAlgorithms}"
+                            SelectedItem="{Binding Path=SelectedLayoutAlgorithm}"
+                            Margin="10 5"
+                            Padding="5"></ComboBox>
                     </DockPanel>
-
                     <ext:ZoomControl
                         Name="ZoomControl"
                         Mode="Original">
@@ -79,35 +108,118 @@
                             PreviewMouseDown="GraphLayout_PreviewMouseDown">
                             <gs:GraphLayout.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Name="AddParentMenuItem" Header="Добавить потомка" Click="AddParentMenuItem_OnClick"></MenuItem>
-                                    <MenuItem Name="AddChildMenuItem" Header="Добавить родителя" Click="AddChildMenuItem_OnClick"></MenuItem>
+                                    <MenuItem
+                                        Name="AddParentMenuItem"
+                                        Header="Добавить потомка"
+                                        Click="AddParentMenuItem_OnClick"></MenuItem>
+                                    <MenuItem
+                                        Name="AddChildMenuItem"
+                                        Header="Добавить родителя"
+                                        Click="AddChildMenuItem_OnClick"></MenuItem>
                                 </ContextMenu>
                             </gs:GraphLayout.ContextMenu>
                         </gs:GraphLayout>
                     </ext:ZoomControl>
                 </DockPanel>
             </GroupBox>
-
             <GroupBox
-            Header="Слоты фрейма"
-            Grid.Column="1">
+                Header="Слоты фрейма"
+                Grid.Column="1">
                 <DockPanel>
-                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" >
-                        <Button Name="AddSlotButton" DockPanel.Dock="Top" Content="Добавить" Margin="10 5" Padding="5" IsEnabled="{Binding Path=IsFrameSelected}" Click="AddSlotButton_OnClick"></Button>
-                        <Button Name="RemoveSlotButton" DockPanel.Dock="Top" Content="Удалить" Margin="10 5" Padding="5" IsEnabled="{Binding Path=IsSlotSelected}" Click="RemoveSlotButton_OnClick"></Button>
+                    <StackPanel
+                        DockPanel.Dock="Top"
+                        Orientation="Horizontal">
+                        <Button
+                            Name="AddSlotButton"
+                            DockPanel.Dock="Top"
+                            Content="Добавить"
+                            Margin="10 5"
+                            Padding="5"
+                            IsEnabled="{Binding Path=IsFrameSelected}"
+                            Click="AddSlotButton_OnClick"></Button>
+                        <Button
+                            Name="RemoveSlotButton"
+                            DockPanel.Dock="Top"
+                            Content="Удалить"
+                            Margin="10 5"
+                            Padding="5"
+                            IsEnabled="{Binding Path=IsSlotRemovingAvailable}"
+                            Click="RemoveSlotButton_OnClick"></Button>
                     </StackPanel>
-                    <GroupBox DockPanel.Dock="Top" Header="Редактировать выбранный слот">
+                    <GroupBox
+                        DockPanel.Dock="Top"
+                        Header="Редактировать выбранный слот">
                         <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-
-                            <TextBox Grid.Column="0" Text="{Binding Path=SelectedSlot.Name}" IsReadOnly="{Binding Path=IsSlotNameEditable}" Margin="5"></TextBox>
-                            <ComboBox Grid.Column="1" ItemsSource="{Binding Path=FrameModel.Domains}" DisplayMemberPath="Name" SelectedItem="SelectedDomain" IsReadOnly="{Binding Path=IsSlotTypeEditable}" Margin="5"></ComboBox>
-                            <ComboBox Grid.Column="2" Margin="5"></ComboBox>
-                            <TextBox Grid.Column="2" Margin="5"></TextBox>
+                            <GroupBox
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                Header="Имя">
+                                <TextBox
+                                    Name="SlotNameTextBox"
+                                    Text="{Binding Path=SelectedSlot.Name, UpdateSourceTrigger=PropertyChanged}"
+                                    IsEnabled="{Binding Path=IsSlotEditable}"
+                                    Margin="5"></TextBox>
+                            </GroupBox>
+                            <GroupBox
+                                Grid.Column="1"
+                                Grid.Row="0"
+                                Header="Тип">
+                                <ComboBox
+                                    Name="SlotTypeComboBox"
+                                    Margin="5"
+                                    IsEnabled="{Binding Path=IsSlotEditable}"
+                                    ItemsSource="{Binding Path=FrameModel.Domains}"
+                                    SelectedItem="{Binding Path=SelectedDomain, UpdateSourceTrigger=PropertyChanged}"
+                                    DisplayMemberPath="Name"></ComboBox>
+                            </GroupBox>
+                            <GroupBox
+                                Grid.Column="2"
+                                Grid.Row="0"
+                                Header="Значение">
+                                <StackPanel>
+                                    <ComboBox
+                                        Name="SlotValueComboBox"
+                                        Margin="5"
+                                        Visibility="{Binding Path=ComboBoxValueVisibility}"
+                                        ItemsSource="{Binding Path=SelectedDomain.Values}"
+                                        SelectedItem="{Binding Path=SelectedDomainValue, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox
+                                        Name="SlotValueTextBox"
+                                        Margin="5"
+                                        Text="{Binding Path=DomainValueText, UpdateSourceTrigger=PropertyChanged}"
+                                        Visibility="{Binding Path=TextBoxValueVisibility}"></TextBox>
+                                </StackPanel>
+                            </GroupBox>
+                            <CheckBox
+                                Grid.Column="0"
+                                Grid.Row="1"
+                                Content="Системный"
+                                IsEnabled="False"
+                                Margin="5"
+                                IsChecked="{Binding Path=SelectedSlot.IsSystem}"></CheckBox>
+                            <CheckBox
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Content="Запрашиваемый"
+                                IsEnabled="{Binding IsSlotEditable}"
+                                Margin="5"
+                                IsChecked="{Binding Path=SelectedSlot.IsRequestable}"></CheckBox>
+                            <CheckBox
+                                Grid.Column="2"
+                                Grid.Row="1"
+                                Content="Результат"
+                                IsEnabled="{Binding IsSlotEditable}"
+                                Margin="5"
+                                IsChecked="{Binding Path=SelectedSlot.IsResult}"></CheckBox>
                         </Grid>
                     </GroupBox>
                     <ListBox></ListBox>
@@ -117,24 +229,32 @@
                         AutoGenerateColumns="False"
                         SelectedItem="{Binding Path=SelectedSlot}">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn Header="C" Binding="{Binding IsSystemSlot}" IsReadOnly="True"></DataGridCheckBoxColumn>
-                            <DataGridCheckBoxColumn Header="З" Binding="{Binding IsRequestable}"></DataGridCheckBoxColumn>
-                            <DataGridCheckBoxColumn Header="Р" Binding="{Binding IsResult}"></DataGridCheckBoxColumn>
+                            <DataGridCheckBoxColumn
+                                Header="C"
+                                Binding="{Binding IsSystemSlot}"
+                                IsReadOnly="True"></DataGridCheckBoxColumn>
+                            <DataGridCheckBoxColumn
+                                Header="З"
+                                Binding="{Binding IsRequestable}"
+                                IsReadOnly="True"></DataGridCheckBoxColumn>
+                            <DataGridCheckBoxColumn
+                                Header="Р"
+                                Binding="{Binding IsResult}"
+                                IsReadOnly="True"></DataGridCheckBoxColumn>
                             <DataGridTextColumn
-                                Header="Имя" 
+                                Header="Имя"
                                 Binding="{Binding Path=Name, Mode=OneWay}"
                                 Width="*"
-                                IsReadOnly="True"/>
-                            <DataGridTextColumn 
+                                IsReadOnly="True" />
+                            <DataGridTextColumn
                                 Header="Тип"
                                 Binding="{Binding Path=TypeAsString, Mode=OneWay}"
                                 Width="*"
-                                IsReadOnly="True"/>
+                                IsReadOnly="True" />
                             <DataGridTextColumn
                                 Header="Значение"
                                 Binding="{Binding Path=ValueAsString, Mode=OneWay}"
-                                Width="*">
-                            </DataGridTextColumn>
+                                Width="*"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>

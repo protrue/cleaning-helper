@@ -12,6 +12,7 @@ namespace CleaningHelper.Model
     /// <summary>
     /// Значение домена
     /// </summary>
+    [Serializable]
     public class DomainValue : INotifyPropertyChanged
     {
         private string _text;
@@ -26,6 +27,7 @@ namespace CleaningHelper.Model
             }
         }
 
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         public DomainValue(string text)
@@ -59,5 +61,7 @@ namespace CleaningHelper.Model
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public override string ToString() => Text;
     }
 }

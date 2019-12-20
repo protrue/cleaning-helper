@@ -4,6 +4,8 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Controls.Primitives;
 using CleaningHelper.Model;
 using CleaningHelper.ViewModel.Annotations;
 using QuickGraph;
@@ -19,20 +21,22 @@ namespace CleaningHelper.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         public FrameModel FrameModel { get; set; }
 
+        public readonly string DefaultLayoutAlgorithm = "LinLog";
+
         public BidirectionalGraph<object, IEdge<object>> Graph
         {
             get
             {
-                _graph = new BidirectionalGraph<object, IEdge<object>>();
+                var graph = new BidirectionalGraph<object, IEdge<object>>();
 
                 foreach (var frame in FrameModel.Frames)
-                    _graph.AddVertex(frame);
+                    graph.AddVertex(frame);
 
                 foreach (var frame in FrameModel.Frames)
                     foreach (var frameChild in frame.Children)
-                        _graph.AddEdge(new Edge<object>(frameChild, frame));
+                        graph.AddEdge(new Edge<object>(frameChild, frame));
 
-                return _graph;
+                return graph;
             }
         }
 
@@ -54,13 +58,19 @@ namespace CleaningHelper.ViewModel
             {
                 _selectedSlot = value;
                 OnPropertyChanged(nameof(SelectedSlot));
+                OnPropertyChanged(nameof(SelectedDomain));
+                OnPropertyChanged(nameof(SelectedDomainValue));
+                OnPropertyChanged(nameof(IsComboBoxValueEditable));
+                OnPropertyChanged(nameof(DomainValueText));
                 OnPropertyChanged(nameof(IsSlotSelected));
-                OnPropertyChanged(nameof(IsSlotNameEditable));
+                OnPropertyChanged(nameof(IsSlotEditable));
                 OnPropertyChanged(nameof(IsSlotTypeEditable));
+                OnPropertyChanged(nameof(ComboBoxValueVisibility));
+                OnPropertyChanged(nameof(TextBoxValueVisibility));
             }
         }
 
-        public List<string> LayoutAlgorithms => new List<string>(new []
+        public List<string> LayoutAlgorithms => new List<string>(new[]
         {
             "BoundedFR",
             "Circular",
@@ -83,72 +93,206 @@ namespace CleaningHelper.ViewModel
             }
         }
 
-        public Domain SelectedDomain { get; set; }
+        public Domain SelectedDomain
+        {
+            get
+            {
+                if (SelectedSlot == null)
+                    return null;
 
-        public Domain SelectedDomainValue { get; set; }
+                if (SelectedSlot is DomainSlot domainSlot)
+                    return domainSlot.Domain;
 
-        public string DomainValueText { get; set; }
+                if (SelectedSlot is FrameSlot)
+                    return FrameModel.FrameSlotDomain;
+
+                if (SelectedSlot is TextSlot)
+                    return FrameModel.TextSlotDomain;
+
+                return null;
+            }
+            set
+            {
+                if (SelectedSlot is DomainSlot selectedDomainSlot)
+                {
+                    if (value == FrameModel.FrameSlotDomain)
+                    {
+                        var frameSlot = new FrameSlot(SelectedSlot.Name);
+                        SelectedFrame.ReplaceSlot(SelectedSlot, frameSlot);
+                        SelectedSlot = frameSlot;
+                        OnPropertyChanged(nameof(SelectedDomain));
+                        OnPropertyChanged(nameof(SelectedDomainValue));
+                        OnPropertyChanged(nameof(DomainValueText));
+                        OnPropertyChanged(nameof(ComboBoxValueVisibility));
+                        OnPropertyChanged(nameof(TextBoxValueVisibility));
+                        return;
+                    }
+
+                    if (value == FrameModel.TextSlotDomain)
+                    {
+                        var textSlot = new TextSlot(SelectedSlot.Name);
+                        SelectedFrame.ReplaceSlot(SelectedSlot, textSlot);
+                        SelectedSlot = textSlot;
+                        OnPropertyChanged(nameof(SelectedDomain));
+                        OnPropertyChanged(nameof(SelectedDomainValue));
+                        OnPropertyChanged(nameof(DomainValueText));
+                        OnPropertyChanged(nameof(ComboBoxValueVisibility));
+                        OnPropertyChanged(nameof(TextBoxValueVisibility));
+                        return;
+                    }
+
+                    selectedDomainSlot.Domain = value;
+                }
+
+                if (SelectedSlot is FrameSlot)
+                {
+                    if (value == FrameModel.FrameSlotDomain)
+                    {
+                        return;
+                    }
+
+                    if (value == FrameModel.TextSlotDomain)
+                    {
+                        var textSlot = new TextSlot(SelectedSlot.Name);
+                        SelectedFrame.ReplaceSlot(SelectedSlot, textSlot);
+                        SelectedSlot = textSlot;
+                        OnPropertyChanged(nameof(SelectedDomain));
+                        OnPropertyChanged(nameof(SelectedDomainValue));
+                        OnPropertyChanged(nameof(DomainValueText));
+                        OnPropertyChanged(nameof(ComboBoxValueVisibility));
+                        OnPropertyChanged(nameof(TextBoxValueVisibility));
+                        return;
+                    }
+
+                    var domainSlot = new DomainSlot(SelectedSlot.Name, value);
+                    SelectedFrame.ReplaceSlot(SelectedSlot, domainSlot);
+                    SelectedSlot = domainSlot;
+                    OnPropertyChanged(nameof(SelectedDomain));
+                    OnPropertyChanged(nameof(SelectedDomainValue));
+                    OnPropertyChanged(nameof(DomainValueText));
+                    OnPropertyChanged(nameof(ComboBoxValueVisibility));
+                    OnPropertyChanged(nameof(TextBoxValueVisibility));
+                }
+
+                if (SelectedSlot is TextSlot)
+                {
+                    if (value == FrameModel.FrameSlotDomain)
+                    {
+                        var frameSlot = new FrameSlot(SelectedSlot.Name);
+                        SelectedFrame.ReplaceSlot(SelectedSlot, frameSlot);
+                        SelectedSlot = frameSlot;
+                        OnPropertyChanged(nameof(SelectedDomain));
+                        OnPropertyChanged(nameof(SelectedDomainValue));
+                        OnPropertyChanged(nameof(DomainValueText));
+                        OnPropertyChanged(nameof(ComboBoxValueVisibility));
+                        OnPropertyChanged(nameof(TextBoxValueVisibility));
+                        return;
+                    }
+
+                    if (value == FrameModel.TextSlotDomain)
+                    {
+                        return;
+                    }
+
+                    var domainSlot = new DomainSlot(SelectedSlot.Name, value);
+                    SelectedFrame.ReplaceSlot(SelectedSlot, domainSlot);
+                    SelectedSlot = domainSlot;
+                    OnPropertyChanged(nameof(SelectedDomain));
+                    OnPropertyChanged(nameof(SelectedDomainValue));
+                    OnPropertyChanged(nameof(DomainValueText));
+                    OnPropertyChanged(nameof(ComboBoxValueVisibility));
+                    OnPropertyChanged(nameof(TextBoxValueVisibility));
+                }
+            }
+        }
+
+        public ObservableCollection<DomainValue> DomainValues => SelectedDomain?.Values;
+
+        public bool IsComboBoxValueEditable => SelectedSlot is TextSlot;
+        
+        public DomainValue SelectedDomainValue
+        {
+            get
+            {
+                if (SelectedSlot is DomainSlot domainSlot)
+                {
+                    return domainSlot.Value;
+                }
+
+                if (SelectedSlot is FrameSlot frameSlot)
+                {
+                    return FrameModel.FrameSlotDomain.Values.FirstOrDefault(v => v.Text == frameSlot.Frame?.Name);
+                }
+
+                return null;
+            }
+            set
+            {
+                if (SelectedSlot is DomainSlot domainSlot)
+                {
+                    domainSlot.Value = value;
+                    OnPropertyChanged(nameof(SelectedDomainValue));
+                    return;
+                }
+
+                if (SelectedSlot is FrameSlot frameSlot)
+                {
+                    frameSlot.Frame = FrameModel.Frames.FirstOrDefault(f => f.Name == value?.Text);
+                    OnPropertyChanged(nameof(SelectedDomainValue));
+                }
+            }
+        }
+
+        public string DomainValueText
+        {
+            get
+            {
+                if (SelectedSlot is TextSlot textSlot)
+                {
+                    return textSlot.Text;
+                }
+
+                return null;
+            }
+            set
+            {
+                if (SelectedSlot is TextSlot textSlot)
+                {
+                    textSlot.Text = value;
+                    OnPropertyChanged(nameof(DomainValueText));
+                }
+            }
+        }
 
         public bool IsFrameSelected => SelectedFrame != null;
 
         public bool IsSlotSelected => SelectedSlot != null;
 
-        public bool IsSlotNameEditable => !SelectedSlot?.IsSystemSlot ?? false;
+        public bool IsSlotRemovingAvailable => SelectedSlot != null && !SelectedSlot.IsSystemSlot;
 
-        public bool IsSlotTypeEditable => !SelectedSlot?.IsSystemSlot ?? false;
+        public bool IsSlotEditable => SelectedSlot != null && !SelectedSlot.IsSystemSlot;
 
-        public FrameModel TestFrameModel
+        public bool IsSlotTypeEditable => SelectedSlot != null && !SelectedSlot.IsSystemSlot;
+
+
+        public Visibility ComboBoxValueVisibility =>
+            !(SelectedSlot is TextSlot) ? Visibility.Visible : Visibility.Collapsed;
+
+        public Visibility TextBoxValueVisibility =>
+            SelectedSlot is TextSlot ? Visibility.Visible : Visibility.Collapsed;
+
+        public FramesViewModel(FrameModel frameModel)
         {
-            get
-            {
-                var domains = new[]
-                {
-                    new Domain("Логический", new[]
-                    {
-                        new DomainValue("Да"),
-                        new DomainValue("Нет"),
-                    }),
-                    new Domain("Ткань", new[]
-                    {
-                        new DomainValue("Хлопок"),
-                        new DomainValue("Синтетика"),
-                    }),
-                };
+            FrameModel = frameModel;
 
-                var frames = new[]
-                {
-                    new Frame("Ситуация"),
-                    new Frame("Загрязнение"),
-                    new Frame("Ужасное загрязнение"),
-                    new Frame("Лёгкое загрязнение"),
-                };
+            FrameModel.PropertyChanged += FrameModelOnPropertyChanged;
 
-                var frameModel = new FrameModel();
-
-                frames[0].Slots.Add(new DomainSlot("Имя слота", domains[0], domains[0].Values[0]));
-                frames[1].Parent = frames[0];
-                frames[2].Parent = frames[1];
-                frames[3].Parent = frames[1];
-
-                foreach (var domain in domains)
-                {
-                    frameModel.Domains.Add(domain);
-                }
-
-                foreach (var frame in frames)
-                {
-                    frameModel.Frames.Add(frame);
-                }
-
-                return frameModel;
-            }
+            SelectedLayoutAlgorithm = DefaultLayoutAlgorithm;
         }
 
-        public FramesViewModel()
+        private void FrameModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            FrameModel = TestFrameModel;
-
-            SelectedLayoutAlgorithm = LayoutAlgorithms.Last();
+            OnPropertyChanged(nameof(Graph));
         }
 
         [NotifyPropertyChangedInvocator]

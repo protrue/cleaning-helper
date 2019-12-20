@@ -1,6 +1,5 @@
 ﻿using CleaningHelper.Core;
 using CleaningHelper.Model;
-using CleaningHelper.OntolisAdapter.DataModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +9,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using CleaningHelper.Tools;
 using CleaningHelper.ViewModel.Annotations;
 using Microsoft.Win32;
 using Newtonsoft.Json;
@@ -19,90 +20,97 @@ namespace CleaningHelper.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private readonly string _applicationStatePath = ConfigurationManager.AppSettings["ApplicationStatePath"];
         private string _pathToModel;
-        private string _pathToOntolis;
-        private OntolisDataObject _ontolisDataObject;
-        private SemanticNetwork _model;
+        private FrameModel _frameModel;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private readonly string _applicationStatePath = ConfigurationManager.AppSettings["ApplicationStatePath"];
+        public const string FileDialogFilter = "Frame model binary file (*.fmb)|*.fmb";
+        public const string DefaultModelName = "New frame model";
+        public const string DefaultModelExtension = "fmb";
 
-        public string PathToOntolis
+        public string DefaultPathToModel => $"{DefaultModelName}.{DefaultModelExtension}";
+
+        public FrameModel FrameModel
         {
-            get => _pathToOntolis; set
+            get => _frameModel;
+            set
             {
-                _pathToOntolis = value;
-                OnPropertyChanged(nameof(PathToOntolis));
-                OnPropertyChanged(nameof(IsEditModelButtonEnabled));
+                _frameModel = value;
+                OnPropertyChanged(nameof(FrameModel));
             }
         }
+
+
         public string PathToModel
         {
-            get => _pathToModel; set
+            get => _pathToModel;
+            set
             {
                 _pathToModel = value;
                 OnPropertyChanged(nameof(PathToModel));
-                TryLoadModel();
             }
         }
 
-//        public bool IsEditModelButtonEnabled => File.Exists(PathToOntolis) && Model != null;
-        public bool IsEditModelButtonEnabled => true;
+        public bool IsModelLoaded => FrameModel != null;
 
-//        public bool IsStartConsultationButtonEnabled => Model != null;
-        public bool IsStartConsultationButtonEnabled => true;
-
-        public OntolisDataObject OntolisDataObject
+        public Command CreateModelCommand => new Command(parameter =>
         {
-            get => _ontolisDataObject; set
+            if (FrameModel != null)
             {
-                _ontolisDataObject = value;
-                OnPropertyChanged(nameof(OntolisDataObject));
+                SaveModelCommand.Execute();
             }
-        }
 
-        public SemanticNetwork Model
-        {
-            get => _model; set
-            {
-                _model = value;
-                OnPropertyChanged(nameof(Model));
-                OnPropertyChanged(nameof(IsStartConsultationButtonEnabled));
-                OnPropertyChanged(nameof(IsEditModelButtonEnabled));
-            }
-        }
+            FrameModel = new FrameModel();
 
-        public Command SetPathToOntolisCommand => new Command(parameter =>
-        {
-            var openFileDialog = new OpenFileDialog
-            {
-                Filter = "Ontolis executable file (ontolis.exe)|ontolis.exe"
-            };
-            var result = openFileDialog.ShowDialog();
-            if (result == true)
-            {
-                PathToOntolis = openFileDialog.FileName;
-            }
+            PathToModel = DefaultPathToModel;
         });
 
         public Command LoadModelCommand => new Command(parameter =>
         {
             var openFileDialog = new OpenFileDialog
             {
-                Filter = "Ontolis ontology file (*.ont)|*.ont"
+                Filter = FileDialogFilter
             };
             var result = openFileDialog.ShowDialog();
             if (result == true)
             {
                 PathToModel = openFileDialog.FileName;
+
+                try
+                {
+                    FrameModel = FrameModelSerializer.Deserialize(PathToModel);
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
             }
         });
 
-        public Command RunOntolisCommand => new Command(parameter =>
+        public Command SaveModelCommand => new Command(parameter =>
         {
-            var ontolisRunner = new OntolisAdapter.Tools.OntolisRunner(PathToOntolis);
-            ontolisRunner.RunOntolis();
+            var saveFileDialog = new SaveFileDialog()
+            {
+                Filter = FileDialogFilter,
+                FileName = DefaultPathToModel
+            };
+
+            var result = saveFileDialog.ShowDialog();
+            if (result == true)
+            {
+                PathToModel = saveFileDialog.FileName;
+
+                try
+                {
+                    FrameModelSerializer.Serialize(PathToModel, FrameModel);
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+            }
         });
 
         public Command LoadStateCommand => new Command(parameter =>
@@ -112,8 +120,16 @@ namespace CleaningHelper.ViewModel
 
             var stateJson = File.ReadAllText(_applicationStatePath);
             var state = JsonConvert.DeserializeObject<ApplicationState>(stateJson);
-            PathToOntolis = state.PathToOntolis;
+
             PathToModel = state.PathToModel;
+            try
+            {
+                FrameModel = FrameModelSerializer.Deserialize(PathToModel);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         });
 
         public Command SaveStateCommand => new Command(parameter =>
@@ -121,32 +137,29 @@ namespace CleaningHelper.ViewModel
             var state = new ApplicationState
             {
                 PathToModel = PathToModel,
-                PathToOntolis = PathToOntolis
             };
 
             var stateJson = JsonConvert.SerializeObject(state, Formatting.Indented);
             File.WriteAllText(_applicationStatePath, stateJson);
+
+            if (FrameModel == null)
+                return;
+
+            try
+            {
+                FrameModelSerializer.Serialize(PathToModel, FrameModel);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         });
 
-        public MainViewModel()
-        {
-            PathToModel = "Не загружена";
-            PathToOntolis = "Не указан";
-        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void TryLoadModel()
-        {
-            if (!File.Exists(PathToModel))
-                return;
-
-            var ontolisDataObject = OntolisAdapter.Tools.OntolisFileDeserializer.DeserializeOntolisFile(PathToModel);
-            Model = OntolisAdapter.Tools.OntolisDataConverter.Convert(ontolisDataObject);
         }
     }
 }

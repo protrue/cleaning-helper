@@ -8,6 +8,7 @@ namespace CleaningHelper.Model
     /// <summary>
     /// Слот фрейма доменного (перечислимого) типа
     /// </summary>
+    [Serializable]
     public class DomainSlot : Slot
     {
         private DomainValue _value;
@@ -43,6 +44,7 @@ namespace CleaningHelper.Model
 
                 _value = value;
                 OnPropertyChanged(nameof(Value));
+                OnPropertyChanged(nameof(ValueAsString));
             }
         }
 

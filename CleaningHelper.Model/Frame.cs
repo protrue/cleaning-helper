@@ -14,6 +14,7 @@ namespace CleaningHelper.Model
     /// <summary>
     /// Фрейм
     /// </summary>
+    [Serializable]
     public class Frame : INotifyPropertyChanged
     {
         private readonly TextSlot _nameSystemSlot;
@@ -83,6 +84,9 @@ namespace CleaningHelper.Model
             _nameSystemSlot = new TextSlot(NameSlotName, isSystemSlot: true);
             _parentSystemSlot = new FrameSlot(ParentSlotName, isSystemSlot: true);
 
+            _nameSystemSlot.PropertyChanged += NameSystemSlotOnPropertyChanged;
+            _parentSystemSlot.PropertyChanged += ParentSystemSlotOnPropertyChanged;
+
             Slots.Add(_nameSystemSlot);
             Slots.Add(_parentSystemSlot);
             Slots.Add(new TextSlot(RecipeSlotName, isSystemSlot: true));
@@ -93,11 +97,30 @@ namespace CleaningHelper.Model
             Slots.CollectionChanged += SlotsOnCollectionChanged;
         }
 
+        private void ParentSystemSlotOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(FrameSlot.Frame))
+                OnPropertyChanged(nameof(Parent));
+        }
+
+        private void NameSystemSlotOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(TextSlot.Text))
+                OnPropertyChanged(nameof(Name));
+        }
+
         public TextSlot GetNameSystemSlot() =>
             Slots.OfType<TextSlot>().First(s => s.Name == NameSlotName && s.IsSystemSlot);
 
         public FrameSlot GetParentSystemSlot() =>
             Slots.OfType<FrameSlot>().First(s => s.Name == ParentSlotName && s.IsSystemSlot);
+
+        public void ReplaceSlot(Slot oldSlot, Slot newSlot)
+        {
+            var oldIndex = Slots.IndexOf(oldSlot);
+            Slots.Insert(oldIndex, newSlot);
+            Slots.Remove(oldSlot);
+        }
 
         private void SlotsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -111,15 +134,17 @@ namespace CleaningHelper.Model
                     }
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                {
-                    foreach (var oldItem in e.OldItems)
                     {
-                        var removedSlot = oldItem as Slot;
-                        ProcessRemovedSlot(removedSlot);
+                        foreach (var oldItem in e.OldItems)
+                        {
+                            var removedSlot = oldItem as Slot;
+                            ProcessRemovedSlot(removedSlot);
+                        }
+                        break;
                     }
-                    break;
-                }
             }
+
+            OnPropertyChanged(nameof(Slots));
         }
 
         private void ProcessRemovedSlot(Slot removedSlot)
@@ -129,6 +154,8 @@ namespace CleaningHelper.Model
                 Slots.Add(removedSlot);
                 throw new RemoveSystemSlotAttemptException();
             }
+
+            removedSlot.PropertyChanged -= FrameSlotOnPropertyChanged;
         }
 
         private void ProcessAddedSlot(Slot addedFrameSlot)
@@ -138,6 +165,13 @@ namespace CleaningHelper.Model
                 Slots.Remove(addedFrameSlot);
                 throw new ArgumentException("Такой слот уже есть у этого фрейма", nameof(addedFrameSlot));
             }
+
+            addedFrameSlot.PropertyChanged += FrameSlotOnPropertyChanged;
+        }
+
+        private void FrameSlotOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Slots));
         }
 
         private void ChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -159,6 +193,8 @@ namespace CleaningHelper.Model
                     }
                     break;
             }
+
+            OnPropertyChanged(nameof(Children));
         }
 
         private void ProcessParentChange(Frame oldParent, Frame newParent)
@@ -189,6 +225,7 @@ namespace CleaningHelper.Model
             child._parentSystemSlot.Frame = null;
         }
 
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

@@ -9,6 +9,7 @@ namespace CleaningHelper.Model
     /// <summary>
     /// Слот текстового типа
     /// </summary>
+    [Serializable]
     public class TextSlot : Slot
     {
         private string _text;
@@ -26,6 +27,7 @@ namespace CleaningHelper.Model
             {
                 _text = value;
                 OnPropertyChanged(nameof(Text));
+                OnPropertyChanged(nameof(ValueAsString));
             }
         }
 

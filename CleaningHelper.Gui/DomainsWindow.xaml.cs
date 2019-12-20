@@ -32,29 +32,7 @@ namespace CleaningHelper.Gui
             DataContext = ViewModel;
         }
 
-        private void AddDomainMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.FrameModel.Domains.Add(new Domain("новый домен"));
-        }
-
-        private void RemoveDomainMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                ViewModel.FrameModel.Domains.Remove(ViewModel.SelectedDomain);
-            }
-            catch (DomainIsInUseException exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
-        }
-
-        private void AddDomainValueMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.SelectedDomain.Values.Add("новое значение");
-        }
-
-        private void RemoveDomainValueMenuItem_Click(object sender, RoutedEventArgs e)
+        private void RemoveValueButton_OnClick(object sender, RoutedEventArgs e)
         {
             var usedList = ViewModel.FrameModel.CheckDomainValueIntegrity(ViewModel.SelectedValue);
 
@@ -66,14 +44,53 @@ namespace CleaningHelper.Gui
                     $"{string.Join(Environment.NewLine, usedList.Select(t => $"{t.Item1}.{t.Item2}"))}" +
                     $"Значения этих слотов будут заменены на пустые";
 
-                    var messageBoxResult = MessageBox.Show(message, "Предупреждение", MessageBoxButton.YesNo);
+                var messageBoxResult = MessageBox.Show(message, "Предупреждение", MessageBoxButton.YesNo);
 
-                    if (messageBoxResult == MessageBoxResult.No)
-                        return;
+                if (messageBoxResult == MessageBoxResult.No)
+                    return;
             }
 
             ViewModel.SelectedDomain.Values.Remove(ViewModel.SelectedValue);
             ViewModel.FrameModel.RestoreDomainValueIntegrity();
+        }
+
+        private void AddValueButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            
+            if (ViewModel.SelectedValue == null)
+            {
+                ViewModel.SelectedDomain.Values.Add("Новое значение");
+            }
+            else
+            {
+                var index = ViewModel.SelectedDomain.Values.IndexOf(ViewModel.SelectedValue);
+                ViewModel.SelectedDomain.Values.Insert(index, new DomainValue("Новое значение"));
+            }
+        }
+
+        private void AddDomainButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.SelectedDomain == null)
+            {
+                ViewModel.FrameModel.Domains.Add(new Domain("Новый домен"));
+            }
+            else
+            {
+                var index = ViewModel.FrameModel.Domains.IndexOf(ViewModel.SelectedDomain);
+                ViewModel.FrameModel.Domains.Insert(index, new Domain("Новый домен"));
+            }
+        }
+
+        private void RemoveDomainButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.FrameModel.Domains.Remove(ViewModel.SelectedDomain);
+            }
+            catch (DomainIsInUseException exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
     }
 }
