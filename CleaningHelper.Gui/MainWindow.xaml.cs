@@ -34,9 +34,9 @@ namespace CleaningHelper.Gui
 
         private void ShowResultsWindow()
         {
-            var resultsWindow = new ResultsWindow(ViewModel.FrameModel);
+            //var resultsWindow = new ResultsWindow(ViewModel.FrameModel);
             
-            resultsWindow.ShowDialog();
+            //resultsWindow.ShowDialog();
         }
 
         private void StartConsultationButton_Click(object sender, RoutedEventArgs e)

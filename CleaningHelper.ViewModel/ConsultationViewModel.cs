@@ -51,6 +51,21 @@ namespace CleaningHelper.ViewModel
             Reasoner = new DownUpReasoner(frameModel, new []{"Ингредиент", "Рецепт"});
         }
 
+        public Command SetAnswerCommand => new Command(parameter =>
+        {
+            if (SelectedAnswer == null || Reasoner.AnswerFound)
+                return;
+            
+            Reasoner.SetAnswer(SelectedAnswer);
+
+            if (!Reasoner.AnswerFound)
+                SetQuestionCommand.Execute();
+            else
+                Result = Reasoner.GetAnswer();
+        });
+
+        public Command SetResultCommand => new Command(parameter => { });
+
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -94,6 +109,12 @@ namespace CleaningHelper.ViewModel
             if (Reasoner.AnswerFound)
             {
                 Result = Reasoner.GetAnswer();
+                return;
+            }
+
+            if (slot == null)
+            {
+                Result = null;
                 return;
             }
 
