@@ -29,12 +29,12 @@ namespace CleaningHelper.ViewModel
             }
         }
 
-        public Reasoner Reasoner { get; set; }
+        public DownUpReasoner Reasoner { get; set; }
 
         public ConsultationViewModel(FrameModel frameModel)
         {
             FrameModel = frameModel;
-            Reasoner = new Reasoner();
+            Reasoner = new DownUpReasoner(frameModel, new []{"Ингредиент", "Рецепт"});
         }
 
         [NotifyPropertyChangedInvocator]
