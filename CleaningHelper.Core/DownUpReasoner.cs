@@ -28,6 +28,8 @@ namespace CleaningHelper.Core
             _goalSlotNames = goalSlotNames;
         }
 
+        public bool AnswerFound { get => _bindedSubframe != null && _resultFrame != null; }
+
         public DomainSlot GetNextValueToAsk()
         {
             if (_bindingCandidate == null)
