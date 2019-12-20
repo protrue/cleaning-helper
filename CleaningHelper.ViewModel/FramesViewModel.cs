@@ -35,8 +35,8 @@ namespace CleaningHelper.ViewModel
                     graph.AddVertex(frame);
 
                 foreach (var frame in FrameModel.Frames)
-                    foreach (var frameChild in frame.Children)
-                        graph.AddEdge(new Edge<object>(frameChild, frame));
+                foreach (var frameChild in frame.Children)
+                    graph.AddEdge(new Edge<object>(frameChild, frame));
 
                 foreach (var frame in FrameModel.Frames)
                 {
@@ -223,7 +223,19 @@ namespace CleaningHelper.ViewModel
             }
         }
 
-        public ObservableCollection<DomainValue> DomainValues => SelectedDomain?.Values;
+        public ObservableCollection<DomainValue> DomainValues
+        {
+            get
+            {
+                if (SelectedDomain != null && SelectedDomain == FrameModel.FrameSlotDomain)
+                    return
+                        new ObservableCollection<DomainValue>(
+                            SelectedDomain.Values.Except(new[]
+                                {SelectedDomain.Values.First(v => v.Text == SelectedFrame.Name)}));
+
+                return SelectedDomain?.Values;
+            }
+        }
 
         public bool IsComboBoxValueEditable => SelectedSlot is TextSlot;
 
@@ -307,18 +319,8 @@ namespace CleaningHelper.ViewModel
             SelectedLayoutAlgorithm = DefaultLayoutAlgorithm;
         }
 
-        public void AllChanged()
-        {
-            foreach (var name in GetType().GetProperties().Select(p => p.Name))
-            {
-                OnPropertyChanged(name);
-            }
-        }
-
         private void FrameModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            AllChanged();
-            OnPropertyChanged(nameof(Graph));
         }
 
         [NotifyPropertyChangedInvocator]

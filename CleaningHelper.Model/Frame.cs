@@ -63,7 +63,7 @@ namespace CleaningHelper.Model
             set
             {
                 var oldParent = _parentSystemSlot.Frame;
-                if (oldParent != null) oldParent.PropertyChanged -= ParentOnPropertyChanged;
+                if (_parentSystemSlot.Frame != null) oldParent.PropertyChanged -= ParentOnPropertyChanged;
                 _parentSystemSlot.Frame = value;
                 if (value != null) value.PropertyChanged += ParentOnPropertyChanged;
                 ProcessParentChange(oldParent, value);
@@ -112,7 +112,10 @@ namespace CleaningHelper.Model
         private void ParentSystemSlotOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(FrameSlot.Frame))
+            {
                 OnPropertyChanged(nameof(Parent));
+                OnPropertyChanged(nameof(Children));
+            }
         }
 
         private void NameSystemSlotOnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -239,7 +242,7 @@ namespace CleaningHelper.Model
 
         private void ChildOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            OnPropertyChanged(nameof(Children));
+            //OnPropertyChanged(nameof(Children));
         }
 
         private void ProcessRemovedChild(Frame child, IList oldItems)

@@ -26,14 +26,13 @@ namespace CleaningHelper.Model
         private readonly Domain _textSlotDomain;
         private Frame _frameToDelete;
 
-        [field: NonSerialized]
-        public event PropertyChangedEventHandler PropertyChanged;
+        [field: NonSerialized] public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Фреймы модели
         /// </summary>
         public ObservableCollection<Frame> Frames { get; set; }
-        
+
         /// <summary>
         /// Домены модели
         /// </summary>
@@ -81,28 +80,29 @@ namespace CleaningHelper.Model
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
+                {
+                    foreach (var newItem in e.NewItems)
                     {
-                        foreach (var newItem in e.NewItems)
-                        {
-                            var frame = newItem as Frame;
-                            ProcessAddedFrame(frame);
-                        }
-
-                        break;
+                        var frame = newItem as Frame;
+                        ProcessAddedFrame(frame);
                     }
+
+                    break;
+                }
                 case NotifyCollectionChangedAction.Remove:
+                {
+                    foreach (var oldItem in e.OldItems)
                     {
-                        foreach (var oldItem in e.OldItems)
-                        {
-                            var frame = oldItem as Frame;
-                            ProcessRemovedFrame(frame);
-                        }
-
-                        break;
+                        var frame = oldItem as Frame;
+                        ProcessRemovedFrame(frame);
                     }
+
+                    break;
+                }
             }
 
             OnPropertyChanged(nameof(Frames));
+            OnPropertyChanged(nameof(Domains));
         }
 
         private void DomainsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -110,25 +110,25 @@ namespace CleaningHelper.Model
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
+                {
+                    foreach (var newItem in e.NewItems)
                     {
-                        foreach (var newItem in e.NewItems)
-                        {
-                            var domain = newItem as Domain;
-                            ProcessAddedDomain(domain);
-                        }
-
-                        break;
+                        var domain = newItem as Domain;
+                        ProcessAddedDomain(domain);
                     }
+
+                    break;
+                }
                 case NotifyCollectionChangedAction.Remove:
+                {
+                    foreach (var oldItem in e.OldItems)
                     {
-                        foreach (var oldItem in e.OldItems)
-                        {
-                            var domain = oldItem as Domain;
-                            ProcessRemovedDomain(domain);
-                        }
-
-                        break;
+                        var domain = oldItem as Domain;
+                        ProcessRemovedDomain(domain);
                     }
+
+                    break;
+                }
             }
 
             OnPropertyChanged(nameof(Domains));
@@ -179,7 +179,12 @@ namespace CleaningHelper.Model
 
         private void FrameOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (!(sender is Frame frame) || e.PropertyName != nameof(Frame.Parent) || frame == _frameToDelete) 
+            if (sender is Frame && e.PropertyName == nameof(Frame.Name))
+            {
+                OnPropertyChanged(nameof(Domains));
+            }
+            
+            if (!(sender is Frame frame) || e.PropertyName != nameof(Frame.Parent) || frame == _frameToDelete)
                 return;
 
             var parent = frame.Parent;
@@ -198,6 +203,14 @@ namespace CleaningHelper.Model
                         var addedFrame = newItem as Frame;
                         ProcessExternallyAddedFrame(addedFrame);
                     }
+
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    foreach (var oldItem in e.OldItems)
+                    {
+                        var removedFrame = oldItem as Frame;
+                    }
+
                     break;
             }
         }
@@ -229,9 +242,9 @@ namespace CleaningHelper.Model
             var useList = new List<Tuple<Frame, DomainSlot>>();
 
             foreach (var frame in Frames)
-                foreach (var slot in frame.Slots.OfType<DomainSlot>())
-                    if (ReferenceEquals(slot.Domain, domain))
-                        useList.Add(Tuple.Create(frame, slot));
+            foreach (var slot in frame.Slots.OfType<DomainSlot>())
+                if (ReferenceEquals(slot.Domain, domain))
+                    useList.Add(Tuple.Create(frame, slot));
 
             if (useList.Count > 0)
             {
@@ -283,7 +296,7 @@ namespace CleaningHelper.Model
 
             return resetList;
         }
-        
+
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -315,7 +328,7 @@ namespace CleaningHelper.Model
 
             foreach (var invocation in _serializableDelegates)
             {
-                PropertyChanged += (PropertyChangedEventHandler)invocation;
+                PropertyChanged += (PropertyChangedEventHandler) invocation;
             }
         }
     }
