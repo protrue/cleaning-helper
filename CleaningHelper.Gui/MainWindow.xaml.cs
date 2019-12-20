@@ -34,7 +34,7 @@ namespace CleaningHelper.Gui
 
         private void ShowResultsWindow()
         {
-            var resultsWindow = new ResultsWindow();
+            var resultsWindow = new ResultsWindow(ViewModel.FrameModel);
             
             resultsWindow.ShowDialog();
         }

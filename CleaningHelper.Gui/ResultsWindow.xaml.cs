@@ -23,12 +23,20 @@ namespace CleaningHelper.Gui
     {
         public ResultsViewModel ViewModel { get; set; }
 
-        public ResultsWindow()
+        public ResultsWindow(FrameModel frameModel)
         {
             InitializeComponent();
 
-            ViewModel = new ResultsViewModel();
+            ViewModel = new ResultsViewModel(frameModel);
             DataContext = ViewModel;
+            GraphLayout.Graph = ViewModel.Graph;
+        }
+        private void AutoLayoutButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            GraphLayout.UpdateLayout();
+            GraphLayout.RecalculateOverlapRemoval();
+
+
         }
     }
 }

@@ -85,6 +85,7 @@ namespace CleaningHelper.Gui
 
         private void AutoLayoutButton_OnClick(object sender, RoutedEventArgs e)
         {
+            ViewModel.AllChanged();
             GraphLayout.UpdateLayout();
             GraphLayout.RecalculateOverlapRemoval();
         }
@@ -156,6 +157,10 @@ namespace CleaningHelper.Gui
             {
                 ViewModel.SelectedFrame = vertexControl.Vertex as Frame;
                 GraphLayout.HighlightVertex(ViewModel.SelectedFrame, "None");
+            }
+            else
+            {
+                ViewModel.SelectedFrame = null;
             }
         }
     }

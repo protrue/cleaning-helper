@@ -30,7 +30,7 @@
             Header="Модель">
             <StackPanel>
                 <GroupBox
-                    Header="Текущая модель:"
+                    Header="Текущая:"
                     Margin="10"
                     Padding="5">
                     <TextBox
