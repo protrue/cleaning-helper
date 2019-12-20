@@ -223,6 +223,7 @@ namespace CleaningHelper.Model
                 throw new ArgumentException("Фрейм уже является наследником", nameof(child));
 
             child._parentSystemSlot.Frame = this;
+            
         }
 
         private void ProcessRemovedChild(Frame child, IList oldItems)

@@ -59,8 +59,7 @@ namespace CleaningHelper.Model
         public DomainValue this[string text] =>
             Values.First(v => v.Text == text);
 
-        [field: NonSerialized]
-        public event PropertyChangedEventHandler PropertyChanged;
+        [field: NonSerialized] public event PropertyChangedEventHandler PropertyChanged;
 
         public Domain(string name, IEnumerable<DomainValue> values = null)
         {
@@ -75,14 +74,34 @@ namespace CleaningHelper.Model
 
         private void ValuesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
+            switch (e.Action)
             {
-                foreach (var newItem in e.NewItems)
+                case NotifyCollectionChangedAction.Add:
                 {
-                    var domainValue = newItem as DomainValue;
-                    ProcessAddedDomainValue(domainValue);
+                    foreach (var newItem in e.NewItems)
+                    {
+                        var domainValue = newItem as DomainValue;
+                        ProcessAddedDomainValue(domainValue);
+                    }
+
+                    break;
+                }
+                case NotifyCollectionChangedAction.Remove:
+                {
+                    foreach (var oldItem in e.OldItems)
+                    {
+                        var domainValue = oldItem as DomainValue;
+                        ProcessRemovedDomainValue(domainValue);
+                    }
+
+                    break;
                 }
             }
+        }
+
+        private void ProcessRemovedDomainValue(DomainValue domainValue)
+        {
+            domainValue.PropertyChanged -= DomainValueOnPropertyChanged;
         }
 
         private void ProcessAddedDomainValue(DomainValue domainValue)
@@ -92,6 +111,13 @@ namespace CleaningHelper.Model
                 Values.Remove(domainValue);
                 throw new ArgumentException("Одинаковые значения доменов недопустимы", nameof(domainValue));
             }
+
+            domainValue.PropertyChanged += DomainValueOnPropertyChanged;
+        }
+
+        private void DomainValueOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Values));
         }
 
         [NotifyPropertyChangedInvocator]
@@ -99,6 +125,7 @@ namespace CleaningHelper.Model
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         [OnSerializing]
         public void OnSerializing(StreamingContext context)
         {
@@ -124,10 +151,8 @@ namespace CleaningHelper.Model
 
             foreach (var invocation in _serializableDelegates)
             {
-                PropertyChanged += (PropertyChangedEventHandler)invocation;
+                PropertyChanged += (PropertyChangedEventHandler) invocation;
             }
         }
     }
-
-
 }
