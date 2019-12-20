@@ -35,13 +35,6 @@ namespace CleaningHelper.Gui
             ViewModel = new FramesViewModel(frameModel);
             DataContext = ViewModel;
             GraphLayout.Graph = ViewModel.Graph;
-
-            ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
-        }
-
-        private void ViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            //UpdateGraphLayout();
         }
 
         private void EditDomainsMenuItem_Click(object sender, RoutedEventArgs e)
@@ -81,20 +74,18 @@ namespace CleaningHelper.Gui
             try
             {
                 GraphLayout.Graph = ViewModel.Graph;
-                //GraphLayout.RecalculateOverlapRemoval();
-                //GraphLayout.UpdateLayout();
+                GraphLayout.RecalculateOverlapRemoval();
+                GraphLayout.UpdateLayout();
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                //MessageBox.Show(exception.Message);
             }
         }
 
         private void AutoLayoutButton_OnClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.AllChanged();
-            GraphLayout.UpdateLayout();
-            GraphLayout.RecalculateOverlapRemoval();
+            UpdateGraphLayout();
         }
 
         private void AddSlotButton_OnClick(object sender, RoutedEventArgs e)

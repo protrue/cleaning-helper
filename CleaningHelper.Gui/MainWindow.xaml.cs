@@ -61,13 +61,13 @@ namespace CleaningHelper.Gui
 
         private void EditDomainsButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var domainsWindow = new DomainsWindow(ViewModel.FrameModel);
+            var domainsWindow = new DomainsWindow(ViewModel.TestFrameModel);
             domainsWindow.ShowDialog();
         }
 
         private void EditFramesButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var editorWindow = new FramesWindow(ViewModel.FrameModel);
+            var editorWindow = new FramesWindow(ViewModel.TestFrameModel);
             editorWindow.ShowDialog();
         }
     }
