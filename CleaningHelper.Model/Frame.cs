@@ -63,10 +63,17 @@ namespace CleaningHelper.Model
             set
             {
                 var oldParent = _parentSystemSlot.Frame;
+                if (oldParent != null) oldParent.PropertyChanged -= ParentOnPropertyChanged;
                 _parentSystemSlot.Frame = value;
+                if (value != null) value.PropertyChanged += ParentOnPropertyChanged;
                 ProcessParentChange(oldParent, value);
                 OnPropertyChanged(nameof(Parent));
             }
+        }
+
+        private void ParentOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Parent));
         }
 
         /// <summary>
@@ -137,16 +144,18 @@ namespace CleaningHelper.Model
                         var addedSlot = newItem as Slot;
                         ProcessAddedSlot(addedSlot);
                     }
+
                     break;
                 case NotifyCollectionChangedAction.Remove:
+                {
+                    foreach (var oldItem in e.OldItems)
                     {
-                        foreach (var oldItem in e.OldItems)
-                        {
-                            var removedSlot = oldItem as Slot;
-                            ProcessRemovedSlot(removedSlot);
-                        }
-                        break;
+                        var removedSlot = oldItem as Slot;
+                        ProcessRemovedSlot(removedSlot);
                     }
+
+                    break;
+                }
             }
 
             OnPropertyChanged(nameof(Slots));
@@ -189,6 +198,7 @@ namespace CleaningHelper.Model
                         var addedChild = newItem as Frame;
                         ProcessAddedChild(addedChild);
                     }
+
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     foreach (var oldItem in e.OldItems)
@@ -196,6 +206,7 @@ namespace CleaningHelper.Model
                         var removedChild = oldItem as Frame;
                         ProcessRemovedChild(removedChild, e.OldItems);
                     }
+
                     break;
             }
 
@@ -223,16 +234,21 @@ namespace CleaningHelper.Model
                 throw new ArgumentException("Фрейм уже является наследником", nameof(child));
 
             child._parentSystemSlot.Frame = this;
-            
+            child.PropertyChanged += ChildOnPropertyChanged;
+        }
+
+        private void ChildOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Children));
         }
 
         private void ProcessRemovedChild(Frame child, IList oldItems)
         {
             child._parentSystemSlot.Frame = null;
+            child.PropertyChanged -= ChildOnPropertyChanged;
         }
 
-        [field: NonSerialized]
-        public event PropertyChangedEventHandler PropertyChanged;
+        [field: NonSerialized] public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -270,7 +286,7 @@ namespace CleaningHelper.Model
 
             foreach (var invocation in _serializableDelegates)
             {
-                PropertyChanged += (PropertyChangedEventHandler)invocation;
+                PropertyChanged += (PropertyChangedEventHandler) invocation;
             }
         }
     }
