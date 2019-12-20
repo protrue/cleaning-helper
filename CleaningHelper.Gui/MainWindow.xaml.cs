@@ -51,23 +51,23 @@ namespace CleaningHelper.Gui
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.LoadStateCommand.Execute();
+//            ViewModel.LoadStateCommand.Execute();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            ViewModel.SaveStateCommand.Execute();
+//            ViewModel.SaveStateCommand.Execute();
         }
 
         private void EditDomainsButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var domainsWindow = new DomainsWindow(ViewModel.TestFrameModel);
+            var domainsWindow = new DomainsWindow(ViewModel.FrameModel);
             domainsWindow.ShowDialog();
         }
 
         private void EditFramesButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var editorWindow = new FramesWindow(ViewModel.TestFrameModel);
+            var editorWindow = new FramesWindow(ViewModel.FrameModel);
             editorWindow.ShowDialog();
         }
     }
