@@ -5,12 +5,68 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:CleaningHelper.Gui"
+    xmlns:ext="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+    xmlns:gs="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
+    xmlns:model="clr-namespace:CleaningHelper.Model;assembly=CleaningHelper.Model"
     mc:Ignorable="d"
     Title="Результаты консультации"
     Height="600"
     Width="800"
     WindowStartupLocation="CenterScreen"
     Icon="Resources/icon.ico">
+    <Window.Resources>
+        <DataTemplate
+            x:Key="FrameTemplate"
+            DataType="{x:Type model:Frame}">
+            <StackPanel
+                Margin="5">
+                <TextBox
+                    IsReadOnly="True"
+                    Text="{Binding Path=Name}" />
+                <DataGrid
+                    Name="SlotsDataGrid"
+                    ItemsSource="{Binding Path=Slots}"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    CanUserSortColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Header="Имя"
+                            Binding="{Binding Path=Name, Mode=OneWay}"
+                            Width="Auto"
+                            IsReadOnly="True"/>
+                        <DataGridTextColumn
+                            Header="Тип"
+                            Binding="{Binding Path=TypeAsString, Mode=OneWay}"
+                            Width="Auto"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Header="Значение"
+                            Binding="{Binding Path=ValueAsString, Mode=OneWay}"
+                            Width="Auto"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </DataTemplate>
+        <Style
+            TargetType="{x:Type gs:VertexControl}">
+            <Setter
+                Property="Template">
+                <Setter.Value>
+                    <ControlTemplate
+                        TargetType="{x:Type gs:VertexControl}">
+                        <Border
+                            BorderBrush="Black"
+                            BorderThickness="1">
+                            <ContentPresenter
+                                Content="{TemplateBinding Vertex}"
+                                ContentTemplate="{StaticResource FrameTemplate}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid
         Margin="50">
         <Grid.RowDefinitions>
@@ -28,44 +84,31 @@
         <GroupBox
             Header="Объяснение:"
             Grid.Row="1">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition
-                        Height="9*"></RowDefinition>
-                    <RowDefinition
-                        Height="1*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <TreeView
-                    Grid.Row="0"
-                    Name="ResultsTreeView"
-                    ItemsSource="{Binding InferringPathView}">
-                    <TreeView.ItemContainerStyle>
-                        <Style
-                            TargetType="{x:Type TreeViewItem}">
-                            <Setter
-                                Property="IsExpanded"
-                                Value="True" />
-                        </Style>
-                    </TreeView.ItemContainerStyle>
-                </TreeView>
-                <Grid
-                    Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+            <DockPanel>
+                <DockPanel
+                    DockPanel.Dock="Top"
+                    LastChildFill="False">
                     <Button
-                        Name="CollapseAllButton"
-                        Grid.Column="0"
-                        Content="Свернуть всё"
-                        Margin="10 5"></Button>
-                    <Button
-                        Name="ExpandAllButton"
-                        Grid.Column="1"
-                        Content="Развернуть всё"
-                        Margin="10 5"></Button>
-                </Grid>
-            </Grid>
+                        Name="AutoLayoutButton"
+                        Content="Авторасположение"
+                        Margin="10 5"
+                        Padding="5"
+                        Click="AutoLayoutButton_OnClick"></Button>
+                    <ComboBox
+                        ItemsSource="{Binding Path=LayoutAlgorithms}"
+                        SelectedItem="{Binding Path=SelectedLayoutAlgorithm}"
+                        Margin="10 5"
+                        Padding="5"></ComboBox>
+                </DockPanel>
+                <ext:ZoomControl
+                    Name="ZoomControl"
+                    Mode="Original">
+                    <gs:GraphLayout
+                        Name="GraphLayout"
+                        LayoutAlgorithmType="{Binding Path=SelectedLayoutAlgorithm}"
+                        OverlapRemovalAlgorithmType="FSA"></gs:GraphLayout>
+                </ext:ZoomControl>
+            </DockPanel>
         </GroupBox>
     </Grid>
 </Window>

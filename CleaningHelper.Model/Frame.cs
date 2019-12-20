@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using CleaningHelper.Model.Annotations;
 using CleaningHelper.Model.Exceptions;
 
@@ -17,6 +18,8 @@ namespace CleaningHelper.Model
     [Serializable]
     public class Frame : INotifyPropertyChanged
     {
+        private readonly List<Delegate> _serializableDelegates;
+
         private readonly TextSlot _nameSystemSlot;
         private readonly FrameSlot _parentSystemSlot;
 
@@ -95,6 +98,8 @@ namespace CleaningHelper.Model
 
             Children.CollectionChanged += ChildrenOnCollectionChanged;
             Slots.CollectionChanged += SlotsOnCollectionChanged;
+
+            _serializableDelegates = new List<Delegate>();
         }
 
         private void ParentSystemSlotOnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -237,6 +242,35 @@ namespace CleaningHelper.Model
         public override string ToString()
         {
             return Name;
+        }
+
+        [OnSerializing]
+        public void OnSerializing(StreamingContext context)
+        {
+            _serializableDelegates.Clear();
+            var handler = PropertyChanged;
+
+            if (handler != null)
+            {
+                foreach (var invocation in handler.GetInvocationList())
+                {
+                    if (invocation.Target.GetType().IsSerializable)
+                    {
+                        _serializableDelegates.Add(invocation);
+                    }
+                }
+            }
+        }
+
+        [OnDeserialized]
+        public void OnDeserialized(StreamingContext context)
+        {
+            if (_serializableDelegates == null) return;
+
+            foreach (var invocation in _serializableDelegates)
+            {
+                PropertyChanged += (PropertyChangedEventHandler)invocation;
+            }
         }
     }
 }

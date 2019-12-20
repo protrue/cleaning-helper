@@ -4,8 +4,10 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 using CleaningHelper.Model;
 using CleaningHelper.ViewModel.Annotations;
 using QuickGraph;
@@ -35,6 +37,20 @@ namespace CleaningHelper.ViewModel
                 foreach (var frame in FrameModel.Frames)
                     foreach (var frameChild in frame.Children)
                         graph.AddEdge(new Edge<object>(frameChild, frame));
+
+                foreach (var frame in FrameModel.Frames)
+                {
+                    foreach (var slot in frame.Slots)
+                    {
+                        if (slot is FrameSlot frameSlot && frameSlot.Frame != null && !frameSlot.IsSystemSlot)
+                        {
+                            graph.AddEdge(new AlternateEdge(frame, frameSlot.Frame)
+                            {
+                                EdgeColor = Colors.Blue
+                            });
+                        }
+                    }
+                }
 
                 return graph;
             }
@@ -67,6 +83,7 @@ namespace CleaningHelper.ViewModel
                 OnPropertyChanged(nameof(IsSlotTypeEditable));
                 OnPropertyChanged(nameof(ComboBoxValueVisibility));
                 OnPropertyChanged(nameof(TextBoxValueVisibility));
+                OnPropertyChanged(nameof(IsSlotRemovingAvailable));
             }
         }
 
@@ -209,7 +226,7 @@ namespace CleaningHelper.ViewModel
         public ObservableCollection<DomainValue> DomainValues => SelectedDomain?.Values;
 
         public bool IsComboBoxValueEditable => SelectedSlot is TextSlot;
-        
+
         public DomainValue SelectedDomainValue
         {
             get
@@ -290,8 +307,17 @@ namespace CleaningHelper.ViewModel
             SelectedLayoutAlgorithm = DefaultLayoutAlgorithm;
         }
 
+        public void AllChanged()
+        {
+            foreach (var name in GetType().GetProperties().Select(p => p.Name))
+            {
+                OnPropertyChanged(name);
+            }
+        }
+
         private void FrameModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            AllChanged();
             OnPropertyChanged(nameof(Graph));
         }
 

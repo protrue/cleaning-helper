@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
@@ -19,6 +20,8 @@ namespace CleaningHelper.Model
     [Serializable]
     public class FrameModel : INotifyPropertyChanged
     {
+        private readonly List<Delegate> _serializableDelegates;
+
         private readonly Domain _frameSlotDomain;
         private readonly Domain _textSlotDomain;
         private Frame _frameToDelete;
@@ -69,6 +72,8 @@ namespace CleaningHelper.Model
 
             Domains.CollectionChanged += DomainsOnCollectionChanged;
             Frames.CollectionChanged += FramesOnCollectionChanged;
+
+            _serializableDelegates = new List<Delegate>();
         }
 
         private void FramesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -283,6 +288,35 @@ namespace CleaningHelper.Model
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        [OnSerializing]
+        public void OnSerializing(StreamingContext context)
+        {
+            _serializableDelegates.Clear();
+            var handler = PropertyChanged;
+
+            if (handler != null)
+            {
+                foreach (var invocation in handler.GetInvocationList())
+                {
+                    if (invocation.Target.GetType().IsSerializable)
+                    {
+                        _serializableDelegates.Add(invocation);
+                    }
+                }
+            }
+        }
+
+        [OnDeserialized]
+        public void OnDeserialized(StreamingContext context)
+        {
+            if (_serializableDelegates == null) return;
+
+            foreach (var invocation in _serializableDelegates)
+            {
+                PropertyChanged += (PropertyChangedEventHandler)invocation;
+            }
         }
     }
 }

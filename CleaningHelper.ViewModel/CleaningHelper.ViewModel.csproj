@@ -71,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlternateEdge.cs" />
     <Compile Include="ApplicationState.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="ConsultationViewModel.cs" />

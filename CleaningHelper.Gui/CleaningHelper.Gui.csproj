@@ -93,12 +93,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AlternateEdge.cs" />
     <Compile Include="ConsultationWindow.xaml.cs">
       <DependentUpon>ConsultationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DomainsWindow.xaml.cs">
       <DependentUpon>DomainsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EdgeColorConverter.cs" />
     <Compile Include="FramesWindow.xaml.cs">
       <DependentUpon>FramesWindow.xaml</DependentUpon>
     </Compile>
