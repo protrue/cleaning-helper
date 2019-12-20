@@ -95,17 +95,21 @@ namespace CleaningHelper.ViewModel
                 var frameModel = new FrameModel();
                 
                 frames[1].Slots.Add(new DomainSlot("Тип ткани", domains[1], domains[1][0]));
+                frames[1].RecipeSlot.Text = "Рецепт для натуральной ткани";
                 frames[1].Parent = frames[0];
                 
                 frames[2].Slots.Add(new DomainSlot("Деликатная", domains[0], domains[0][0]));
+                frames[2].RecipeSlot.Text = "Рецепт для деликатно ткани";
                 frames[2].Parent = frames[1];
                 
                 frames[3].Slots.Add(new DomainSlot("Цвет ткани", domains[2], domains[2][0], false, true));
                 frames[3].Slots.Add(new DomainSlot("Ткань", domains[3], domains[3][0], false, true));
+                frames[3].RecipeSlot.Text = "Рецепт для светлого хлопка";
                 frames[3].Parent = frames[2];
                 
                 frames[4].Slots.Add(new DomainSlot("Цвет ткани", domains[2], domains[2][1], false, true));
                 frames[4].Slots.Add(new DomainSlot("Ткань", domains[3], domains[3][0], false, true));
+                frames[4].RecipeSlot.Text = "Рецепт для тёмного хлопка";
                 frames[4].Parent = frames[2];
                 
                 frames[8].Slots.Add(new DomainSlot("Вещество", domains[4], domains[4][0], false, true));

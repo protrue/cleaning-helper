@@ -85,6 +85,8 @@ namespace CleaningHelper.Model
         /// Список слотов
         /// </summary>
         public ObservableCollection<Slot> Slots { get; }
+        
+        public TextSlot RecipeSlot {get => Slots[2] as TextSlot;}
 
         public Frame(string name)
         {
