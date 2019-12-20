@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,13 +26,23 @@ namespace CleaningHelper.Model
             get => _frame;
             set
             {
+                if (_frame != null) _frame.PropertyChanged -= FrameOnPropertyChanged;
                 _frame = value;
+                if (_frame != null) _frame.PropertyChanged += FrameOnPropertyChanged;
+
                 OnPropertyChanged(nameof(Frame));
                 OnPropertyChanged(nameof(ValueAsString));
             }
         }
 
-        public FrameSlot(string name, Frame frame = null, bool isSystemSlot = false, bool isRequestable = false, bool isResult = false) :
+        private void FrameOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+//            OnPropertyChanged(nameof(Frame));
+//            OnPropertyChanged(nameof(ValueAsString));
+        }
+
+        public FrameSlot(string name, Frame frame = null, bool isSystemSlot = false, bool isRequestable = false,
+            bool isResult = false) :
             base(name, isSystemSlot, isRequestable, isResult)
         {
             Frame = frame;
