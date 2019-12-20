@@ -88,8 +88,12 @@
         <GroupBox
             Header="Результат:"
             Grid.Row="0">
-            <Label
-                Content="{Binding Path=Result.Name}"></Label>
+            <StackPanel>
+                <Label
+                    Content="{Binding Path=Result.Name}"></Label>
+                <Label
+                    Content="{Binding Path=Result.RecipeSlot}"></Label>
+            </StackPanel>
         </GroupBox>
         <GroupBox
             Header="Объяснение:"
