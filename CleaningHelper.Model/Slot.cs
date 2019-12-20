@@ -98,6 +98,11 @@ namespace CleaningHelper.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         [OnSerializing]
         public void OnSerializing(StreamingContext context)
         {

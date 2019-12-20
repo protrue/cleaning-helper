@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DownUpReasoner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reasoner.cs" />
   </ItemGroup>
